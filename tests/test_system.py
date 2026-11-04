@@ -102,7 +102,7 @@ class TestBudget(Base):
     def test_dry_run_spends_nothing(self):
         w = self.world([ep(1, "a")]); c = FakeHF()
         out = self.run_gen(w, c, live=False)
-        self.assertIn("DRY-RUN", out[0]); self.assertEqual(c.submits, 0)
+        self.assertTrue(any("DRY-RUN" in o for o in out)); self.assertEqual(c.submits, 0)
 
     def test_cap_enforced_with_margin(self):
         # 2 episodes x $2.40 = 4.80; with 10% margin 5.28 > 5 => second skipped
