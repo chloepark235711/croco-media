@@ -60,6 +60,13 @@ def run(date, live, pub, ctl, inbox, work, client=hf, poll_s=15, max_polls=80):
             budget.load_approval(ctl.workdir, day)
         except budget.NotApproved as e:
             return [f"BLOCKED: {e}"]
+    if not live:
+        try:
+            ctl.sync()
+            cap = budget.load_approval(ctl.workdir, day)
+            report.append(f"APPROVAL: valid, cap ${cap}")
+        except Exception as e:
+            report.append(f"APPROVAL: NOT ACTIVE ({e}) -> live run would be BLOCKED")
     for ep in todo:
         eid = ep["id"]
         try:
@@ -108,10 +115,10 @@ def process(ep, live, pub, ctl, inbox, work, client, day, poll_s, max_polls):
         for i, s in enumerate(ep["scenes"], 1):
             try:
                 rid = client.submit(scene_params(ep, s))
-            except hf.ApiError as e:  # 4xx: rejected, certainly not charged
-                budget.release(ctl, day, eid, now(), f"rejected: {e}")
+            except hf.ApiError as e:  # 4xx rejected; reservation is HELD until CEO reconcile
+                budget.log_error(ctl, day, eid, f"rejected scene {i}: {e}", now())
                 set_status(pub, eid, lambda e_: e_.update(status="FAILED", error=str(e)[:200]) or True, "rejected")
-                return f"FAILED (rejected: {e})"
+                return f"FAILED (rejected: {e}); reservation held until reconcile"
             except hf.AmbiguousSubmit as e:  # keep reservation, no retry
                 set_status(pub, eid, lambda e_: e_.update(status="NEEDS_REVIEW", error="ambiguous submit") or True, "ambiguous submit")
                 budget.log_error(ctl, day, eid, f"ambiguous submit scene {i}: {e}", now())
@@ -137,8 +144,8 @@ def process(ep, live, pub, ctl, inbox, work, client, day, poll_s, max_polls):
             return "STILL GENERATING (will resume next run; no resubmit)"
         if st["status"] != "completed":
             set_status(pub, eid, lambda e_: e_.update(status="FAILED", error=f"scene {i}: {st['status']}") or True, "generation failed")
-            budget.release(ctl, day, eid, now(), f"provider status {st['status']} (not charged per docs)")
-            return f"FAILED (scene {i}: {st['status']})"
+            budget.log_error(ctl, day, eid, f"scene {i}: {st['status']}", now())
+            return f"FAILED (scene {i}: {st['status']}); reservation held until reconcile"
         f = os.path.join(outdir, f"scene-{i:02d}.mp4")
         client.download(st["video"]["url"], f)  # immediately, before URL expiry
         clips.append({"scene": i, "file": f, "sha256": sha256(f), "request_id": rid,
@@ -181,7 +188,8 @@ def main(argv=None):
     pub_remote = os.environ.get("CROCO_PUBLIC_REMOTE", "https://github.com/chloepark235711/croco-media")
     ctl_remote = os.environ.get("CROCO_CONTROL_REMOTE", "https://github.com/chloepark235711/croco-control")
     pub = GitStore(os.path.join(work, "pub"), pub_remote, os.environ.get("CROCO_PUBLIC_BRANCH", "main"))
-    ctl = GitStore(os.path.join(work, "ctl"), ctl_remote, "main")
+    ctl = GitStore(os.path.join(work, "ctl"), ctl_remote, "main",
+                   allowed=("ledger/", "errors/", "requests/"))
     inbox = GitStore(os.path.join(work, "inbox"), pub_remote, "inbox")
     for line in run(a.date, a.live, pub, ctl, inbox, work):
         print(line)

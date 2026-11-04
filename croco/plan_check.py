@@ -5,8 +5,8 @@ from . import episodes
 def main(date, root="."):
     eps = [e for e in episodes.all_episodes(root) if e["date"] == date]
     bad = 0
-    if len(eps) != 2:
-        print(f"expected 2 episodes for {date}, found {len(eps)}"); bad = 1
+    if len(eps) != episodes.EPISODES_PER_DAY:
+        print(f"expected {} episodes for {date}, found {len(eps)}".format(episodes.EPISODES_PER_DAY)); bad = 1
     for e in eps:
         others = [o for o in episodes.all_episodes(root) if o["id"] != e["id"]]
         for p in episodes.validate(e, others):

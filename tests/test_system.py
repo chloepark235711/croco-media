@@ -152,11 +152,12 @@ class TestPipeline(Base):
         self.run_gen(w, c); self.run_gen(w, c)
         self.assertEqual(c.submits, 1)
 
-    def test_rejected_submit_releases_budget(self):
+    def test_rejected_submit_HOLDS_budget_until_reconcile(self):
         w = self.world([ep(1, "a")]); c = FakeHF(mode="reject")
         self.assertIn("FAILED", self.run_gen(w, c)[0])
         w[1].sync()
-        self.assertEqual(budget.committed_total(budget._events(w[1].workdir, DAY)), 0)
+        self.assertGreater(budget.committed_total(budget._events(w[1].workdir, DAY)), 0)
+        self.assertEqual(budget.reconcile_release(w[1], DAY, "20261105-01", "n"), "held")
 
     def test_provider_failure_stops_safely(self):
         w = self.world([ep(1, "a")]); c = FakeHF(mode="fail")
@@ -172,6 +173,38 @@ class TestPipeline(Base):
         bad = ep(1, "a"); bad["scenes"][0]["prompt"] = "mickey fights with a knife"
         w = self.world([bad]); c = FakeHF()
         self.assertIn("INVALID", self.run_gen(w, c)[0]); self.assertEqual(c.submits, 0)
+
+
+class TestPermissions(Base):
+    def test_worker_cannot_write_approvals(self):
+        w = self.world(); ctl = GitStore(w[1].workdir, w[4], "main", allowed=("ledger/", "errors/", "requests/"))
+        def evil(root):
+            open(os.path.join(root, "approvals", "budget.json"), "w").write("{}")
+            return ["approvals/budget.json"]
+        with self.assertRaises(PermissionError): ctl.transact(evil, "x")
+        ctl.sync()
+        self.assertEqual(open(os.path.join(ctl.workdir, "approvals", "budget.json")).read(), APPROVAL)
+
+    def test_bot_edited_approval_is_rejected(self):
+        w = self.world(); ctl = w[1]
+        ctl.transact(lambda r: (open(os.path.join(r, "approvals", "budget.json"), "w").write(APPROVAL + " "), ["approvals/budget.json"])[1], "bot edit")
+        with self.assertRaises(budget.NotApproved): budget.reserve(ctl, DAY, "E1", "1", "n")
+
+    def test_reconcile_requires_ceo_file(self):
+        w = self.world(); ctl = w[1]
+        budget.reserve(ctl, DAY, "E1", "1", "n")
+        self.assertEqual(budget.reconcile_release(ctl, DAY, "E1", "n"), "held")
+        ctl.transact(lambda r: (os.makedirs(os.path.join(r, "reconcile"), exist_ok=True), open(os.path.join(r, "reconcile", "E1.json"), "w").write('{"resolved":"not_charged"}'), ["reconcile/E1.json"])[2], "ceo")
+        self.assertEqual(budget.reconcile_release(ctl, DAY, "E1", "n"), "released")
+
+
+class TestBudgetDefaults(unittest.TestCase):
+    def test_default_plan_fits_cap(self):
+        per = Decimal("0.668"); total = per * 3 * 2
+        self.assertLessEqual(total * Decimal("1.1"), Decimal("5"))
+        self.assertGreater(per * 4 * 2 * Decimal("1.1"), Decimal("5"))
+        e = ep(1, "a"); e["scenes"] = [{"n": i, "prompt": "p", "duration": 5} for i in range(4)]
+        self.assertTrue(any("max 3" in x for x in episodes.validate(e)))
 
 
 class TestPlanValidation(unittest.TestCase):

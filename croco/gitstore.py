@@ -17,9 +17,10 @@ class Conflict(Exception):
 
 class GitStore:
     def __init__(self, workdir, remote, branch="main", retries=10,
-                 author=("croco-bot", "croco-bot@users.noreply.github.com")):
+                 author=("croco-bot", "croco-bot@users.noreply.github.com"), allowed=None):
         self.workdir, self.remote, self.branch = workdir, remote, branch
         self.retries, self.author = retries, author
+        self.allowed = allowed  # tuple of path prefixes this worker may write; None = any
 
     def _git(self, *args, check=True):
         env = dict(os.environ, GIT_TERMINAL_PROMPT="0",
@@ -46,6 +47,12 @@ class GitStore:
             changed = fn(self.workdir)
             if not changed:
                 return None
+            if self.allowed is not None:
+                dirty = [l[3:] for l in self._git("status", "--porcelain").stdout.splitlines()]
+                for c in list(changed) + dirty:
+                    if not c.startswith(self.allowed):
+                        self._git("reset", "-q", "--hard", f"origin/{self.branch}")
+                        raise PermissionError(f"write outside allowed paths refused: {c}")
             self._git("add", "--", *changed)
             self._git("commit", "-q", "-m", message)
             r = self._git("push", "-q", "origin", f"HEAD:{self.branch}", check=False)
@@ -53,3 +60,8 @@ class GitStore:
                 return self._git("rev-parse", "HEAD").stdout.strip()
             time.sleep(random.uniform(0.05, 0.3) * (attempt + 1))
         raise Conflict(f"could not push after {self.retries} attempts")
+
+    def bot_touched(self, prefix):
+        """True if the bot identity ever authored/committed a change under prefix."""
+        out = self._git("log", "--format=%ae%n%ce", "--", prefix, check=False).stdout.split()
+        return self.author[1] in out

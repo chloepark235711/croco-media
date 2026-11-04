@@ -17,6 +17,9 @@ BLOCKLIST = ["disney", "pixar", "pokemon", "mario", "peppa", "cocomelon", "baby 
              "paw patrol", "bluey", "spiderman", "marvel", "frozen", "mickey",
              "gun", "blood", "kill", "knife", "scary", "horror"]
 DIR = os.path.join("briefings", "episodes")
+MAX_SCENES = 3          # 5s clip ~ $0.668 -> 2 episodes x 3 clips ~ $4.01 (+10% margin 4.41) <= $5
+MAX_SCENE_SECONDS = 5
+EPISODES_PER_DAY = 2
 
 
 def path(root, eid):
@@ -59,10 +62,12 @@ def validate(ep, existing=()):
     scenes = ep.get("scenes") or []
     if not scenes:
         errs.append("no scenes")
+    if len(scenes) > MAX_SCENES:
+        errs.append(f"max {MAX_SCENES} scenes per episode (budget)")
     for i, s in enumerate(scenes, 1):
         d = s.get("duration")
-        if not s.get("prompt") or not isinstance(d, int) or not 3 <= d <= 30:
-            errs.append(f"scene {i}: needs prompt and integer duration 3-30")
+        if not s.get("prompt") or not isinstance(d, int) or not 3 <= d <= MAX_SCENE_SECONDS:
+            errs.append(f"scene {i}: needs prompt and integer duration 3-5")
     text = json.dumps(ep, ensure_ascii=False).lower()
     errs += [f"blocked term: {w}" for w in BLOCKLIST if re.search(rf"\b{re.escape(w)}\b", text)]
     for o in existing:

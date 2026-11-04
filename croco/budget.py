@@ -84,6 +84,8 @@ def reserve(store, day, episode_id, usd, now):
 
     def fn(root):
         cap = load_approval(root, day)
+        if store.bot_touched("approvals"):
+            raise NotApproved("approvals/ was modified by the automation identity; refusing")
         ev = _events(root, day)
         for e in ev:
             if e["type"] == "reserve" and e["episode_id"] == episode_id and not any(
@@ -129,3 +131,20 @@ def reserved_amount(root, day, episode_id):
         if e["type"] == "reserve" and e["episode_id"] == episode_id:
             return Decimal(e["usd"])
     return None
+
+
+def reconcile_release(store, day, episode_id, now):
+    """Release a held reservation ONLY if the CEO placed reconcile/<id>.json
+    ({"resolved": "not_charged", "by": ...}). Automation never decides this alone."""
+    out = {}
+
+    def fn(root):
+        p = os.path.join(root, "reconcile", f"{episode_id}.json")
+        if not os.path.exists(p) or json.load(open(p)).get("resolved") != "not_charged":
+            out["r"] = "held"
+            return None
+        out["r"] = "released"
+        return _append(root, day, {"type": "release", "episode_id": episode_id,
+                                   "reason": "CEO reconciliation: not charged", "at": now})
+    store.transact(fn, f"ledger: reconcile {episode_id}")
+    return out["r"]
