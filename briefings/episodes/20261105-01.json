@@ -3,6 +3,7 @@
   "description": "Little Croco learns that sharing a toy with a friend makes playtime more fun. A gentle 5-second lesson for little ones. #shorts",
   "id": "20261105-01",
   "learning_goal": "Sharing makes everyone happy",
+  "requests": {},
   "scenes": [
     {
       "duration": 5,
@@ -10,7 +11,7 @@
       "prompt": "Cute 3D cartoon for toddlers: Croco, a friendly green baby crocodile with a yellow belly and a red scarf, happily hands a colorful toy ball to a small smiling bunny in a sunny meadow, bright soft colors, gentle cheerful mood, vertical video"
     }
   ],
-  "status": "PLANNED",
+  "status": "GENERATING",
   "tags": [
     "kids",
     "shorts",
