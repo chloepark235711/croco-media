@@ -15,7 +15,15 @@
     }
   ],
   "character_lock": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm.",
-  "date": "2026-11-05",
+  "date": "2026-11-06",
+  "date_history": [
+    {
+      "from": "2026-11-05",
+      "reason": "2026-11-05 slots missed (no clips generated); owner order 2026-11-05: publish 11/6 17:00 America/Denver. ID unchanged.",
+      "target_slot": "2026-11-06T17:00",
+      "to": "2026-11-06"
+    }
+  ],
   "description": "Croco turns on the water, makes soapy bubbles, rinses and dries his hands. All clean!\nFor parents: hand-washing steps - water, soap, scrub, rinse, dry. \"Bubbles, bubbles!\", \"Rinse!\", \"All clean!\"\n#CrocosLittleWorld #HandWashing #HealthyHabits #KidsShorts",
   "hashtags": [
     "#CrocosLittleWorld",
@@ -68,6 +76,7 @@
     "preschool learning",
     "kids animation"
   ],
+  "target_slot": "2026-11-06T17:00",
   "title": "Wash, Wash, Wash! 🫧🐊 | Croco's Little World #Shorts",
   "topic_key": "hand-washing-1",
   "youtube_post_id": null

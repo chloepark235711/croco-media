@@ -85,19 +85,21 @@ class Base(unittest.TestCase):
         self.t = tempfile.mkdtemp()
         self.addCleanup(shutil.rmtree, self.t, True)
 
-    def world(self, episodes_=(), approval=APPROVAL):
+    def world(self, episodes_=(), approval=APPROVAL, ctl_files=None):
         files = {"README.md": "x"}
         for e in episodes_:
             files[f"briefings/episodes/{e['id']}.json"] = json.dumps(e)
         pub = make_remote(self.t, "pub", files, ("main", "inbox"))
-        ctl = make_remote(self.t, "ctl", {"approvals/budget.json": approval} if approval else {"README": "x"})
+        cf = dict({"approvals/budget.json": approval} if approval else {"README": "x"}, **(ctl_files or {}))
+        ctl = make_remote(self.t, "ctl", cf)
         mk = lambda n, r, b="main": GitStore(os.path.join(self.t, n), r, b)
         return mk("pub", pub), mk("ctl", ctl), mk("inbox", pub, "inbox"), pub, ctl
 
-    def run_gen(self, w, client, live=True):
+    def run_gen(self, w, client, live=True, verifier=lambda store: None):
         pub, ctl, inbox = w[:3]
         return generate.run(DAY, live, pub, ctl, inbox, os.path.join(self.t, "work"),
-                            client=client, poll_s=0, max_polls=2, spend_day=DAY)
+                            client=client, poll_s=0, max_polls=2, spend_day=DAY,
+                            approval_verifier=verifier)
 
 
 class TestBudget(Base):
@@ -238,10 +240,10 @@ class TestPublishGuard(Base):
         pg.claim_edit(pub, "20261105-01")
         with self.assertRaises(pg.NotAllowed): pg.claim_edit(pub, "20261105-01")
         pg.mark_qa(pub, "20261105-01", True, "ok", checklist=FULL_QA)
-        pg.claim_publish(pub, "20261105-01", "2026-11-06T12:00", "a" * 64)
-        with self.assertRaises(pg.NotAllowed): pg.claim_publish(pub, "20261105-01", "2026-11-06T17:00", "b" * 64)
+        pg.claim_publish(pub, "20261105-01", "2030-01-07T12:00", "a" * 64)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(pub, "20261105-01", "2030-01-07T17:00", "b" * 64)
         pg.claim_edit(pub, "20261105-02"); pg.mark_qa(pub, "20261105-02", False, "copyright risk")
-        with self.assertRaises(pg.NotAllowed): pg.claim_publish(pub, "20261105-02", "2026-11-06T17:00", "b" * 64)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(pub, "20261105-02", "2030-01-07T17:00", "b" * 64)
 
 
 # ---------------------------------------------------------------- V2 recovery tests
@@ -340,7 +342,7 @@ class TestGeneratedRecord(Base):
     def test_ledger_uses_spend_day(self):
         w = self.world([ep(1, "a", date="2026-11-06")]); pub, ctl, inbox = w[:3]
         generate.run("2026-11-06", True, pub, ctl, inbox, os.path.join(self.t, "work"),
-                     client=FakeHF(), poll_s=0, max_polls=2, spend_day=DAY)
+                     client=FakeHF(), poll_s=0, max_polls=2, spend_day=DAY, approval_verifier=lambda s: None)
         ctl.sync()
         self.assertTrue(os.path.exists(os.path.join(ctl.workdir, "ledger", f"{DAY}.jsonl")))
         self.assertFalse(os.path.exists(os.path.join(ctl.workdir, "ledger", "2026-11-06.jsonl")))
@@ -367,9 +369,11 @@ class TestPlanCheck(unittest.TestCase):
         self.write(ep(1, "h", "HOLD", hold=True), ep(2, "a"))
         self.assertEqual(self.check(), 1)
 
-    def test_real_plan_for_2026_11_05(self):
+    def test_real_plan_for_2026_11_06(self):
         with contextlib.redirect_stdout(io.StringIO()):
-            self.assertEqual(plan_check.main(DAY, REPO), 0)
+            self.assertEqual(plan_check.main("2026-11-06", REPO), 0)
+        self.assertEqual(episodes.load(REPO, "20261105-02")["target_slot"], "2026-11-06T12:00")
+        self.assertEqual(episodes.load(REPO, "20261105-03")["target_slot"], "2026-11-06T17:00")
         one = episodes.load(REPO, "20261105-01")
         self.assertEqual(one["status"], "HOLD")
         self.assertEqual(one["requests"], {"1": "01a1a7fc-58de-7ed1-9953-b2572114fab4"})  # preserved, not reused
@@ -426,17 +430,17 @@ class TestPublishV2(Base):
     def test_two_episodes_never_share_slot_or_file(self):
         w = self.world([ep(1, "a", "GENERATED"), ep(2, "b", "GENERATED")])
         self.ready(w, "20261105-01"); self.ready(w, "20261105-02")
-        pg.claim_publish(w[0], "20261105-01", "2026-11-06T12:00", "a" * 64)
-        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-02", "2026-11-06T12:00", "b" * 64)
-        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-02", "2026-11-06T17:00", "a" * 64)
-        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-02", "2026-11-06T09:00", "b" * 64)
-        pg.claim_publish(w[0], "20261105-02", "2026-11-06T17:00", "b" * 64)
+        pg.claim_publish(w[0], "20261105-01", "2030-01-07T12:00", "a" * 64)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-02", "2030-01-07T12:00", "b" * 64)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-02", "2030-01-07T17:00", "a" * 64)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-02", "2030-01-07T09:00", "b" * 64)
+        pg.claim_publish(w[0], "20261105-02", "2030-01-07T17:00", "b" * 64)
 
     def test_published_only_after_schedule_and_once(self):
         w = self.world([ep(1, "a", "GENERATED"), ep(2, "b", "GENERATED")])
         with self.assertRaises(pg.NotAllowed): pg.record_published(w[0], "20261105-01", "yt1")
         self.ready(w, "20261105-01")
-        pg.claim_publish(w[0], "20261105-01", "2026-11-06T12:00", "a" * 64)
+        pg.claim_publish(w[0], "20261105-01", "2030-01-07T12:00", "a" * 64)
         pg.record_metricool(w[0], "20261105-01", "416000001", "uuid-1")
         with self.assertRaises(pg.NotAllowed): pg.record_metricool(w[0], "20261105-01", "416000002")
         pg.record_published(w[0], "20261105-01", "yt1")
@@ -445,9 +449,9 @@ class TestPublishV2(Base):
 
     def test_publish_failure_parks_for_review(self):
         w = self.world([ep(1, "a", "GENERATED")]); self.ready(w, "20261105-01")
-        pg.claim_publish(w[0], "20261105-01", "2026-11-06T12:00", "a" * 64)
+        pg.claim_publish(w[0], "20261105-01", "2030-01-07T12:00", "a" * 64)
         pg.publish_failed(w[0], "20261105-01", "metricool timeout")
-        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-01", "2026-11-06T17:00", "a" * 64)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-01", "2030-01-07T17:00", "a" * 64)
 
 
 class TestOffline(unittest.TestCase):
@@ -459,6 +463,113 @@ class TestOffline(unittest.TestCase):
             with self.assertRaises(real.OfflineMode): real.submit({"prompt": "x"})
         finally:
             real._call = _no_network; real.download = _no_network
+
+
+AGENT_APPROVAL = json.dumps({**json.loads(APPROVAL), "approved_by":
+    "CEO (instruction given in Claude Code chat; recorded by Claude Code, NOT a GitHub-verified CEO commit)"})
+HELD_LEDGER = {f"ledger/{DAY}.jsonl": json.dumps({"at": "x", "episode_id": "20261105-01", "type": "reserve", "usd": "0.668"}) + "\n"}
+
+
+class TestApprovalProvenance(Base):
+    def test_agent_recorded_approval_blocks(self):
+        w = self.world([ep(2, "a")], approval=AGENT_APPROVAL); c = FakeHF()
+        out = self.run_gen(w, c)
+        self.assertIn("BLOCKED", out[0]); self.assertIn("agent", out[0]); self.assertEqual(c.submits, 0)
+
+    def test_unverified_commit_blocks(self):
+        def deny(store): raise budget.NotApproved("not a verified commit by owner")
+        w = self.world([ep(2, "a")]); c = FakeHF()
+        self.assertIn("BLOCKED", self.run_gen(w, c, verifier=deny)[0]); self.assertEqual(c.submits, 0)
+        out = self.run_gen(w, c, live=False, verifier=deny)
+        self.assertTrue(any("NOT ACTIVE" in o for o in out)); self.assertEqual(c.submits, 0)
+
+    def test_repo_slug(self):
+        self.assertEqual(budget._repo_slug("https://github.com/chloepark235711/croco-control"), "chloepark235711/croco-control")
+        self.assertIsNone(budget._repo_slug("/tmp/x/ctl.git"))
+
+
+class TestUnconfirmedCost(Base):
+    def hold(self):
+        return ep(1, "hold", "HOLD", hold=True, requests={"1": "old"}, scenes=[{"n": 1, "prompt": OLD_01_PROMPT, "duration": 5}])
+
+    def test_unconfirmed_hold_cost_blocks_that_day(self):
+        w = self.world([self.hold(), ep(2, "a")], ctl_files=HELD_LEDGER); c = FakeHF()
+        out = self.run_gen(w, c)
+        self.assertIn("unconfirmed cost", out[0]); self.assertEqual(c.submits, 0)
+        self.assertTrue(any("UNCONFIRMED" in o for o in self.run_gen(w, c, live=False)))
+
+    def test_ceo_reconcile_charged_unblocks(self):
+        rec = {"reconcile/20261105-01.json": json.dumps({"resolved": "charged", "usd": "0.40", "by": "ceo"})}
+        w = self.world([self.hold(), ep(2, "a")], ctl_files={**HELD_LEDGER, **rec}); c = FakeHF()
+        out = self.run_gen(w, c)
+        self.assertEqual(c.submits, 1, out)
+        w[1].sync()
+        ev = budget._events(w[1].workdir, DAY)
+        self.assertTrue(any(e["type"] == "settle" and e["episode_id"] == "20261105-01" and e["usd"] == "0.40" for e in ev))
+
+    def test_failure_mid_run_stops_spending_that_day(self):
+        class RejectFirst(FakeHF):
+            def submit(self, p):
+                self.submits += 1
+                if self.submits == 1: raise hf.ApiError(422, "bad")
+                return "req-x"
+        w = self.world([ep(2, "a"), ep(3, "b")]); c = RejectFirst()
+        out = self.run_gen(w, c)
+        self.assertEqual(c.submits, 1, out)
+        w[0].sync(); self.assertEqual(episodes.load(w[0].workdir, "20261105-03")["status"], "PLANNED")
+
+
+class TestLimitedRun(Base):
+    def test_max_episodes_one(self):
+        w = self.world([ep(2, "a"), ep(3, "b")]); c = FakeHF("0.50"); pub, ctl, inbox = w[:3]
+        generate.run(DAY, True, pub, ctl, inbox, os.path.join(self.t, "work"), client=c, poll_s=0, max_polls=2,
+                     spend_day=DAY, approval_verifier=lambda s: None, max_new=1)
+        self.assertEqual(c.submits, 1)
+
+
+class TestRequestRecord(Base):
+    def test_private_request_record(self):
+        w = self.world([ep(1, "a")]); self.run_gen(w, FakeHF())
+        w[1].sync()
+        r = json.load(open(os.path.join(w[1].workdir, "requests", "20261105-01.json")))
+        s1 = r["scenes"]["1"]
+        self.assertEqual((s1["request_id"], s1["status"], s1["video_url"]), ("req-1", "completed", "mock://v"))
+        self.assertEqual(len(s1["sha256"]), 64); self.assertEqual(r["cost_usd"], "1.00")
+        self.assertIn("estimate", r["cost_basis"])
+
+
+class TestQARecord(unittest.TestCase):
+    def test_unverified_is_recorded_and_blocks(self):
+        part = dict(FULL_QA); del part["audio_loudness"]; part["copyright_trademark"] = False
+        rec = qa.record(part)
+        self.assertEqual((rec["audio_loudness"], rec["copyright_trademark"], rec["playback_ok"]), ("UNVERIFIED", "FAIL", "PASS"))
+        ok, why = qa.evaluate(part); self.assertFalse(ok); self.assertIn("UNVERIFIED: audio_loudness", why)
+        self.assertEqual(qa.evaluate(FULL_QA)[0], True)
+        self.assertEqual(len(qa.REQUIRED), 13)
+
+
+class TestSlotChoice(Base):
+    NOW = datetime.datetime(2030, 1, 7, 15, 0, tzinfo=datetime.timezone.utc)   # 08:00 MST
+
+    def test_target_slot_used_when_free(self):
+        w = self.world([ep(2, "a", "QA_PASSED", target_slot="2030-01-07T12:00")])
+        self.assertEqual(pg.choose_slot(w[0], "20261105-02", now=self.NOW), "2030-01-07T12:00")
+
+    def test_past_target_replanned_to_next_free(self):
+        late = datetime.datetime(2030, 1, 7, 23, 45, tzinfo=datetime.timezone.utc)   # 16:45 MST
+        w = self.world([ep(2, "a", "QA_PASSED", target_slot="2030-01-07T12:00")])
+        self.assertEqual(pg.choose_slot(w[0], "20261105-02", now=late), "2030-01-08T12:00")
+
+    def test_metricool_occupied_target_replanned(self):
+        w = self.world([ep(2, "a", "QA_PASSED", target_slot="2030-01-07T12:00"),
+                        ep(3, "b", "QA_PASSED", target_slot="2030-01-07T17:00")])
+        got = pg.choose_slot(w[0], "20261105-02", occupied_external={"2030-01-07T12:00"}, now=self.NOW)
+        self.assertEqual(got, "2030-01-08T12:00")   # 17:00 is reserved as -03's target
+
+    def test_claim_refuses_past_slot(self):
+        w = self.world([ep(1, "a", "GENERATED")]); pg.claim_edit(w[0], "20261105-01")
+        pg.mark_qa(w[0], "20261105-01", True, "ok", checklist=FULL_QA)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-01", "2020-01-01T12:00", "a" * 64)
 
 
 if __name__ == "__main__":

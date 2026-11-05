@@ -6,7 +6,7 @@ topic_key / source_episode across ALL episodes (HOLD included), marketing/SEO ru
 """
 import sys
 
-from . import episodes, marketing
+from . import episodes, marketing, slots
 
 
 def main(date, root="."):
@@ -24,6 +24,15 @@ def main(date, root="."):
     if secs > episodes.MAX_SECONDS_PER_DAY:
         print(f"total scene seconds {secs} > {episodes.MAX_SECONDS_PER_DAY} (daily budget)")
         bad = 1
+    targets = [e.get("target_slot") for e in active if e.get("target_slot")]
+    if len(targets) != len(set(targets)):
+        print(f"two active episodes share a target_slot: {targets}")
+        bad = 1
+    for t in targets:
+        day, _, hhmm = t.partition("T")
+        if day != date or hhmm not in slots.SLOT_TIMES:
+            print(f"target_slot {t} must be {date}T12:00 or {date}T17:00 (America/Denver)")
+            bad = 1
     for e in active:
         others = [o for o in every if o["id"] != e["id"]]
         for p in episodes.validate(e, others):

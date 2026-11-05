@@ -16,7 +16,6 @@ import datetime
 import hashlib
 import json
 import os
-import sys
 import time
 from decimal import Decimal
 
@@ -51,35 +50,60 @@ def scene_params(ep, s):
             "aspect_ratio": ASPECT}
 
 
-def select(all_eps, date):
+def select(all_eps, date, max_new=episodes.EPISODES_PER_DAY):
     """Episodes this run may touch: resume GENERATING ones (poll only), then PLANNED ones
     dated <= D, oldest first; never HOLD; at most EPISODES_PER_DAY new submissions."""
     live_eps = [e for e in all_eps if episodes.is_active(e) and e.get("date", "") <= date]
     resume = [e for e in live_eps if e["status"] == "GENERATING"]
     planned = sorted((e for e in live_eps if e["status"] == "PLANNED"),
                      key=lambda e: (e["date"], e["id"]))
-    return resume + planned[:episodes.EPISODES_PER_DAY]
+    return resume + planned[:max(0, min(max_new, episodes.EPISODES_PER_DAY))]
 
 
-def run(date, live, pub, ctl, inbox, work, client=hf, poll_s=15, max_polls=80, spend_day=None):
+def statuses(pub):
+    return {e["id"]: e.get("status") for e in episodes.all_episodes(pub.workdir)}
+
+
+def unconfirmed_gate(pub, ctl, day):
+    """Apply any CEO reconcile files, then return the episode ids whose cost on `day` is still unknown."""
+    ctl.sync()
+    st = statuses(pub)
+    pending = budget.unconfirmed(ctl.workdir, day, st)
+    for eid in pending:
+        budget.apply_reconcile(ctl, day, eid, now())
+    ctl.sync()
+    return budget.unconfirmed(ctl.workdir, day, st)
+
+
+def run(date, live, pub, ctl, inbox, work, client=hf, poll_s=15, max_polls=80, spend_day=None,
+        approval_verifier=budget.github_verifier, max_new=episodes.EPISODES_PER_DAY):
     day = spend_day or slots.denver_today()
     report = []
     sync_root = pub.workdir
     pub.sync()
-    todo = select(episodes.all_episodes(sync_root), date)
-    if live:
+    todo = select(episodes.all_episodes(sync_root), date, max_new)
+    try:
         ctl.sync()
+        cap = budget.load_approval(ctl.workdir, day)
+        approval_verifier(ctl)
+        approval = (True, f"APPROVAL: valid, cap ${cap}, spend day {day}")
+    except Exception as e:
+        approval = (False, f"APPROVAL: NOT ACTIVE ({e})")
+    if live:
+        if not approval[0]:
+            return [f"BLOCKED: {approval[1]}"]
+        stuck = unconfirmed_gate(pub, ctl, day)
+        if stuck:
+            return [f"BLOCKED: unconfirmed cost on {day} for {', '.join(stuck)}; owner must add "
+                    f"croco-control reconcile/<id>.json (charged + usd, or not_charged)"]
+    else:
+        report.append(approval[1] + ("" if approval[0] else " -> live run would be BLOCKED"))
         try:
-            budget.load_approval(ctl.workdir, day)
-        except budget.NotApproved as e:
-            return [f"BLOCKED: {e}"]
-    if not live:
-        try:
-            ctl.sync()
-            cap = budget.load_approval(ctl.workdir, day)
-            report.append(f"APPROVAL: valid, cap ${cap}")
+            stuck = budget.unconfirmed(ctl.workdir, day, statuses(pub))
+            if stuck:
+                report.append(f"UNCONFIRMED COST on {day}: {', '.join(stuck)} -> live run would be BLOCKED")
         except Exception as e:
-            report.append(f"APPROVAL: NOT ACTIVE ({e}) -> live run would be BLOCKED")
+            report.append(f"LEDGER: unreadable ({type(e).__name__})")
     for ep in todo:
         eid = ep["id"]
         try:
@@ -116,12 +140,15 @@ def process(ep, live, pub, ctl, inbox, work, client, day, poll_s, max_polls):
         total = sum(est, Decimal(0))
         if not live:
             return f"DRY-RUN estimate ${total} for {len(est)} scenes (nothing reserved or sent)"
+        stuck = unconfirmed_gate(pub, ctl, day)
+        if stuck:   # an earlier episode in this run failed ambiguously: stop spending today
+            return f"BLOCKED (unconfirmed cost on {day} for {', '.join(stuck)}); stays PLANNED"
         try:
-            r = budget.reserve(ctl, day, eid, total, now())
+            budget.reserve(ctl, day, eid, total, now())
         except budget.OverBudget as e:
             set_status(pub, eid, lambda e_: e_.update(status="SKIPPED_BUDGET") or True, "skipped budget")
             return f"SKIPPED_BUDGET ({e})"
-        # r == "exists": an earlier/concurrent run reserved; the claim CAS below
+        # "exists": an earlier/concurrent run reserved; the claim CAS below
         # decides which single worker may submit.
         # claim: only the worker whose push wins proceeds
         won = set_status(pub, eid, lambda e: (e["status"] == "PLANNED") and (e.update(status="GENERATING", requests={}) or True), "claim for generation")
@@ -131,14 +158,17 @@ def process(ep, live, pub, ctl, inbox, work, client, day, poll_s, max_polls):
             try:
                 rid = client.submit(scene_params(ep, s))
             except hf.ApiError as e:  # 4xx rejected; reservation is HELD until CEO reconcile
-                budget.log_error(ctl, day, eid, f"rejected scene {i}: {e}", now())
-                set_status(pub, eid, lambda e_: e_.update(status="FAILED", error=str(e)[:200]) or True, "rejected")
-                return f"FAILED (rejected: {e}); reservation held until reconcile"
+                msg = str(e)[:200]
+                budget.log_error(ctl, day, eid, f"rejected scene {i}: {msg}", now())
+                set_status(pub, eid, lambda e_: e_.update(status="FAILED", error=msg) or True, "rejected")
+                return f"FAILED (rejected: {msg}); reservation held until reconcile"
             except hf.AmbiguousSubmit as e:  # keep reservation, no retry
                 set_status(pub, eid, lambda e_: e_.update(status="NEEDS_REVIEW", error="ambiguous submit") or True, "ambiguous submit")
                 budget.log_error(ctl, day, eid, f"ambiguous submit scene {i}: {e}", now())
                 return "NEEDS_REVIEW (ambiguous submit; reservation kept, no resubmit)"
             set_status(pub, eid, lambda e_, i=i, rid=rid: e_["requests"].__setitem__(str(i), rid) or True, f"request id scene {i}")
+            budget.record_request(ctl, eid, lambda r, i=i, rid=rid: r.setdefault("scenes", {}).__setitem__(
+                str(i), {"request_id": rid, "submitted_at": now(), "model": hf.MODEL, "status": "submitted"}))
 
     # GENERATING: poll only, download, hash, deliver.
     pub.sync()
@@ -164,12 +194,22 @@ def process(ep, live, pub, ctl, inbox, work, client, day, poll_s, max_polls):
         f = os.path.join(outdir, f"scene-{i:02d}.mp4")
         client.download(st["video"]["url"], f)  # immediately, before URL expiry
         clips.append({"scene": i, "file": f, "sha256": sha256(f), "request_id": rid,
-                      "bytes": os.path.getsize(f)})
+                      "bytes": os.path.getsize(f), "video_url": st["video"]["url"]})
     deliver(inbox, ep, clips)
     ctl.sync()
     prices = budget.find_reserved(ctl.workdir, eid)
     if prices is not None:
         budget.settle(ctl, prices[0], eid, prices[1], now())
+
+    def done(r):
+        for c in clips:
+            r.setdefault("scenes", {}).setdefault(str(c["scene"]), {}).update(
+                request_id=c["request_id"], status="completed", video_url=c["video_url"],
+                sha256=c["sha256"], bytes=c["bytes"])
+        r["cost_usd"] = str(prices[1]) if prices else None
+        r["cost_basis"] = "estimate (provider returns no actual charge)"
+        r["completed_at"] = now()
+    budget.record_request(ctl, eid, done)
     asset_paths = [os.path.join("clips", ep["date"], eid, os.path.basename(c["file"])) for c in clips]
     shas = {str(c["scene"]): c["sha256"] for c in clips}
     set_status(pub, eid, lambda e_: e_.update(status="GENERATED", asset_paths=asset_paths, sha256=shas,
@@ -202,6 +242,8 @@ def main(argv=None):
     ap = argparse.ArgumentParser()
     ap.add_argument("--date", required=True)
     ap.add_argument("--live", action="store_true")
+    ap.add_argument("--max-episodes", type=int, default=episodes.EPISODES_PER_DAY,
+                    help="new submissions this run (Phase D limited test: 1)")
     a = ap.parse_args(argv)
     work = os.environ.get("CROCO_WORK", "/tmp/croco-work")
     pub_remote = os.environ.get("CROCO_PUBLIC_REMOTE", "https://github.com/chloepark235711/croco-media")
@@ -210,7 +252,7 @@ def main(argv=None):
     ctl = GitStore(os.path.join(work, "ctl"), ctl_remote, "main",
                    allowed=("ledger/", "errors/", "requests/"))
     inbox = GitStore(os.path.join(work, "inbox"), pub_remote, "inbox")
-    for line in run(a.date, a.live, pub, ctl, inbox, work):
+    for line in run(a.date, a.live, pub, ctl, inbox, work, max_new=a.max_episodes):
         print(line)
 
 

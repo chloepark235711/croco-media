@@ -12,9 +12,15 @@ Fail-closed: no valid approval => nothing is reserved => nothing is generated.
 """
 import json
 import os
+import re
+import subprocess
 from decimal import Decimal
 
 SAFETY_MARGIN = Decimal("0.10")  # estimates may drift; keep 10% headroom
+OWNER_LOGIN = os.environ.get("CROCO_OWNER_LOGIN", "chloepark235711")
+# An approval that an agent wrote "on behalf of" the CEO is not an approval.
+AGENT_MARKERS = ("recorded by claude", "not a github-verified", "claude code", "on behalf of")
+UNCONFIRMED_STATUSES = {"HOLD", "FAILED", "NEEDS_REVIEW"}
 
 
 class NotApproved(Exception):
@@ -35,12 +41,40 @@ def load_approval(root, day):
         raise NotApproved("approval not active (approved/enabled must both be true)")
     if not (a.get("approved_by") and a.get("approved_at")):
         raise NotApproved("approval missing approved_by/approved_at")
+    if any(m in str(a["approved_by"]).lower() for m in AGENT_MARKERS):
+        raise NotApproved("approval was recorded by an agent, not committed by the owner")
     if not (a["valid_from"] <= day <= a["valid_until"]):
         raise NotApproved(f"{day} outside approval window")
     cap = Decimal(str(a["daily_cap_usd"]))
     if cap <= 0 or cap > Decimal("5"):
         raise NotApproved("daily cap must be in (0, 5] USD")
     return cap
+
+
+def _repo_slug(remote):
+    m = re.search(r"github\.com[/:]([^/]+/[^/]+?)(?:\.git)?$", remote or "")
+    return m.group(1) if m else None
+
+
+def github_verifier(store):
+    """Fail-closed provenance check: the latest commit that touched approvals/budget.json
+    must be a GitHub-verified (signed) commit authored by the owner's GitHub account.
+    Commits made in the GitHub web UI by the owner are signed by GitHub automatically."""
+    sha = store._git("log", "-1", "--format=%H", "--", "approvals/budget.json", check=False).stdout.strip()
+    slug = _repo_slug(store.remote)
+    if not sha or not slug:
+        raise NotApproved("cannot locate the approval commit")
+    try:
+        r = subprocess.run(["gh", "api", f"repos/{slug}/commits/{sha}",
+                            "--jq", "[.commit.verification.verified, (.author.login // \"\")] | @tsv"],
+                           capture_output=True, text=True, timeout=60)
+    except Exception as e:
+        raise NotApproved(f"cannot verify approval commit ({type(e).__name__})")
+    if r.returncode != 0:
+        raise NotApproved("cannot verify approval commit via GitHub API")
+    verified, login = (r.stdout.strip().split("\t") + [""])[:2]
+    if verified != "true" or login.lower() != OWNER_LOGIN.lower():
+        raise NotApproved(f"approval commit {sha[:7]} is not a verified commit by {OWNER_LOGIN}")
 
 
 def _events(root, day):
@@ -105,9 +139,9 @@ def reserve(store, day, episode_id, usd, now):
     return out["r"]
 
 
-def settle(store, day, episode_id, usd, now):
+def settle(store, day, episode_id, usd, now, basis="estimate (provider returns no actual charge)"):
     store.transact(lambda root: _append(root, day, {"type": "settle", "episode_id": episode_id,
-                                                    "usd": str(usd), "at": now}),
+                                                    "usd": str(usd), "basis": basis, "at": now}),
                    f"ledger: settle {episode_id}")
 
 
@@ -153,6 +187,64 @@ def find_reserved(root, episode_id):
             if e["type"] == "reserve" and e["episode_id"] == episode_id:
                 found = (day, Decimal(e["usd"]))
     return found
+
+
+def unconfirmed(root, day, statuses):
+    """Reservations on `day` whose real cost is unknown: neither settled nor released, and the
+    episode is HOLD / FAILED / NEEDS_REVIEW (or unknown). While any exist, the safe remaining
+    budget for that day cannot be computed, so no new paid request may be sent that day."""
+    ev = _events(root, day)
+    done = {e["episode_id"] for e in ev if e["type"] in ("settle", "release")}
+    out = []
+    for e in ev:
+        if e["type"] == "reserve" and e["episode_id"] not in done:
+            if statuses.get(e["episode_id"], "UNKNOWN") in UNCONFIRMED_STATUSES | {"UNKNOWN"}:
+                out.append(e["episode_id"])
+    return sorted(set(out))
+
+
+def apply_reconcile(store, day, episode_id, now):
+    """CEO-written reconcile/<id>.json resolves an unconfirmed reservation:
+    {"resolved": "not_charged"} -> release; {"resolved": "charged", "usd": "0.40"} -> settle."""
+    out = {}
+
+    def fn(root):
+        p = os.path.join(root, "reconcile", f"{episode_id}.json")
+        if not os.path.exists(p):
+            out["r"] = "held"
+            return None
+        with open(p) as f:
+            rec = json.load(f)
+        if rec.get("resolved") == "not_charged":
+            out["r"] = "released"
+            return _append(root, day, {"type": "release", "episode_id": episode_id,
+                                       "reason": "CEO reconciliation: not charged", "at": now})
+        if rec.get("resolved") == "charged" and rec.get("usd") is not None:
+            out["r"] = "settled"
+            return _append(root, day, {"type": "settle", "episode_id": episode_id, "usd": str(Decimal(str(rec["usd"]))),
+                                       "basis": "CEO reconciliation: actual charge", "at": now})
+        out["r"] = "held"
+        return None
+    store.transact(fn, f"ledger: reconcile {episode_id}")
+    return out["r"]
+
+
+def record_request(store, episode_id, update):
+    """Private request record requests/<id>.json (request ids, video URLs, hashes, cost basis)."""
+    def fn(root):
+        os.makedirs(os.path.join(root, "requests"), exist_ok=True)
+        rel = os.path.join("requests", f"{episode_id}.json")
+        p = os.path.join(root, rel)
+        rec = {"episode_id": episode_id}
+        if os.path.exists(p):
+            with open(p) as f:
+                rec = json.load(f)
+        update(rec)
+        with open(p, "w") as f:
+            json.dump(rec, f, indent=2, sort_keys=True)
+            f.write("\n")
+        return [rel]
+    store.transact(fn, f"requests: {episode_id}")
 
 
 def reconcile_release(store, day, episode_id, now):

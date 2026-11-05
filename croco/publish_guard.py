@@ -52,15 +52,30 @@ def mark_qa(pub, eid, passed, notes, checklist=None):
         ep["status"] = "QA_PASSED" if passed else "QA_FAILED"
         ep["qa_status"] = ep["status"]
         ep["qa_notes"] = (notes or "")[:300]
-        if checklist is not None:
-            ep["qa_checklist"] = {k: checklist.get(k) is True for k in qa.REQUIRED}
+        ep["qa_checklist"] = qa.record(checklist)   # PASS / FAIL / UNVERIFIED per item
     _set(pub, eid, m, "qa " + ("passed" if passed else "FAILED"))
 
 
-def claim_publish(pub, eid, slot, final_sha256):
+def choose_slot(pub, eid, occupied_external=(), now=None):
+    """The episode's target_slot if it is still free and in the future (>= slots.LEAD),
+    otherwise the next free 12:00/17:00 Denver slot (automatic re-plan, never a past slot).
+    occupied_external: slot keys already used by real Metricool posts (excluding [TEST] drafts)."""
+    pub.sync()
+    ep = episodes.load(pub.workdir, eid)
+    others = [o for o in episodes.all_episodes(pub.workdir) if o["id"] != eid]
+    occupied = set(occupied_external) | slots.occupied_from_episodes(others) | {
+        o["target_slot"] for o in others if o.get("target_slot") and episodes.is_active(o)
+        and o.get("status") not in ("SCHEDULED", "PUBLISHED", "FAILED", "QA_FAILED", "SKIPPED_BUDGET")}
+    t = ep.get("target_slot")
+    if t and t not in set(occupied_external) | slots.occupied_from_episodes(others) and slots.is_future(t, now):
+        return t
+    return slots.next_free_slot(occupied, now)
+
+
+def claim_publish(pub, eid, slot, final_sha256, now=None):
     """Call BEFORE calling Metricool. Atomically reserves the slot for this episode.
     slot: 'YYYY-MM-DDTHH:MM' (one of croco.slots.SLOT_TIMES)."""
-    day, _, hhmm = slot.partition("T")
+    day, _, hhmm = (slot or "").partition("T")
     if hhmm not in slots.SLOT_TIMES:
         raise NotAllowed(f"slot must be one of {slots.SLOT_TIMES} America/Denver")
     if not final_sha256 or len(final_sha256) != 64:
@@ -75,6 +90,8 @@ def claim_publish(pub, eid, slot, final_sha256):
             raise NotAllowed("marketing rules: " + "; ".join(errs))
         if slot in slots.occupied_from_episodes(others):
             raise NotAllowed(f"slot {slot} already taken by another episode")
+        if not slots.is_future(slot, now):
+            raise NotAllowed(f"slot {slot} is in the past or starts in < {slots.LEAD}")
         mine = set((ep.get("sha256") or {}).values())
         for o in others:
             if o.get("final_sha256") == final_sha256:

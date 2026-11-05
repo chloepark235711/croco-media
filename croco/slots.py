@@ -53,6 +53,12 @@ def next_free_slot(occupied, now=None, horizon_days=7):
     return None
 
 
+def is_future(key, now=None):
+    now = now or datetime.datetime.now(datetime.timezone.utc)
+    day, hhmm = key.split("T")
+    return slot_datetime(day, hhmm) - now >= LEAD
+
+
 def metricool_datetime(key):
     """'2026-11-05T12:00' -> ('2026-11-05T12:00:00', 'America/Denver') for createScheduledPost."""
     day, hhmm = key.split("T")
