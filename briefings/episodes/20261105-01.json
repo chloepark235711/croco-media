@@ -1,0 +1,31 @@
+{
+  "date": "2026-11-05",
+  "description": "Little Croco learns that sharing a toy with a friend makes playtime more fun. A gentle 5-second lesson for little ones. #shorts",
+  "hold": true,
+  "hold_reason": "Owner decision 2026-11-04: off-model prompt (red scarf, yellow belly, bunny) vs brand bible. Never resubmit, never publish; keep any finished clip.",
+  "id": "20261105-01",
+  "learning_goal": "Sharing makes everyone happy",
+  "metricool_post_id": null,
+  "qa_status": "HOLD",
+  "requests": {
+    "1": "01a1a7fc-58de-7ed1-9953-b2572114fab4"
+  },
+  "scenes": [
+    {
+      "duration": 5,
+      "n": 1,
+      "prompt": "Cute 3D cartoon for toddlers: Croco, a friendly green baby crocodile with a yellow belly and a red scarf, happily hands a colorful toy ball to a small smiling bunny in a sunny meadow, bright soft colors, gentle cheerful mood, vertical video"
+    }
+  ],
+  "status": "HOLD",
+  "tags": [
+    "kids",
+    "shorts",
+    "sharing",
+    "cartoon",
+    "learning"
+  ],
+  "title": "Croco Shares a Toy | Kids Learn Sharing",
+  "topic_key": "sharing-toys-1",
+  "youtube_post_id": null
+}
