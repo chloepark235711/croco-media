@@ -1,10 +1,14 @@
-"""20:00 generation worker.
+"""20:00 generation worker (V2).
 
 Safe by default: without --live nothing is reserved, submitted or pushed.
 Live mode additionally requires a valid budget approval in croco-control.
 
-    python -m croco.generate --date 2026-11-05            # dry run (estimates only)
-    python -m croco.generate --date 2026-11-05 --live     # real, paid generation
+    python -m croco.generate --date 2026-11-06            # dry run (estimates only, $0)
+    python -m croco.generate --date 2026-11-06 --live     # real, paid generation
+--date is the publish date D. Episodes planned for D, plus still-PLANNED episodes from
+earlier dates that never ran, are processed (oldest first), at most EPISODES_PER_DAY
+per run. HOLD episodes are never submitted, re-submitted or polled.
+The $5 cap is per America/Denver SPEND day (the day the run happens), shared by all runs.
 Env: CROCO_CONTROL_REMOTE (private repo URL), CROCO_WORK (scratch dir).
 """
 import argparse
@@ -16,7 +20,7 @@ import sys
 import time
 from decimal import Decimal
 
-from . import budget, episodes, higgsfield as hf
+from . import budget, episodes, higgsfield as hf, slots
 from .gitstore import GitStore
 
 RES, ASPECT = "720p", "9:16"
@@ -47,13 +51,22 @@ def scene_params(ep, s):
             "aspect_ratio": ASPECT}
 
 
-def run(date, live, pub, ctl, inbox, work, client=hf, poll_s=15, max_polls=80):
-    day = date
+def select(all_eps, date):
+    """Episodes this run may touch: resume GENERATING ones (poll only), then PLANNED ones
+    dated <= D, oldest first; never HOLD; at most EPISODES_PER_DAY new submissions."""
+    live_eps = [e for e in all_eps if episodes.is_active(e) and e.get("date", "") <= date]
+    resume = [e for e in live_eps if e["status"] == "GENERATING"]
+    planned = sorted((e for e in live_eps if e["status"] == "PLANNED"),
+                     key=lambda e: (e["date"], e["id"]))
+    return resume + planned[:episodes.EPISODES_PER_DAY]
+
+
+def run(date, live, pub, ctl, inbox, work, client=hf, poll_s=15, max_polls=80, spend_day=None):
+    day = spend_day or slots.denver_today()
     report = []
     sync_root = pub.workdir
     pub.sync()
-    todo = [e for e in episodes.all_episodes(sync_root)
-            if e["date"] == date and e["status"] in ("PLANNED", "GENERATING")]
+    todo = select(episodes.all_episodes(sync_root), date)
     if live:
         ctl.sync()
         try:
@@ -83,6 +96,8 @@ def run(date, live, pub, ctl, inbox, work, client=hf, poll_s=15, max_polls=80):
 
 def process(ep, live, pub, ctl, inbox, work, client, day, poll_s, max_polls):
     eid = ep["id"]
+    if episodes.is_hold(ep):            # defence in depth; select() already skips HOLD
+        return "HOLD (never submitted or polled)"
     probs = episodes.validate(ep)
     if probs:
         if live:
@@ -152,10 +167,13 @@ def process(ep, live, pub, ctl, inbox, work, client, day, poll_s, max_polls):
                       "bytes": os.path.getsize(f)})
     deliver(inbox, ep, clips)
     ctl.sync()
-    prices = budget.reserved_amount(ctl.workdir, day, eid)
+    prices = budget.find_reserved(ctl.workdir, eid)
     if prices is not None:
-        budget.settle(ctl, day, eid, prices, now())
-    set_status(pub, eid, lambda e_: e_.update(status="GENERATED", clips=[os.path.relpath(c["file"], work) for c in clips]) or True, "generated")
+        budget.settle(ctl, prices[0], eid, prices[1], now())
+    asset_paths = [os.path.join("clips", ep["date"], eid, os.path.basename(c["file"])) for c in clips]
+    shas = {str(c["scene"]): c["sha256"] for c in clips}
+    set_status(pub, eid, lambda e_: e_.update(status="GENERATED", asset_paths=asset_paths, sha256=shas,
+                                               clips=[os.path.relpath(c["file"], work) for c in clips]) or True, "generated")
     return f"GENERATED ({len(clips)} clips delivered to inbox)"
 
 
@@ -170,11 +188,12 @@ def deliver(inbox, ep, clips):
             with open(c["file"], "rb") as s, open(os.path.join(root, rel), "wb") as t:
                 t.write(s.read())
             paths.append(rel)
-        man = {"episode_id": ep["id"], "date": ep["date"], "clips": [
+        man = {"episode_id": ep["id"], "date": ep["date"], "hold": False, "test": False, "clips": [
             {"file": os.path.basename(c["file"]), "sha256": c["sha256"], "bytes": c["bytes"],
              "request_id": c["request_id"]} for c in clips]}
         mp = os.path.join(d, "manifest.json")
-        json.dump(man, open(os.path.join(root, mp), "w"), indent=2)
+        with open(os.path.join(root, mp), "w") as f:
+            json.dump(man, f, indent=2)
         return paths + [mp]
     inbox.transact(fn, f"clips: {ep['id']}")
 

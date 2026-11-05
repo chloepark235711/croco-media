@@ -29,7 +29,8 @@ def load_approval(root, day):
     p = os.path.join(root, "approvals", "budget.json")
     if not os.path.exists(p):
         raise NotApproved("no budget approval record")
-    a = json.load(open(p))
+    with open(p) as f:
+        a = json.load(f)
     if a.get("approved") is not True or a.get("enabled") is not True:
         raise NotApproved("approval not active (approved/enabled must both be true)")
     if not (a.get("approved_by") and a.get("approved_at")):
@@ -46,7 +47,8 @@ def _events(root, day):
     p = os.path.join(root, "ledger", f"{day}.jsonl")
     if not os.path.exists(p):
         return []
-    return [json.loads(l) for l in open(p) if l.strip()]
+    with open(p) as f:
+        return [json.loads(l) for l in f if l.strip()]
 
 
 def committed_total(events):
@@ -133,6 +135,26 @@ def reserved_amount(root, day, episode_id):
     return None
 
 
+def find_reserved(root, episode_id):
+    """(ledger_day, usd) of the episode's latest un-released reservation in any ledger file.
+    A GENERATING episode may finish on a later day than the one it was reserved on."""
+    d = os.path.join(root, "ledger")
+    if not os.path.isdir(d):
+        return None
+    found = None
+    for n in sorted(os.listdir(d)):
+        if not n.endswith(".jsonl"):
+            continue
+        day = n[:-len(".jsonl")]
+        ev = _events(root, day)
+        if any(e["type"] == "release" and e["episode_id"] == episode_id for e in ev):
+            continue
+        for e in ev:
+            if e["type"] == "reserve" and e["episode_id"] == episode_id:
+                found = (day, Decimal(e["usd"]))
+    return found
+
+
 def reconcile_release(store, day, episode_id, now):
     """Release a held reservation ONLY if the CEO placed reconcile/<id>.json
     ({"resolved": "not_charged", "by": ...}). Automation never decides this alone."""
@@ -140,7 +162,11 @@ def reconcile_release(store, day, episode_id, now):
 
     def fn(root):
         p = os.path.join(root, "reconcile", f"{episode_id}.json")
-        if not os.path.exists(p) or json.load(open(p)).get("resolved") != "not_charged":
+        resolved = None
+        if os.path.exists(p):
+            with open(p) as f:
+                resolved = json.load(f).get("resolved")
+        if resolved != "not_charged":
             out["r"] = "held"
             return None
         out["r"] = "released"

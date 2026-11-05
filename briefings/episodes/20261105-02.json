@@ -1,0 +1,70 @@
+{
+  "asset_paths": [],
+  "captions": [
+    {
+      "at": "0-5",
+      "text": "Good morning!"
+    },
+    {
+      "at": "5-10",
+      "text": "Stretch up high!"
+    },
+    {
+      "at": "10-15",
+      "text": "Hello, sun! Let's start the day!"
+    }
+  ],
+  "character_lock": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm.",
+  "date": "2026-11-05",
+  "description": "Croco wakes up, stretches up high and says hello to the sun. A calm morning routine for little ones.\nFor parents: practice morning greetings - \"Good morning!\", \"Stretch up high!\", \"Hello, sun!\"\n#CrocosLittleWorld #GoodMorning #MorningRoutine #KidsShorts",
+  "hashtags": [
+    "#CrocosLittleWorld",
+    "#GoodMorning",
+    "#MorningRoutine",
+    "#KidsShorts"
+  ],
+  "id": "20261105-02",
+  "id_history": [
+    {
+      "event": "planned 2026-11-04 17:10 MT (Claude project pipeline/v2-episodes); first committed to GitHub in this integration",
+      "id": "20261105-02"
+    }
+  ],
+  "learning_goal": "Say good morning and follow a simple wake-up stretch routine",
+  "made_for_kids": true,
+  "metricool_post_id": null,
+  "qa_status": "NOT_STARTED",
+  "requests": {},
+  "safety": "No jumping on the bed; window stays closed; the sun is small in the corner (no staring at sunlight).",
+  "scenes": [
+    {
+      "duration": 5,
+      "n": 1,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Croco slowly wakes up in a cozy small bed with a soft pastel blanket, rubbing his eyes with one short arm, warm morning light through a closed window, his face clearly visible from the first frame, vertical 9:16, slow gentle motion. Mouth detail: closed-mouth smile, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design."
+    },
+    {
+      "duration": 5,
+      "n": 2,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Croco stands on the floor next to his bed and stretches both short arms up high, eyes happily closed, soft pastel bedroom, vertical 9:16, slow movement. Mouth detail: closed-mouth smile, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design."
+    },
+    {
+      "duration": 5,
+      "n": 3,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Croco stands by a closed window and waves one hand at a soft cartoon sun in a pale blue sky, the sun small in the corner of the frame, then he turns to the camera with a calm smile and a little wave, vertical 9:16, steady camera. Mouth detail: closed-mouth smile, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design."
+    }
+  ],
+  "sha256": {},
+  "source_episode": "EP-0001",
+  "status": "PLANNED",
+  "tags": [
+    "Croco's Little World",
+    "Croco",
+    "good morning for kids",
+    "morning routine",
+    "preschool learning",
+    "kids animation"
+  ],
+  "title": "Good Morning, Croco! ☀️🐊 | Croco's Little World #Shorts",
+  "topic_key": "morning-routine-1",
+  "youtube_post_id": null
+}

@@ -1,0 +1,74 @@
+{
+  "asset_paths": [],
+  "captions": [
+    {
+      "at": "0-4",
+      "text": "Time to wash! Bubbles, bubbles!"
+    },
+    {
+      "at": "4-8",
+      "text": "Rinse!"
+    },
+    {
+      "at": "8-12",
+      "text": "All clean!"
+    }
+  ],
+  "character_lock": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm.",
+  "date": "2026-11-05",
+  "description": "Croco turns on the water, makes soapy bubbles, rinses and dries his hands. All clean!\nFor parents: hand-washing steps - water, soap, scrub, rinse, dry. \"Bubbles, bubbles!\", \"Rinse!\", \"All clean!\"\n#CrocosLittleWorld #HandWashing #HealthyHabits #KidsShorts",
+  "hashtags": [
+    "#CrocosLittleWorld",
+    "#HandWashing",
+    "#HealthyHabits",
+    "#KidsShorts"
+  ],
+  "id": "20261105-03",
+  "id_history": [
+    {
+      "event": "planned 2026-11-04 17:10 MT for 11/6 in the Claude project only; never committed to GitHub; superseded",
+      "id": "20261106-01"
+    },
+    {
+      "event": "owner decision 2026-11-04: moved to 11/5 production with a new non-conflicting id",
+      "id": "20261105-03"
+    }
+  ],
+  "learning_goal": "Hand-washing steps: water, soap, scrub, rinse, dry",
+  "made_for_kids": true,
+  "metricool_post_id": null,
+  "qa_status": "NOT_STARTED",
+  "requests": {},
+  "safety": "Wide sturdy step stool; no soap near eyes or mouth; no hot steaming water; no splashing.",
+  "scenes": [
+    {
+      "duration": 4,
+      "n": 1,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Croco stands on a wide, sturdy step stool at a small low sink in a bright pastel bathroom, turns on gentle running water and rubs his small hands together with soft white soap bubbles, a few round bubbles floating gently below his face, vertical 9:16, calm steady shot. Mouth detail: closed-mouth smile, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design. No hot steaming water, no bubbles near eyes."
+    },
+    {
+      "duration": 4,
+      "n": 2,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Croco rinses his hands under gentle clear water at the low sink, bubbles washing away, vertical 9:16, steady shot. Mouth detail: closed-mouth smile, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design."
+    },
+    {
+      "duration": 4,
+      "n": 3,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Croco dries his hands with a soft yellow towel, then holds up both clean hands toward the camera proudly, vertical 9:16, steady medium shot. Mouth detail: closed-mouth smile, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design."
+    }
+  ],
+  "sha256": {},
+  "source_episode": "EP-0002",
+  "status": "PLANNED",
+  "tags": [
+    "Croco's Little World",
+    "Croco",
+    "hand washing for kids",
+    "healthy habits",
+    "preschool learning",
+    "kids animation"
+  ],
+  "title": "Wash, Wash, Wash! 🫧🐊 | Croco's Little World #Shorts",
+  "topic_key": "hand-washing-1",
+  "youtube_post_id": null
+}

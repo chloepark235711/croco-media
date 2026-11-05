@@ -1,10 +1,21 @@
 import json, os, shutil, subprocess, tempfile, threading, unittest
 from decimal import Decimal
 
-from croco import budget, episodes, generate, higgsfield as hf
+os.environ["CROCO_OFFLINE"] = "1"   # no real Higgsfield / network call can happen in tests
+
+from croco import brand, budget, episodes, generate, higgsfield as hf
 from croco.gitstore import GitStore
 
 DAY = "2026-11-05"
+REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _no_network(*a, **k):
+    raise AssertionError("tests must never call the real Higgsfield API")
+
+
+hf._call = _no_network
+hf.download = _no_network
 
 
 def sh(*a, cwd=None):
@@ -33,9 +44,14 @@ APPROVAL = json.dumps({"approved": True, "enabled": True, "daily_cap_usd": "5.00
 
 
 def ep(n, topic, status="PLANNED", **kw):
-    e = {"id": f"20261105-0{n}", "date": DAY, "status": status, "title": "t", "description": "d",
-         "tags": ["kids"], "learning_goal": "sharing", "topic_key": topic,
-         "scenes": [{"n": 1, "prompt": "a green crocodile shares a toy", "duration": 5}]}
+    e = {"id": f"20261105-0{n}", "date": DAY, "status": status,
+         "title": f"Croco Tries {topic}! | Croco's Little World #Shorts",
+         "description": "Croco tries something new.\nFor parents: simple words.",
+         "tags": ["Croco's Little World", "Croco", "preschool learning", "kids animation", topic],
+         "hashtags": ["#CrocosLittleWorld", "#KidsShorts", "#Learning"], "made_for_kids": True,
+         "learning_goal": "sharing", "topic_key": topic, "source_episode": f"EP-{topic}",
+         "character_lock": brand.CHARACTER_LOCK,
+         "scenes": [{"n": 1, "prompt": brand.scene_prompt("Croco rolls a soft ball."), "duration": 5}]}
     e.update(kw)
     return e
 
@@ -81,7 +97,7 @@ class Base(unittest.TestCase):
     def run_gen(self, w, client, live=True):
         pub, ctl, inbox = w[:3]
         return generate.run(DAY, live, pub, ctl, inbox, os.path.join(self.t, "work"),
-                            client=client, poll_s=0, max_polls=2)
+                            client=client, poll_s=0, max_polls=2, spend_day=DAY)
 
 
 class TestBudget(Base):
@@ -170,7 +186,7 @@ class TestPipeline(Base):
         self.assertEqual(self.run_gen(w, c), []); self.assertEqual(c.submits, 0)
 
     def test_invalid_plan_rejected_before_spend(self):
-        bad = ep(1, "a"); bad["scenes"][0]["prompt"] = "mickey fights with a knife"
+        bad = ep(1, "a"); bad["scenes"][0]["prompt"] = brand.scene_prompt("mickey fights with a knife")
         w = self.world([bad]); c = FakeHF()
         self.assertIn("INVALID", self.run_gen(w, c)[0]); self.assertEqual(c.submits, 0)
 
@@ -213,8 +229,6 @@ class TestPlanValidation(unittest.TestCase):
         self.assertEqual(episodes.validate(ep(2, "other"), [ep(1, "same")]), [])
 
 
-if __name__ == "__main__":
-    unittest.main()
 
 
 class TestPublishGuard(Base):
@@ -223,8 +237,229 @@ class TestPublishGuard(Base):
         w = self.world([ep(1, "a", "GENERATED"), ep(2, "b", "GENERATED")]); pub = w[0]
         pg.claim_edit(pub, "20261105-01")
         with self.assertRaises(pg.NotAllowed): pg.claim_edit(pub, "20261105-01")
-        pg.mark_qa(pub, "20261105-01", True, "ok")
-        pg.claim_publish(pub, "20261105-01")
-        with self.assertRaises(pg.NotAllowed): pg.claim_publish(pub, "20261105-01")
+        pg.mark_qa(pub, "20261105-01", True, "ok", checklist=FULL_QA)
+        pg.claim_publish(pub, "20261105-01", "2026-11-06T12:00", "a" * 64)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(pub, "20261105-01", "2026-11-06T17:00", "b" * 64)
         pg.claim_edit(pub, "20261105-02"); pg.mark_qa(pub, "20261105-02", False, "copyright risk")
-        with self.assertRaises(pg.NotAllowed): pg.claim_publish(pub, "20261105-02")
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(pub, "20261105-02", "2026-11-06T17:00", "b" * 64)
+
+
+# ---------------------------------------------------------------- V2 recovery tests
+from croco import marketing, plan_check, publish_guard as pg, qa, slots  # noqa: E402
+import datetime  # noqa: E402
+import io  # noqa: E402
+import contextlib  # noqa: E402
+
+FULL_QA = {k: True for k in qa.REQUIRED}
+OLD_01_PROMPT = ("Cute 3D cartoon for toddlers: Croco, a friendly green baby crocodile with a yellow belly "
+                 "and a red scarf, happily hands a colorful toy ball to a small smiling bunny in a sunny meadow")
+
+
+class CountingHF(FakeHF):
+    def __init__(self, *a, **k):
+        super().__init__(*a, **k); self.polled = []
+
+    def status(self, rid):
+        self.polled.append(rid); return super().status(rid)
+
+
+class TestBrandBible(unittest.TestCase):
+    def test_off_model_prompt_rejected(self):
+        e = ep(1, "a"); e["scenes"][0]["prompt"] = OLD_01_PROMPT
+        self.assertTrue(any("character lock" in x for x in episodes.validate(e)))
+
+    def test_scarf_rejected_even_with_lock(self):
+        e = ep(1, "a"); e["scenes"][0]["prompt"] = brand.scene_prompt("Croco wears a red scarf and waves.")
+        self.assertTrue(any("scarf" in x for x in episodes.validate(e)))
+
+    def test_negative_line_may_say_scary(self):
+        self.assertIn("no scary expressions", brand.NEGATIVE)
+        self.assertEqual(episodes.validate(ep(1, "a")), [])
+
+    def test_pebble_requires_pebble_lock(self):
+        bad = brand.scene_prompt("Croco waves to Pebble.")
+        self.assertTrue(any("Pebble lock" in x for x in brand.check_scene(bad)))
+        self.assertEqual(brand.check_scene(brand.scene_prompt("Croco waves to Pebble.", pebble=True)), [])
+
+    def test_character_lock_field_required(self):
+        e = ep(1, "a"); e["character_lock"] = "a green crocodile"
+        self.assertTrue(any("character_lock" in x for x in episodes.validate(e)))
+
+
+class TestDuplicates(unittest.TestCase):
+    def test_same_source_episode_new_id_rejected(self):
+        a = ep(2, "x", source_episode="EP-0001"); b = ep(3, "y", source_episode="EP-0001")
+        self.assertTrue(any("source_episode" in x for x in episodes.validate(b, [a])))
+
+
+class TestHold(Base):
+    def hold_ep(self):
+        return ep(1, "hold", "HOLD", hold=True, requests={"1": "old-request-id"},
+                  scenes=[{"n": 1, "prompt": OLD_01_PROMPT, "duration": 5}])
+
+    def test_hold_never_submitted_or_polled(self):
+        w = self.world([self.hold_ep(), ep(2, "b")]); c = CountingHF()
+        out = self.run_gen(w, c); self.run_gen(w, c)
+        self.assertEqual(c.submits, 1)                      # only 20261105-02
+        self.assertNotIn("old-request-id", c.polled)        # old request id never reused
+        self.assertFalse(any("20261105-01" in o for o in out))
+        w[0].sync()
+        self.assertEqual(episodes.load(w[0].workdir, "20261105-01")["status"], "HOLD")
+
+    def test_hold_flag_wins_over_generating_status(self):
+        # the original 20261105-01 was GENERATING with a request id; hold=true must freeze it
+        h = self.hold_ep(); h["status"] = "GENERATING"
+        w = self.world([h]); c = CountingHF()
+        self.run_gen(w, c); self.run_gen(w, c)
+        self.assertEqual((c.submits, c.polled), (0, []))
+
+    def test_hold_cannot_be_published(self):
+        h = self.hold_ep(); h["status"] = "GENERATED"      # even if someone flips the status
+        w = self.world([h])
+        with self.assertRaises(pg.NotAllowed): pg.claim_edit(w[0], "20261105-01")
+
+
+class TestGeneratedRecord(Base):
+    def test_sha256_and_paths_recorded(self):
+        w = self.world([ep(1, "a")]); self.run_gen(w, FakeHF())
+        w[0].sync(); e = episodes.load(w[0].workdir, "20261105-01")
+        self.assertEqual(len(e["sha256"]["1"]), 64)
+        self.assertEqual(e["asset_paths"], [f"clips/{DAY}/20261105-01/scene-01.mp4"])
+        w[2].sync()
+        man = json.load(open(os.path.join(w[2].workdir, "clips", DAY, "20261105-01", "manifest.json")))
+        self.assertEqual((man["hold"], man["test"]), (False, False))
+        self.assertEqual(man["clips"][0]["sha256"], e["sha256"]["1"])
+
+    def test_overdue_planned_picked_and_max_two_per_run(self):
+        old = ep(1, "a", date="2026-11-04"); w = self.world([old, ep(2, "b"), ep(3, "c")])
+        c = FakeHF("0.50"); out = self.run_gen(w, c)
+        self.assertEqual(c.submits, 2)
+        self.assertTrue(out[0].startswith("20261105-01"))   # oldest first
+        w[0].sync(); self.assertEqual(episodes.load(w[0].workdir, "20261105-03")["status"], "PLANNED")
+
+    def test_ledger_uses_spend_day(self):
+        w = self.world([ep(1, "a", date="2026-11-06")]); pub, ctl, inbox = w[:3]
+        generate.run("2026-11-06", True, pub, ctl, inbox, os.path.join(self.t, "work"),
+                     client=FakeHF(), poll_s=0, max_polls=2, spend_day=DAY)
+        ctl.sync()
+        self.assertTrue(os.path.exists(os.path.join(ctl.workdir, "ledger", f"{DAY}.jsonl")))
+        self.assertFalse(os.path.exists(os.path.join(ctl.workdir, "ledger", "2026-11-06.jsonl")))
+
+
+class TestPlanCheck(unittest.TestCase):
+    def setUp(self):
+        self.t = tempfile.mkdtemp(); self.addCleanup(shutil.rmtree, self.t, True)
+
+    def write(self, *eps):
+        d = os.path.join(self.t, "briefings", "episodes"); os.makedirs(d, exist_ok=True)
+        for e in eps:
+            json.dump(e, open(os.path.join(d, e["id"] + ".json"), "w"))
+
+    def check(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            return plan_check.main(DAY, self.t)
+
+    def test_hold_does_not_take_a_slot(self):
+        self.write(ep(1, "h", "HOLD", hold=True), ep(2, "a"), ep(3, "b"))
+        self.assertEqual(self.check(), 0)
+
+    def test_wrong_count_fails(self):
+        self.write(ep(1, "h", "HOLD", hold=True), ep(2, "a"))
+        self.assertEqual(self.check(), 1)
+
+    def test_real_plan_for_2026_11_05(self):
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(plan_check.main(DAY, REPO), 0)
+        one = episodes.load(REPO, "20261105-01")
+        self.assertEqual(one["status"], "HOLD")
+        self.assertEqual(one["requests"], {"1": "01a1a7fc-58de-7ed1-9953-b2572114fab4"})  # preserved, not reused
+        for i in ("02", "03"):
+            e = episodes.load(REPO, f"20261105-{i}")
+            self.assertEqual(e["character_lock"], brand.CHARACTER_LOCK)
+            self.assertEqual(marketing.check(e)[0], [])
+
+    def test_all_modules_compile(self):
+        import py_compile
+        for n in os.listdir(os.path.join(REPO, "croco")):
+            if n.endswith(".py"):
+                py_compile.compile(os.path.join(REPO, "croco", n), doraise=True,
+                                   cfile=os.path.join(self.t, n + "c"))
+
+
+class TestMarketing(unittest.TestCase):
+    def test_rules(self):
+        e = ep(1, "a"); self.assertEqual(marketing.check(e)[0], [])
+        for k, v, frag in (("title", "Momo Shares! | Croco's Little World #Shorts", "momo"),
+                           ("hashtags", ["#KidsShorts", "#Fun", "#Play"], "#CrocosLittleWorld"),
+                           ("hashtags", ["#CrocosLittleWorld", "#Croco's", "#Play"], "bad hashtag"),
+                           ("description", "Like and subscribe!", "subscribe"),
+                           ("made_for_kids", False, "made_for_kids")):
+            bad = dict(e, **{k: v})
+            self.assertTrue(any(frag in x for x in marketing.check(bad)[0]), (k, v))
+
+
+class TestSlots(unittest.TestCase):
+    def test_denver_times_follow_dst(self):
+        utc = datetime.timezone.utc
+        self.assertEqual(slots.slot_datetime("2026-11-05", "12:00").astimezone(utc).hour, 19)  # MST
+        self.assertEqual(slots.slot_datetime("2026-07-01", "17:00").astimezone(utc).hour, 23)  # MDT
+
+    def test_next_free_slot(self):
+        now = datetime.datetime(2026, 11, 5, 15, 0, tzinfo=datetime.timezone.utc)   # 08:00 MST
+        self.assertEqual(slots.next_free_slot(set(), now), "2026-11-05T12:00")
+        self.assertEqual(slots.next_free_slot({"2026-11-05T12:00"}, now), "2026-11-05T17:00")
+        late = datetime.datetime(2026, 11, 5, 23, 45, tzinfo=datetime.timezone.utc)  # 16:45 MST
+        self.assertEqual(slots.next_free_slot(set(), late), "2026-11-06T12:00")
+        self.assertTrue(slots.is_test_post("[TEST] Pipeline Test - Do Not Publish"))
+
+
+class TestPublishV2(Base):
+    def ready(self, w, eid):
+        pg.claim_edit(w[0], eid); pg.mark_qa(w[0], eid, True, "ok", checklist=FULL_QA)
+
+    def test_incomplete_checklist_cannot_pass(self):
+        w = self.world([ep(1, "a", "GENERATED")]); pg.claim_edit(w[0], "20261105-01")
+        with self.assertRaises(pg.NotAllowed):
+            pg.mark_qa(w[0], "20261105-01", True, "ok", checklist=dict(FULL_QA, copyright_trademark=False))
+        with self.assertRaises(pg.NotAllowed): pg.mark_qa(w[0], "20261105-01", True, "ok")
+
+    def test_two_episodes_never_share_slot_or_file(self):
+        w = self.world([ep(1, "a", "GENERATED"), ep(2, "b", "GENERATED")])
+        self.ready(w, "20261105-01"); self.ready(w, "20261105-02")
+        pg.claim_publish(w[0], "20261105-01", "2026-11-06T12:00", "a" * 64)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-02", "2026-11-06T12:00", "b" * 64)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-02", "2026-11-06T17:00", "a" * 64)
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-02", "2026-11-06T09:00", "b" * 64)
+        pg.claim_publish(w[0], "20261105-02", "2026-11-06T17:00", "b" * 64)
+
+    def test_published_only_after_schedule_and_once(self):
+        w = self.world([ep(1, "a", "GENERATED"), ep(2, "b", "GENERATED")])
+        with self.assertRaises(pg.NotAllowed): pg.record_published(w[0], "20261105-01", "yt1")
+        self.ready(w, "20261105-01")
+        pg.claim_publish(w[0], "20261105-01", "2026-11-06T12:00", "a" * 64)
+        pg.record_metricool(w[0], "20261105-01", "416000001", "uuid-1")
+        with self.assertRaises(pg.NotAllowed): pg.record_metricool(w[0], "20261105-01", "416000002")
+        pg.record_published(w[0], "20261105-01", "yt1")
+        with self.assertRaises(pg.NotAllowed): pg.record_published(w[0], "20261105-01", "yt2")
+        w[0].sync(); self.assertEqual(episodes.load(w[0].workdir, "20261105-01")["status"], "PUBLISHED")
+
+    def test_publish_failure_parks_for_review(self):
+        w = self.world([ep(1, "a", "GENERATED")]); self.ready(w, "20261105-01")
+        pg.claim_publish(w[0], "20261105-01", "2026-11-06T12:00", "a" * 64)
+        pg.publish_failed(w[0], "20261105-01", "metricool timeout")
+        with self.assertRaises(pg.NotAllowed): pg.claim_publish(w[0], "20261105-01", "2026-11-06T17:00", "a" * 64)
+
+
+class TestOffline(unittest.TestCase):
+    def test_real_client_is_blocked_in_tests(self):
+        import importlib
+        real = importlib.reload(importlib.import_module("croco.higgsfield"))
+        try:
+            with self.assertRaises(real.OfflineMode): real.estimate_usd({"prompt": "x"})
+            with self.assertRaises(real.OfflineMode): real.submit({"prompt": "x"})
+        finally:
+            real._call = _no_network; real.download = _no_network
+
+
+if __name__ == "__main__":
+    unittest.main()

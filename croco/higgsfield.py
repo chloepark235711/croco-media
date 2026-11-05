@@ -14,6 +14,15 @@ BASE = os.environ.get("HF_BASE", "https://api.higgsfield.ai")
 MODEL = "kling-video/v4.0/text-to-video"
 
 
+class OfflineMode(Exception):
+    """Raised instead of any network call when CROCO_OFFLINE=1 (tests, dry checks)."""
+
+
+def _offline_guard():
+    if os.environ.get("CROCO_OFFLINE") == "1":
+        raise OfflineMode("CROCO_OFFLINE=1: no Higgsfield network call allowed")
+
+
 class AmbiguousSubmit(Exception):
     """Request may or may not have been accepted. NEVER auto-resubmit."""
 
@@ -32,6 +41,7 @@ def _headers():
 
 
 def _call(method, url, body=None, timeout=60):
+    _offline_guard()
     data = json.dumps(body).encode() if body is not None else None
     req = urllib.request.Request(url, data=data, method=method, headers=_headers())
     try:
@@ -58,6 +68,8 @@ def submit(params):
         if 400 <= e.code < 500:  # rejected before queueing => definitely not charged
             raise
         raise AmbiguousSubmit(str(e))
+    except OfflineMode:
+        raise
     except Exception as e:  # timeout / connection reset after send
         raise AmbiguousSubmit(repr(e))
     rid = r.get("request_id")
@@ -71,6 +83,7 @@ def status(request_id):
 
 
 def download(url, dest, timeout=300):
+    _offline_guard()
     req = urllib.request.Request(url)
     with urllib.request.urlopen(req, timeout=timeout) as r, open(dest, "wb") as f:
         while True:
