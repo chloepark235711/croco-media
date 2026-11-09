@@ -1,0 +1,71 @@
+{
+  "asset_paths": [],
+  "captions": [
+    {
+      "at": "0-4",
+      "text": "What a tall tower!"
+    },
+    {
+      "at": "4-8",
+      "text": "Oops!"
+    },
+    {
+      "at": "8-12",
+      "text": "I'm sorry, Pebble. Let's fix it together!"
+    }
+  ],
+  "character_lock": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm.",
+  "date": "2026-11-10",
+  "description": "Oops! Croco bumps Pebble's block tower by accident. He says sorry and helps build it again. A gentle lesson about saying sorry.\nFor parents: practice \"Oops!\", \"I'm sorry!\" and \"Let's fix it together!\"\n#CrocosLittleWorld #SayingSorry #KindnessForKids #KidsShorts",
+  "hashtags": [
+    "#CrocosLittleWorld",
+    "#SayingSorry",
+    "#KindnessForKids",
+    "#KidsShorts"
+  ],
+  "id": "20261108-01",
+  "id_history": [
+    {
+      "event": "planned 2026-11-09 by Claude V2 under owner approval (new JSON authorized 2026-11-09); publish target 2026-11-10 America/Denver",
+      "id": "20261108-01"
+    }
+  ],
+  "learning_goal": "Say sorry after an accident and help fix it",
+  "made_for_kids": true,
+  "metricool_post_id": null,
+  "qa_status": "NOT_STARTED",
+  "requests": {},
+  "safety": "Soft wooden blocks only; nobody is hurt; no shouting or crying.",
+  "scenes": [
+    {
+      "duration": 4,
+      "n": 1,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Pebble, a small round lavender baby turtle with a cream-colored belly, a smooth lavender shell with exactly three soft sky-blue round spots, big round gray eyes, short stubby legs, a gentle closed-mouth smile, and no clothing or accessories. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Pebble sits on a soft rug and proudly finishes a small tower of colorful soft wooden blocks while Croco walks up beside the rug in a cozy pastel playroom, both faces clearly visible. vertical 9:16, slow gentle motion, steady camera. Mouth detail: closed-mouth smiles for both characters, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design. No clothing or accessories on Pebble, no sharp beak, do not change Pebble's lavender color or the three sky-blue shell spots, no resemblance to other franchises' turtle characters."
+    },
+    {
+      "duration": 4,
+      "n": 2,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Pebble, a small round lavender baby turtle with a cream-colored belly, a smooth lavender shell with exactly three soft sky-blue round spots, big round gray eyes, short stubby legs, a gentle closed-mouth smile, and no clothing or accessories. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Croco accidentally bumps the tower with his chunky tail and the soft blocks tumble gently onto the rug, Croco looks surprised and a little worried, Pebble blinks calmly, nobody is hurt. vertical 9:16, slow gentle motion, steady camera. Mouth detail: closed-mouth smiles for both characters, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design. No clothing or accessories on Pebble, no sharp beak, do not change Pebble's lavender color or the three sky-blue shell spots, no resemblance to other franchises' turtle characters."
+    },
+    {
+      "duration": 4,
+      "n": 3,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Pebble, a small round lavender baby turtle with a cream-colored belly, a smooth lavender shell with exactly three soft sky-blue round spots, big round gray eyes, short stubby legs, a gentle closed-mouth smile, and no clothing or accessories. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Croco kneels beside Pebble, places one hand on his chest, then picks up a block and helps stack the tower again, Pebble smiles and gently pats Croco's arm, calm cozy playroom. vertical 9:16, slow gentle motion, steady camera. Mouth detail: closed-mouth smiles for both characters, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design. No clothing or accessories on Pebble, no sharp beak, do not change Pebble's lavender color or the three sky-blue shell spots, no resemblance to other franchises' turtle characters."
+    }
+  ],
+  "sha256": {},
+  "source_episode": "EP-0004",
+  "status": "PLANNED",
+  "tags": [
+    "Croco's Little World",
+    "Croco",
+    "saying sorry for kids",
+    "kindness for kids",
+    "preschool learning",
+    "kids animation"
+  ],
+  "target_slot": "2026-11-10T12:00",
+  "title": "Oops! Croco Says Sorry 🧱🐊 | Croco's Little World #Shorts",
+  "topic_key": "saying-sorry-1",
+  "youtube_post_id": null
+}

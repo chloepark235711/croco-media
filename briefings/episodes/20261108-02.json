@@ -1,0 +1,71 @@
+{
+  "asset_paths": [],
+  "captions": [
+    {
+      "at": "0-4",
+      "text": "What does Croco see?"
+    },
+    {
+      "at": "4-8",
+      "text": "A yellow duck!"
+    },
+    {
+      "at": "8-12",
+      "text": "Hello, duck!"
+    }
+  ],
+  "character_lock": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm.",
+  "date": "2026-11-10",
+  "description": "What does Croco see by the pond? A yellow duck! A calm look-and-say game for little ones.\nFor parents: point and name together - \"pond\", \"duck\", \"yellow\".\n#CrocosLittleWorld #LearnColors #DuckForKids #KidsShorts",
+  "hashtags": [
+    "#CrocosLittleWorld",
+    "#LearnColors",
+    "#DuckForKids",
+    "#KidsShorts"
+  ],
+  "id": "20261108-02",
+  "id_history": [
+    {
+      "event": "planned 2026-11-09 by Claude V2 under owner approval (new JSON authorized 2026-11-09); publish target 2026-11-10 America/Denver",
+      "id": "20261108-02"
+    }
+  ],
+  "learning_goal": "Look closely, name what you see (duck) and its color (yellow)",
+  "made_for_kids": true,
+  "metricool_post_id": null,
+  "qa_status": "NOT_STARTED",
+  "requests": {},
+  "safety": "Croco stays on the grass at a safe distance from the shallow pond; no swimming; the duck is a calm storybook-style duck, not a character.",
+  "scenes": [
+    {
+      "duration": 4,
+      "n": 1,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Croco stands on soft green grass at the edge of a small calm pastel pond, shading his big eyes with one short hand and looking out over the water, gentle morning light. vertical 9:16, slow gentle motion, steady camera. Mouth detail: closed-mouth smile, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design."
+    },
+    {
+      "duration": 4,
+      "n": 2,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Close view of a small round yellow duck floating quietly on the calm pond, soft ripples, gentle storybook style, Croco's smiling face peeks in at the edge of the frame. vertical 9:16, slow gentle motion, steady camera. Mouth detail: closed-mouth smile, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design."
+    },
+    {
+      "duration": 4,
+      "n": 3,
+      "prompt": "Croco, a chubby mint-green baby crocodile with a rounded head, short snout, peach-cream belly, rosy cheeks, big chocolate-brown eyes, a gentle closed-mouth smile with no visible teeth, short arms and legs, chunky tail, wearing orange dungaree overalls with two small wooden buttons and a yellow star embroidered on the front pocket. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm. Scene: Croco points one short arm toward the yellow duck and turns to the camera with a calm smile and a little wave, pastel pond behind him, he stays on the grass. vertical 9:16, slow gentle motion, steady camera. Mouth detail: closed-mouth smile, no teeth visible at any time.\nNegative: no scary expressions, no sharp teeth, no rows of teeth, no teeth, no open mouth with teeth, no realistic reptile skin, no extra limbs, no text, no letters, no other franchises' characters, no flashing lights, no twinkling flashes, no fast camera moves, no hats or extra clothing, do not change the pocket star design."
+    }
+  ],
+  "sha256": {},
+  "source_episode": "EP-0005",
+  "status": "PLANNED",
+  "tags": [
+    "Croco's Little World",
+    "Croco",
+    "duck for kids",
+    "learn colors",
+    "preschool learning",
+    "kids animation"
+  ],
+  "target_slot": "2026-11-10T17:00",
+  "title": "What Does Croco See? A Duck! 🦆🐊 | Croco's Little World #Shorts",
+  "topic_key": "duck-pond-1",
+  "youtube_post_id": null
+}
