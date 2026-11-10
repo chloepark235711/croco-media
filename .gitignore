@@ -1,2 +1,7 @@
 __pycache__/
 *.pyc
+
+# marketing competitor research: local state/output never committed (may hold cached API data)
+yt-state/
+yt-out/
+*.env
