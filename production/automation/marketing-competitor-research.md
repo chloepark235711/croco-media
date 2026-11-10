@@ -1,20 +1,29 @@
 # 마케팅팀 경쟁 채널 조사 (17:00 부서 회의 통합안)
 
-상태: **준비됨 · 운영 미반영** (브랜치 `feature/marketing-competitor-research`). 새 예약 작업 없음. 기존 17:00 회의 안의 한 단계로 들어갑니다.
+상태: **PR 검토 단계 · 운영 미반영**. 새 예약 작업은 만들지 않습니다. 기존 17:00 회의 안에 "2b" 단계 하나를 추가합니다.
 
 ## 흐름
 ```
-17:00 부서 회의 (기존 루틴, 시각 변경 없음)
+17:00 부서 회의 (기존 루틴 · 시각/다른 단계 변경 없음)
  ├ 1. YouTube Analytics (기존, Metricool)
  ├ 2. 트렌드 연구 (기존, WebSearch)
- ├ 2b. 경쟁 채널 조사 ← 신규: python3 -m croco.competitors run  (YouTube Data API v3, 읽기 전용)
- │     → briefings/<today>.md "### 경쟁 채널 조사" 섹션
- ├ 3. 마케팅 제안 (아이디어 3+) ← 2b 근거 인용 필수
- ├ 4. 부서 토론 → 추천 순위
- ├ 8. V2 export  pipeline/v2-episodes/<id>.json  (제작 실제 입력, 변경 없음)
- └ 9. briefings/<D>-marketing-order.md            (08:00 제작팀·20:00 V2 근거 문서, 변경 없음)
-18:50 CEO 브리핑(비서실)은 briefings/<today>.md를 그대로 읽음 → 별도 변경 없음
+ ├ 2b. 경쟁 채널 조사 ← 신규 · 읽기 전용 · 최대 5분 · 실패해도 3~9단계 계속
+ │      CROCO_YT_AUTH=proxy python3 -m croco.competitors run --state $STATE --out $OUT
+ ├ 3. 마케팅 제안 (아이디어 3+, 2b 근거 인용)
+ ├ 4. 부서 토론 → 다음 영상 제작 추천 순위
+ ├ 8. V2 export → pipeline/v2-episodes/<id>.json   ← 마케팅 결정이 실제 제작에 들어가는 유일한 경로
+ └ 9. briefings/<D>-marketing-order.md             ← 근거·검증 문서 (어떤 작업도 자동으로 읽지 않음)
 ```
+
+## 제작 인계 경로 (2026-11-09 루틴 설정과 실행 기록으로 확인)
+| 구간 | 실제 동작 |
+|---|---|
+| 17:00 → 실행 지시서 | `briefings/<D>-marketing-order.md`를 씁니다. 08:00 제작, 20:00 V2, 18:50 CEO 프롬프트 모두 이 파일을 **읽지 않습니다**. |
+| 17:00 → 제작 입력 | 8단계에서 채택된 결정을 `pipeline/v2-episodes/<id>.json`의 title / description / hashtags / captions[0](0–3초 훅) / scene 1 prompt에 직접 씁니다. |
+| JSON → main | 20:00 V2 작업이 main `briefings/episodes/`에 반영하고 `plan_check`를 통과해야 생성합니다. |
+| main → 게시 | 08:00은 main에서 `GENERATED` 상태인 기록만 편집·QA·게시합니다(제목·자막·학습 목표 사용). |
+
+결론: 마케팅 전략은 **JSON 필드에 들어가고, 그 JSON이 main에서 GENERATED가 될 때만** 제작에 반영됩니다. 형식이 유효한 것만으로는 인계 완료가 아닙니다. 그래서 9단계에 "JSON 반영 필드" 줄을 추가해, 어떤 결정이 어느 필드에 들어갔는지 매번 적게 합니다. 기존 승인·예산·게시 규칙(`plan_check`, `budget`, `publish_guard`, 08:00 QA)은 그대로입니다.
 
 ## 수집 항목 (공개 API 값만)
 | 항목 | 출처 |
@@ -33,7 +42,6 @@
 - 탐색 범위 6개: 글로벌 키즈 애니메이션 / 동물 캐릭터 Shorts / 어린이 교육용 애니메이션 / 짧은 스토리 가족 친화 / 성장 중인 중소형 / 대형 키즈 브랜드(핸들 조회).
 - 점수 100 = 콘텐츠 유사성 25 + 시청 대상(아동용 표시 비율 × 영어 적합) 25 + 최근 업로드 활동 25 + 공개 영상 성과 25 (+ 검색 노출 가산 최대 5).
 - 후보 10개 → 추적 5개 (가능하면 중소형 2개 이상·대형 브랜드 1개 이상 포함). Croco 자체 채널은 제외.
-- 재평가 결과(추가·제외)는 보고서에 표시. 근거는 채널마다 4개 항목 점수와 원값으로 기록.
 
 ## 쿼터 (공식: developers.google.com/youtube/v3/determine_quota_cost, 2026-11-03 갱신본 확인)
 | 메서드 | 공식 비용 | 비고 |
@@ -41,29 +49,53 @@
 | channels.list / playlistItems.list / videos.list | 1 unit | 일반 할당 10,000 units/일 |
 | search.list | 1 unit | **별도 버킷 100회/일** |
 | 실패한 요청 | 최소 1 unit | 장부에 실패도 기록 |
-- 리셋: 태평양시(PT) 자정. 내부 상한(대표 지시 2026-11-09): **500 units/일**, 보조 상한 search 20회/일 (`CROCO_YT_DAILY_CAP`, `CROCO_YT_SEARCH_CAP`).
-- 예상 사용량: 평일 약 13 units(search 1회) · 재평가일 약 70 units(search 6회). 캐시(search·channels 20시간, 영상 6시간)로 같은 요청은 0 unit.
-- 모든 호출은 `state.json`의 `ledger`에 시각·엔드포인트·비용·캐시 여부·성공 여부로 남습니다.
+- 리셋은 태평양시(PT) 자정입니다. 내부 상한은 **500 units/일**(대표 지시 2026-11-09)이고, 보조 상한으로 search 20회/일을 둡니다.
+- 예상 일일 호출량: 평일 **약 13 units**(search 1회), 재평가일 **약 70 units**(search 6회). 같은 날 다시 실행하면 캐시로 처리돼 0 units입니다.
+- 모든 호출은 `state.json`의 `ledger`에 시각·엔드포인트·비용·캐시 여부·성공 여부와 함께 기록됩니다. 보고서에는 외부 API 사용량만 적고, Claude 사용량은 회의 세션이 별도 줄로 기록합니다.
 
-## 키 보안
-- 키는 환경변수 `YOUTUBE_API_KEY` 또는 `CROCO_YOUTUBE_ENV` 파일(로컬 기본값 `~/.config/croco/youtube.env`)에서만 읽음.
-- 요청 헤더 `X-Goog-Api-Key`로만 전송(URL·로그에 없음). 오류 메시지의 키 문자열은 `[REDACTED]`로 바꿈.
-- 상태·캐시·보고서·이 저장소에는 키를 쓰지 않음 (테스트로 검증).
+## 장애 시 우회 동작 (영상 제작·게시 보호)
+| 상황 | 동작 |
+|---|---|
+| 키 없음·인증 실패·네트워크 오류·429 | 첫 실패에서 회로 차단기를 엽니다. 이후 네트워크 호출 0회, `BLOCKED` 출력(exit 3), 장부는 저장됩니다. |
+| 그 밖의 오류가 3회 연속 | 회로 차단기를 열고 확보한 데이터만 사용합니다. |
+| 실행 시간 300초 초과 (`CROCO_YT_DEADLINE_SEC`) | 새 호출을 중단합니다. |
+| 내부 상한 도달 | 새 호출을 중단하고 이전 선정 목록을 유지합니다. |
+| 예기치 못한 예외 | traceback 대신 `BLOCKED: <키를 지운 이유>`를 출력하고 exit 3으로 끝납니다. |
+| Claude 사용량 한도·명령 거부 | 회의가 2b를 건너뛰고 "SKIPPED: 원인"을 기록한 뒤 3단계로 넘어갑니다(가장 최근 조사를 날짜와 함께 인용). |
+- 이 모듈은 다른 croco 모듈을 import하지 않고, 다른 모듈도 이 모듈을 import하지 않습니다. 에피소드·Metricool·예약 작업·예산 파일에는 쓰지 않습니다.
+
+## 키 보안 · 클라우드 등록 방법
+- 클라우드 모드 `CROCO_YT_AUTH=proxy`에서는 VM에 키가 없습니다. 클라우드 환경의 **Network secret**을 Anthropic agent proxy가 요청이 나간 뒤에 붙입니다.
+  - 등록 위치: claude.ai/code → 17:00 루틴이 쓰는 환경 편집 → **Network secrets** → **Add secret**
+  - 설정값: Allowed websites `www.googleapis.com` · Header name `X-Goog-Api-Key` · Prefix 비움 · Value = 키
+  - Team/Enterprise에서 관리자 역할이 없으면 짧은 양식(Host + Token, Header를 `X-Goog-Api-Key`로 변경)을 씁니다.
+  - `*.googleapis.com`은 기본 Trusted 허용 목록에 있어 네트워크 설정은 바꿀 필요가 없습니다.
+  - 환경 변수(Environment variables)에는 넣지 않습니다. 그 값은 그 환경을 쓰는 모든 세션이 읽을 수 있습니다.
+- 권장: Google Cloud Console에서 이 키의 API 제한을 **YouTube Data API v3만** 허용하도록 설정합니다.
+- 로컬 모드: 환경변수 `YOUTUBE_API_KEY`, 없으면 `CROCO_YOUTUBE_ENV` 파일(기본값 `~/.config/croco/youtube.env`)을 읽습니다.
+- 키는 `X-Goog-Api-Key` 헤더로만 보냅니다. URL·로그·상태·캐시·보고서에는 넣지 않고, 오류 메시지에 나오면 `[REDACTED]`로 바꿉니다(테스트로 검증).
 
 ## 상태 저장 위치
-클라우드 실행은 매번 새 환경이므로 상태 파일을 Claude 프로젝트 `marketing/competitors/state.json`에 보관합니다. 실행 전에 읽고, 실행 후에 저장합니다. 이 파일에는 선정 목록, 구독자 스냅샷, 쿼터 장부, 캐시가 들어 있습니다. 공개 저장소에는 저장하지 않습니다.
+클라우드 실행은 매번 새 환경이므로 Claude 프로젝트 `marketing/competitors/state.json`에서 상태를 읽고 다시 저장합니다. 이 파일에는 선정 목록, 구독자 스냅샷, 호출 장부, 캐시가 들어 있습니다. 공개 저장소에는 저장하지 않습니다(`.gitignore`).
 
-## 17:00 회의 프롬프트 삽입문 (승인 후 적용 — 현재 미적용)
-기존 2번(트렌드 연구) 다음, 3번 앞에 아래 단락을 넣고, 3번·4번에 표시한 한 줄씩을 덧붙입니다. 실행 시각, 다른 단계, 다른 예약 작업은 바꾸지 않습니다.
+## 복구 절차
+1. **PR 병합 전:** PR을 닫고 브랜치를 삭제하면 끝입니다. main은 바뀌지 않습니다.
+2. **병합 후:** `git revert <merge commit>`. 새 파일만 추가하고 기존 파일은 README와 `.gitignore` 각 한 줄만 바꾸므로, 되돌려도 다른 모듈에 영향이 없습니다.
+3. **17:00 프롬프트 변경 후:** 변경 직전 프롬프트로 루틴을 다시 업데이트합니다. 변경 직전 루틴 설정 전체를 변경 담당자가 비공개로 백업해 둡니다.
+4. **Network secret:** 환경의 Network secrets 목록에서 삭제합니다.
+5. **상태 파일:** Claude 프로젝트 `marketing/competitors/state.json`을 지웁니다. 다음 실행 때 처음부터 다시 선정합니다.
 
-> 2b. 마케팅부 — 경쟁 채널 조사 (YouTube Data API v3, read-only, max ~5 minutes): Read the Claude project file marketing/competitors/state.json if it exists and save it to $STATE/state.json. In a read-only clone of croco-media main, run `python3 -m croco.competitors run --state $STATE --out $OUT`. Never print, echo or save the API key; it comes only from the environment variable YOUTUBE_API_KEY. If the command prints "BLOCKED", or the quota cap is reached, write "경쟁 채널 조사 BLOCKED: <reason>" and continue with the rest of the meeting. Then save $STATE/state.json back to marketing/competitors/state.json, and paste $OUT/report.md into the briefing under "### 경쟁 채널 조사". Use only the numbers in that report. Retention, CTR and subscriber conversion of other channels are not available, so never estimate them. Never copy competitors' characters, songs, lyrics, stories, titles or designs, and never put competitor names in Croco titles, descriptions, tags or prompts.
->
-> (3번에 추가) Every idea must cite at least one row of "### 경쟁 채널 조사" (a TOP 5 video or a trend) as evidence and explain how Croco makes it original, then give: 오늘의 글로벌 트렌드 TOP 3 요약 → 아이디어 3개 → 첫 3초 후킹·스토리 구조 → 교육적 가치·브랜드 적합성 → 제작 난이도·예상 비용(추정) → 찬성·반대.
->
-> (4번에 추가) End with "다음 영상 제작 추천 순위" (1–3위, each with the reason and the evidence row it uses).
+## 17:00 회의 프롬프트 변경 (승인 후 적용 — 현재 미적용)
+기존 문장은 하나도 지우거나 바꾸지 않고 7곳에 삽입만 합니다. 실행 시각, 다른 단계, 다른 예약 작업은 그대로입니다. 전체 전후 비교본에는 내부 정보(브랜드 ID 등)가 있어 공개 저장소에 두지 않고 대표에게 별도로 전달합니다. 삽입 내용 요약:
+1. 역할에 Competitor Research를 추가하고, 마케팅은 자사 데이터가 없어도 시장 데이터로 진행한다는 문장을 넣습니다.
+2. 2단계 다음에 **2b** 단계를 넣습니다(실행 명령, 상태 읽기·저장, SKIPPED 규칙, 재실행 금지, 복제·경쟁 채널 이름 사용 금지).
+3. 3단계: 아이디어마다 근거 행과 독창성 한 줄, 맨 앞에 트렌드 TOP 3와 경쟁 영상 TOP 5.
+4. 4단계: "다음 영상 제작 추천 순위".
+5. 9단계: 에피소드별 "JSON 반영 필드" 줄.
+6. 사용량 줄: 외부 API와 Claude 사용량을 구분해 기록합니다.
 
 ## 운영 반영에 필요한 승인 (대표)
-1. **클라우드 환경 비밀값:** 17:00 루틴 환경에 `YOUTUBE_API_KEY`를 Network secret으로 추가하는 것. 새 인증 권한을 주는 일이라 승인이 필요합니다.
-2. **네트워크 허용:** 클라우드 환경에서 `www.googleapis.com`에 접속할 수 있어야 합니다.
-3. **17:00 루틴 프롬프트 수정:** 위 삽입문을 기존 예약 작업에 넣는 것. 기존 예약 작업 변경이라 승인이 필요합니다.
-4. **main 병합:** 이 브랜치의 PR을 검토하고 병합하는 것. 17:00 회의는 main을 읽기 전용으로 클론합니다.
+1. PR 병합 (17:00 회의는 main을 클론해 실행합니다)
+2. 17:00 루틴이 쓰는 클라우드 환경에 Network secret 등록 (새 인증 권한 부여)
+3. 17:00 루틴 프롬프트 변경 (기존 예약 작업 변경)
+4. (권장) 17:00 루틴에 croco-media를 소스 저장소로 연결 (기존 예약 작업 변경). 현재는 회의가 저장소를 직접 클론하는데, 11/9 회의에서 클론한 코드(`plan_check`) 실행이 자동 권한 검사에 막힌 기록이 있습니다.

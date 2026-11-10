@@ -16,9 +16,19 @@ never estimated. Subscriber change is reported only against a previously stored
 public snapshot.
 
 Safety
-- Key: env YOUTUBE_API_KEY, else the file in CROCO_YOUTUBE_ENV (default
-  ~/.config/croco/youtube.env). Sent only in the X-Goog-Api-Key header, never in a URL,
-  never printed, never written to state/cache; any echo in an error body is redacted.
+- Key, two modes:
+  * CROCO_YT_AUTH=proxy (cloud): no key in the VM at all. The cloud environment's
+    network secret (host www.googleapis.com, header X-Goog-Api-Key) is attached by
+    Anthropic's agent proxy after the request leaves the session.
+  * default (local): env YOUTUBE_API_KEY, else the file in CROCO_YOUTUBE_ENV (default
+    ~/.config/croco/youtube.env).
+  The key is sent only in the X-Goog-Api-Key header, never in a URL, never printed, never
+  written to state/cache; any echo in an error body is redacted.
+- Fail-safe: a network/auth/quota error (HTTP 0/400 keyInvalid/401/403/429) opens a circuit
+  breaker -> no further network calls in this run; 3 consecutive other errors do the same.
+  A run-time budget (CROCO_YT_DEADLINE_SEC, default 300 s) stops new calls. `run` never
+  raises: it prints "BLOCKED: ..." (exit 3) and still saves the ledger, so the meeting
+  continues without this section.
 - Quota: official costs (developers.google.com/youtube/v3/determine_quota_cost, page
   updated 2026-11-03): list methods 1 unit; search.list 1 unit per call from its own
   bucket of 100 calls/day; invalid requests still cost >= 1; reset at midnight PT.
@@ -48,6 +58,9 @@ COST = {"search": 1, "channels": 1, "playlistItems": 1, "videos": 1}
 DAILY_UNIT_CAP = int(os.environ.get("CROCO_YT_DAILY_CAP", "500"))
 DAILY_SEARCH_CAP = int(os.environ.get("CROCO_YT_SEARCH_CAP", "20"))
 TTL_HOURS = {"search": 20, "channels": 20, "playlistItems": 6, "videos": 6}
+DEADLINE_SEC = int(os.environ.get("CROCO_YT_DEADLINE_SEC", "300"))
+AUTH_MODE = os.environ.get("CROCO_YT_AUTH", "key")      # "key" | "proxy"
+FATAL_CODES = {0, 401, 403, 429}
 REEVALUATE_DAYS = 7
 N_CANDIDATES, N_TRACKED = 10, 5
 MID_SIZE_MAX_SUBS = 1_000_000
@@ -100,7 +113,7 @@ def _ssl_context():
 
 
 class QuotaCapReached(RuntimeError):
-    pass
+    """Internal cap, deadline or open circuit: stop calling, keep what we have."""
 
 
 class ApiError(RuntimeError):
@@ -164,10 +177,15 @@ def save_state(state_dir, state):
 class Client:
     """Read-only YouTube Data API client with quota ledger, caps, cache and de-dup."""
 
-    def __init__(self, state, key=None, transport=None):
+    def __init__(self, state, key=None, transport=None, auth=None, deadline_sec=None):
         self.state = state
-        self.key = key if key is not None else load_key()
+        self.auth = auth or AUTH_MODE
+        self.key = "" if self.auth == "proxy" else (key if key is not None else load_key())
         self.transport = transport or self._http
+        self.started = now_utc()
+        self.deadline = self.started + dt.timedelta(seconds=deadline_sec or DEADLINE_SEC)
+        self.circuit = None          # reason string once open
+        self.consecutive_errors = 0
 
     def _day(self):
         d = now_utc().astimezone(PT).date().isoformat()
@@ -178,13 +196,18 @@ class Client:
         return {"pt_day": now_utc().astimezone(PT).date().isoformat(), "units": d["units"],
                 "search_calls": d["search_calls"], "unit_cap": DAILY_UNIT_CAP,
                 "search_cap": DAILY_SEARCH_CAP,
-                "cache_hits": sum(1 for c in d["calls"] if c.get("cached"))}
+                "cache_hits": sum(1 for c in d["calls"] if c.get("cached")),
+                "failed_calls": sum(1 for c in d["calls"] if c.get("ok") is False),
+                "auth_mode": self.auth, "circuit": self.circuit}
 
     def _http(self, endpoint, params):
         if os.environ.get("CROCO_OFFLINE") == "1":
             raise RuntimeError("CROCO_OFFLINE=1: network disabled")
         url = API + endpoint + "?" + urllib.parse.urlencode(params)
-        req = urllib.request.Request(url, headers={"X-Goog-Api-Key": self.key, "Accept": "application/json"})
+        headers = {"Accept": "application/json"}
+        if self.key:                       # proxy mode: header is added outside the VM
+            headers["X-Goog-Api-Key"] = self.key
+        req = urllib.request.Request(url, headers=headers)
         try:
             with urllib.request.urlopen(req, timeout=30, context=_ssl_context()) as r:
                 return json.loads(r.read())
@@ -198,6 +221,8 @@ class Client:
             raise ApiError(e.code, redact(reason, self.key))
         except urllib.error.URLError as e:
             raise ApiError(0, redact(e.reason, self.key))
+        except (TimeoutError, OSError, ValueError) as e:      # socket timeout / reset / bad JSON
+            raise ApiError(0, redact(f"{type(e).__name__}: {e}", self.key))
 
     def get(self, endpoint, **params):
         params = {k: v for k, v in sorted(params.items()) if v is not None}
@@ -213,7 +238,11 @@ class Client:
             raise QuotaCapReached(f"daily unit cap {DAILY_UNIT_CAP} reached ({day['units']} used)")
         if endpoint == "search" and day["search_calls"] + 1 > DAILY_SEARCH_CAP:
             raise QuotaCapReached(f"daily search cap {DAILY_SEARCH_CAP} reached")
-        if not self.key:
+        if self.circuit:
+            raise QuotaCapReached(f"circuit open: {self.circuit}")
+        if now_utc() > self.deadline:
+            raise QuotaCapReached(f"run deadline {DEADLINE_SEC}s reached")
+        if not self.key and self.auth != "proxy":
             raise ApiError(0, "YOUTUBE_API_KEY not available")
         # quota is spent even when the call fails -> record before calling
         day["units"] += cost
@@ -221,7 +250,15 @@ class Client:
         entry = {"t": now_utc().isoformat(timespec="seconds"), "endpoint": endpoint, "units": cost,
                  "cached": False, "ok": False}
         day["calls"].append(entry)
-        data = self.transport(endpoint, params)
+        try:
+            data = self.transport(endpoint, params)
+        except ApiError as e:
+            entry["error"] = f"{e.code}:{str(e.reason)[:80]}"
+            self.consecutive_errors += 1
+            if e.code in FATAL_CODES or "key" in str(e.reason).lower() or self.consecutive_errors >= 3:
+                self.circuit = f"{endpoint} HTTP {e.code} {str(e.reason)[:80]}"
+            raise
+        self.consecutive_errors = 0
         entry["ok"] = True
         exp = now_utc() + dt.timedelta(hours=TTL_HOURS[endpoint])
         self.state["cache"][ck] = {"expires": exp.isoformat(), "data": data}
@@ -471,11 +508,16 @@ def run(state_dir, reevaluate=False, today=None, client=None):
             else:
                 notes.append("재평가 결과 추적 후보 없음 → 이전 목록 유지")
             notes += new["notes"]
-        except QuotaCapReached as e:
+        except (QuotaCapReached, ApiError) as e:
             notes.append(f"재평가 중단: {e} → 이전 목록 유지")
     tracked = []
+    chans = {}
     if sel:
-        chans = fetch_channels(c, sel["tracked"])
+        try:
+            chans = fetch_channels(c, sel["tracked"])
+        except (ApiError, QuotaCapReached) as e:
+            notes.append(f"추적 채널 조회 실패: {e}")
+    if sel and chans:
         for cid in sel["tracked"]:
             ch = chans.get(cid)
             if not ch:
@@ -564,7 +606,9 @@ def render(result):
          "",
          f"**쿼터:** 오늘(PT {q['pt_day']}) {q['units']} / 내부 상한 {q['unit_cap']} units · "
          f"search 호출 {q['search_calls']} / {q['search_cap']}회 · 캐시 적중 {q['cache_hits']}회 "
-         f"(공식 기본 할당: 일반 10,000 units/일, search.list 100회/일)",
+         f"(공식 기본 할당: 일반 10,000 units/일, search.list 100회/일) · 실패 호출 {q.get('failed_calls', 0)}회"
+         + (f" · ⚠️ 호출 중단: {q['circuit']}" if q.get("circuit") else ""),
+         "**사용량 구분:** 위 값은 외부 YouTube Data API 사용량만입니다. 이 스크립트는 Claude를 호출하지 않으며, Claude 사용량은 회의 세션이 따로 기록합니다.",
          ""]
     if result["reevaluated"]:
         ch = sel.get("changes", {})
@@ -627,10 +671,19 @@ def main(argv=None):
     if a.cmd == "plan":
         print(json.dumps(plan_units(a.state), ensure_ascii=False))
         return 0
-    if not load_key():
-        print("BLOCKED: YOUTUBE_API_KEY not available (env or CROCO_YOUTUBE_ENV file)")
+    if AUTH_MODE != "proxy" and not load_key():
+        print("BLOCKED: YOUTUBE_API_KEY not available (env, CROCO_YOUTUBE_ENV file, or CROCO_YT_AUTH=proxy)")
         return 2
-    res = run(a.state, reevaluate=a.reevaluate, today=a.date)
+    try:
+        res = run(a.state, reevaluate=a.reevaluate, today=a.date)
+    except Exception as e:                      # never block the meeting; never leak the key
+        print("BLOCKED: " + redact(f"{type(e).__name__}: {e}", load_key()))
+        return 3
+    if not res["tracked"] and not res["trend_videos"]:
+        q = res["quota"]
+        print("BLOCKED: no data collected (" + redact("; ".join(res["notes"])[:300], load_key())
+              + f") units={q['units']}/{q['unit_cap']} circuit={q['circuit']}")
+        return 3
     out = a.out or a.state
     os.makedirs(out, exist_ok=True)
     with open(os.path.join(out, "report.md"), "w") as f:

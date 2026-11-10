@@ -1,4 +1,6 @@
+import contextlib
 import datetime as dt
+import io
 import json
 import os
 import tempfile
@@ -190,6 +192,80 @@ class CompetitorTests(unittest.TestCase):
         self.assertFalse(C.is_english({"title": "Croco", "defaultAudioLanguage": "hi"}))
         self.assertFalse(C.is_english({"title": "मैं तोता मैं तोता"}))
         self.assertTrue(C.is_english({"title": "Baby Duck Learns Colors"}))
+
+    def test_proxy_mode_sends_no_key_header(self):
+        seen = {}
+
+        class Resp:
+            def __enter__(self): return self
+            def __exit__(self, *a): return False
+            def read(self): return b'{"items": []}'
+
+        def fake_urlopen(req, timeout=None, context=None):
+            seen["headers"] = {k.lower(): v for k, v in req.header_items()}
+            seen["url"] = req.full_url
+            return Resp()
+        with mock.patch.dict(os.environ, {"CROCO_OFFLINE": "0", "YOUTUBE_API_KEY": FAKE_KEY}), \
+                mock.patch.object(C.urllib.request, "urlopen", fake_urlopen):
+            C.Client(C.load_state(self.tmp), auth="proxy").get("videos", id="vUC1_0")
+            self.assertNotIn("x-goog-api-key", seen["headers"])          # proxy attaches it outside the VM
+            self.assertNotIn(FAKE_KEY, seen["url"])
+            C.Client(C.load_state(self.tmp), key=FAKE_KEY).get("videos", id="vUC1_1")
+            self.assertEqual(seen["headers"]["x-goog-api-key"], FAKE_KEY)  # local mode: header only
+            self.assertNotIn(FAKE_KEY, seen["url"])
+
+    def test_circuit_breaker_stops_after_auth_error(self):
+        calls = []
+
+        def forbidden(e, p):
+            calls.append(e)
+            raise C.ApiError(403, "forbidden")
+        res = C.run(self.tmp, client=self.client(forbidden))
+        self.assertEqual(len(calls), 1, "after a 403 no further network call may happen")
+        self.assertTrue(res["quota"]["circuit"])
+        self.assertEqual(res["tracked"], [])
+        self.assertIn("호출 중단", C.render(res))
+
+    def test_three_consecutive_errors_open_circuit(self):
+        calls = []
+
+        def flaky(e, p):
+            calls.append(e)
+            raise C.ApiError(500, "backendError")
+        C.run(self.tmp, client=self.client(flaky))
+        self.assertEqual(len(calls), 3)
+
+    def test_deadline_stops_new_calls(self):
+        fake = FakeYT()
+        c = C.Client(C.load_state(self.tmp), key=FAKE_KEY, transport=fake, deadline_sec=1)
+        with mock.patch.object(C, "now_utc", return_value=NOW + dt.timedelta(seconds=5)):
+            with self.assertRaises(C.QuotaCapReached):
+                c.get("videos", id="vUC1_0")
+        self.assertEqual(fake.calls, [])
+
+    def test_main_never_raises_and_reports_blocked(self):
+        def boom(*a, **k):
+            raise RuntimeError(f"unexpected {FAKE_KEY}")
+        out = io.StringIO()
+        with mock.patch.object(C, "run", boom), mock.patch.object(C, "load_key", return_value=FAKE_KEY), \
+                contextlib.redirect_stdout(out):
+            rc = C.main(["run", "--state", self.tmp])
+        self.assertEqual(rc, 3)
+        self.assertIn("BLOCKED", out.getvalue())
+        self.assertNotIn(FAKE_KEY, out.getvalue())
+
+    def test_main_blocked_when_nothing_collected(self):
+        def down(e, p):
+            raise C.ApiError(0, "URLError: no route")
+        real = C.Client
+        out = io.StringIO()
+        with mock.patch.object(C, "load_key", return_value=FAKE_KEY), \
+                mock.patch.object(C, "Client", lambda st: real(st, key=FAKE_KEY, transport=down)), \
+                contextlib.redirect_stdout(out):
+            rc = C.main(["run", "--state", self.tmp])
+        self.assertEqual(rc, 3)
+        self.assertIn("BLOCKED: no data collected", out.getvalue())
+        self.assertTrue(os.path.exists(os.path.join(self.tmp, "state.json")), "ledger must still be saved")
 
     def test_offline_guard(self):
         c = C.Client(C.load_state(self.tmp), key=FAKE_KEY)
