@@ -46,3 +46,4 @@ HOLD: 소유자 결정. 제출·재제출·폴링·편집·게시 모두 없음.
 
 예산 승인·지출 원장·오류 로그는 **비공개 저장소 croco-control**에만 있습니다.
 각 작업 프롬프트 초안과 필요한 설정은 `prompts.md`, 병합 절차는 `MERGE_PLAN.md`.
+17:00 회의에 넣을 경쟁 채널 조사 단계(YouTube Data API, 읽기 전용, 승인 대기)는 `marketing-competitor-research.md`.
