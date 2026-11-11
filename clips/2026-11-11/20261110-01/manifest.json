@@ -2,10 +2,44 @@
   "episode_id": "20261110-01",
   "test": false,
   "scenes": [
-    {"scene": 1, "file": "scene-01.mp4",
-     "sha256": "e9768e3e7b9e0dba84daec0920b1ad5c1ea8fd446f734447bfea127a5603a2e0",
-     "request_id": "01a1c92e-3b6d-7ae6-bbad-598ad0bd8810",
-     "model": "kling-video/v4.0/text-to-video", "seconds": 5, "resolution": "720p",
-     "aspect_ratio": "9:16", "width": 720, "height": 1280, "price_usd": 0.6285, "test": false}
+    {
+      "scene": 1,
+      "file": "scene-01.mp4",
+      "sha256": "e9768e3e7b9e0dba84daec0920b1ad5c1ea8fd446f734447bfea127a5603a2e0",
+      "request_id": "01a1c92e-3b6d-7ae6-bbad-598ad0bd8810",
+      "model": "kling-video/v4.0/text-to-video",
+      "seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "9:16",
+      "price_usd": 0.6285,
+      "test": false,
+      "used_in_final": true
+    },
+    {
+      "scene": 2,
+      "file": "scene-02.mp4",
+      "sha256": "de0b48a376aada84f7a59c6958cf2d2e5f1a49ece94ee5372d5655f17e6de3f6",
+      "request_id": "01a1c937-56dc-71f8-8bf2-f454e954a4d0",
+      "model": "kling-video/v4.0/text-to-video",
+      "seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "9:16",
+      "price_usd": 0.6285,
+      "test": false,
+      "used_in_final": true
+    },
+    {
+      "scene": 3,
+      "file": "scene-03.mp4",
+      "sha256": "2e579500f70519cead7d62af664a05d91f7a8c57d0e7361abf98cfa59696a948",
+      "request_id": "01a1c937-5866-7e0e-b5da-4c894209f6b0",
+      "model": "kling-video/v4.0/text-to-video",
+      "seconds": 5,
+      "resolution": "720p",
+      "aspect_ratio": "9:16",
+      "price_usd": 0.6285,
+      "test": false,
+      "used_in_final": true
+    }
   ]
 }
