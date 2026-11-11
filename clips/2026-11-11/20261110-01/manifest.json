@@ -1,0 +1,11 @@
+{
+  "episode_id": "20261110-01",
+  "test": false,
+  "scenes": [
+    {"scene": 1, "file": "scene-01.mp4",
+     "sha256": "e9768e3e7b9e0dba84daec0920b1ad5c1ea8fd446f734447bfea127a5603a2e0",
+     "request_id": "01a1c92e-3b6d-7ae6-bbad-598ad0bd8810",
+     "model": "kling-video/v4.0/text-to-video", "seconds": 5, "resolution": "720p",
+     "aspect_ratio": "9:16", "width": 720, "height": 1280, "price_usd": 0.6285, "test": false}
+  ]
+}

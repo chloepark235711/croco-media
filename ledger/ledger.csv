@@ -1,2 +1,2 @@
 date,episode_id,scene,model,seconds,resolution,request_id,status,price_usd
-2026-11-10,20261110-01,1,kling-video/v4.0/text-to-video,5,720p,01a1c92e-3b6d-7ae6-bbad-598ad0bd8810,completed_not_downloaded,0.6285
+2026-11-10,20261110-01,1,kling-video/v4.0/text-to-video,5,720p,01a1c92e-3b6d-7ae6-bbad-598ad0bd8810,completed,0.6285
