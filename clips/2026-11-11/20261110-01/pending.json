@@ -1,0 +1,11 @@
+{
+  "episode_id": "20261110-01",
+  "test": false,
+  "note": "Clip generated but NOT downloaded: CDN host blocked by environment network policy. Output expires 2026-11-18T05:58:49Z. Reuse instead of regenerating.",
+  "scenes": [
+    {"scene": 1, "request_id": "01a1c92e-3b6d-7ae6-bbad-598ad0bd8810", "model": "kling-video/v4.0/text-to-video",
+     "seconds": 5, "resolution": "720p", "aspect_ratio": "9:16", "price_usd": 0.6285, "status": "completed",
+     "video_url": "https://d3u0tzju9qaucj.cloudfront.net/2ac28edc-0ca7-42f4-a0e1-999393702cf4/01a1c92e-3b6d-7ae6-bbad-598ad0bd8810/dfc42ed1-2d82-4fd3-a53c-cdab7af9cf55.mp4",
+     "expires_at": "2026-11-18T05:58:49.656286+00:00", "sha256": null}
+  ]
+}
