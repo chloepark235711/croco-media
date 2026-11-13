@@ -5,3 +5,11 @@ date,episode_id,scene,model,seconds,resolution,request_id,status,price_usd
 2026-11-10,20261110-02,1,kling-video/v4.0/text-to-video,5,720p,01a1c937-59de-7dbc-9dce-87ab1f9a8996,completed,0.6285
 2026-11-10,20261110-02,2,kling-video/v4.0/text-to-video,5,720p,01a1c937-5b45-7e11-b0a6-3cd222d6e590,completed,0.6285
 2026-11-10,20261110-02,2-retry,kling-video/v4.0/text-to-video,5,720p,01a1c93d-25e8-7ff2-8568-3a9d11af473e,completed,0.6285
+2026-11-12,20261108-01,1,kling-video/v4.0/text-to-video,4,720p,01a1d0fd-2964-7705-aae4-dbf0392c7f2f,completed,0.5028
+2026-11-12,20261108-01,2,kling-video/v4.0/text-to-video,4,720p,01a1d0fd-2adf-7166-93ac-22b17fab1087,completed,0.5028
+2026-11-12,20261108-01,3,kling-video/v4.0/text-to-video,4,720p,01a1d0fd-2c4b-7817-96a2-20ec19abe3e1,completed,0.5028
+2026-11-12,20261108-01,3-retry,kling-video/v4.0/text-to-video,4,720p,01a1d102-bcd3-7d59-9578-0e6818ff739f,completed,0.5028
+2026-11-12,20261113-01,1,kling-video/v4.0/reference-to-video,4,720p,01a1d2e0-cba2-734c-94bd-d1547564bae2,completed,0.5028
+2026-11-12,20261113-01,2,kling-video/v4.0/reference-to-video,5,720p,01a1d2e2-b81f-7338-8ab3-a25f08d3e23f,completed,0.6285
+2026-11-12,20261113-01,3,kling-video/v4.0/reference-to-video,5,720p,01a1d2e2-b94e-7789-b00d-6cb815c786fa,completed,0.6285
+2026-11-12,20261113-01,2-retry,kling-video/v4.0/reference-to-video,5,720p,01a1d2e5-ad1a-7749-8ed4-00a99b1d3514,completed,0.6285

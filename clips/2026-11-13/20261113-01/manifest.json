@@ -1,0 +1,57 @@
+{
+ "episode": "20261113-01",
+ "title": "Guess with Croco 1: A Duck! 🦆 Animals for Toddlers | Croco's Little World #Shorts",
+ "model": "kling-video/v4.0/reference-to-video",
+ "reference_image": "reference/croco-face.png (sha256 d24854e1d88ec6ae06804356f9d12dd877466646fd1b14ecf3182966ce15f2c7), passed as image_urls[0]",
+ "resolution": "720p",
+ "aspect_ratio": "9:16",
+ "test": false,
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "scene": 1,
+   "request_id": "01a1d2e0-cba2-734c-94bd-d1547564bae2",
+   "seconds": 4,
+   "price_usd": 0.5028,
+   "used": true,
+   "sha256": "0de32abf0ec525930be9ed6bad3ebc33e8c61bee56e0695c973891357e738af5"
+  },
+  {
+   "file": "scene-02.mp4",
+   "scene": 2,
+   "request_id": "01a1d2e2-b81f-7338-8ab3-a25f08d3e23f",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "used": false,
+   "note": "open smile 2.25-5.0s (no teeth) -> retried",
+   "sha256": "38c62e0e739c115264374009ac03abb6b39bd2e0f0aafbd1926d6ec05eaa8a26"
+  },
+  {
+   "file": "scene-02-retry.mp4",
+   "scene": 2,
+   "request_id": "01a1d2e5-ad1a-7749-8ed4-00a99b1d3514",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "used": true,
+   "sha256": "dbda1b1f18654796a65feb8b63c4ace007892ef9382df98a60f6904c9abcf11b"
+  },
+  {
+   "file": "scene-03.mp4",
+   "scene": 3,
+   "request_id": "01a1d2e2-b94e-7789-b00d-6cb815c786fa",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "used": true,
+   "note": "3.95-4.45s cut (brief open smile), end held 0.6s",
+   "sha256": "2f57eb9500406db4ade613b8c6510cb307f9a5ee612be867f7254df0215b3dec"
+  }
+ ],
+ "final": {
+  "file": "final.mp4",
+  "sha256": "115106387997eb6f340351c22938aee7920f13ea37ed35039bf5aba1515c9b9a",
+  "seconds": 14,
+  "size": "1080x1920",
+  "lufs": -14.0,
+  "peak_dbfs": -2.5
+ }
+}
