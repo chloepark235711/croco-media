@@ -1,0 +1,111 @@
+{
+ "published": [
+  {
+   "id": "strawberry",
+   "title": "Momo Found a Strawberry! 🍓🐊 | Cute Crocodile #Shorts",
+   "topic": "strawberry",
+   "date": "2026-11-01",
+   "video_id": "MBRfb_IOYPI"
+  },
+  {
+   "id": "little-fish",
+   "title": "A Little Fish Surprise! 🐟🐊 | Croco the Crocodile #Shorts",
+   "topic": "little fish",
+   "date": "2026-11-02",
+   "video_id": "iHrXcWzRGwg"
+  },
+  {
+   "id": "colors-ryb",
+   "title": "Red, Yellow, Blue! 🔴🟡🔵 Croco Learns Colors | Croco's Little World #Shorts",
+   "topic": "colors red-yellow-blue",
+   "date": "2026-11-02",
+   "video_id": "SdUpYv24wkA"
+  },
+  {
+   "id": "good-morning",
+   "title": "Good Morning, Croco! ☀️🐊 | Croco's Little World #Shorts",
+   "topic": "good morning",
+   "date": "2026-11-09",
+   "video_id": "IHE8WAenMGU"
+  },
+  {
+   "id": "washes-hands",
+   "title": "Croco Washes Hands! 🧼🐊 | Croco's Little World #Shorts",
+   "topic": "washes hands",
+   "date": "2026-11-09",
+   "video_id": "UwrjIfYrZ7Q"
+  },
+  {
+   "id": "20261110-01",
+   "title": "Hop, Waddle, Stomp! 🐊 | Croco's Little World #Shorts",
+   "topic": "Hop-Waddle-Stomp (Move with Croco 1)",
+   "date": "2026-11-11",
+   "video_id": "NdSdat-3g2M"
+  },
+  {
+   "id": "20261110-02",
+   "title": "Up and Down! ⭐🐊 | Croco's Little World #Shorts",
+   "topic": "Up and Down",
+   "date": "2026-11-11",
+   "video_id": "swXGNiRv610"
+  },
+  {
+   "id": "20261108-01",
+   "title": "Oops! Saying Sorry for Toddlers 🐢 Croco & Pebble 1 | Croco's Little World #Shorts",
+   "topic": "Oops! Saying Sorry (Croco & Pebble 1)",
+   "date": "2026-11-12",
+   "video_id": "NqI9TWs25NY"
+  }
+ ],
+ "drafted": [
+  {
+   "id": "20261113-01",
+   "title": "Guess with Croco 1: A Duck! 🦆 Animals for Toddlers | Croco's Little World #Shorts",
+   "topic": "duck (animals)",
+   "slot": "2026-11-13T12:00 America/Denver",
+   "metricool_id": 426497419,
+   "uuid": "-3370566682135804642",
+   "status": "draft, awaiting 08:00 Morning Review"
+  }
+ ],
+ "hold": [
+  "20261105-01"
+ ],
+ "queue": [
+  {
+   "id": "P3",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco 2: What's in the Box? Shapes",
+   "note": "15 s = 5+5+5, spec in V2 prompt P3; carried over from 2026-11-13 (budget)"
+  },
+  {
+   "id": "P4",
+   "series": "Guess with Croco (counting)",
+   "title": "Croco Counts Stars",
+   "note": "14 s = 4+5+5, spec in V2 prompt P4"
+  },
+  {
+   "id": "N1",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble 2: Taking Turns on the Slide",
+   "goal": "taking turns ('My turn, your turn'), low soft slide on a mat"
+  },
+  {
+   "id": "N2",
+   "series": "Move with Croco",
+   "title": "Move with Croco 2: Big and Small",
+   "goal": "opposites big/small via stretching tall and curling small"
+  },
+  {
+   "id": "N3",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco 3: Who Says Moo?",
+   "goal": "animal sound -> soft cartoon cow peeks from a barn door"
+  }
+ ],
+ "series": {
+  "Guess with Croco": 1,
+  "Move with Croco": 1,
+  "Croco & Pebble": 1
+ }
+}
