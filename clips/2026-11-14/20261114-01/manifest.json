@@ -1,0 +1,39 @@
+{
+ "episode": "20261114-01",
+ "publish_date": "2026-11-14",
+ "status": "BLOCKED",
+ "model": "kling-video/v4.0/reference-to-video",
+ "resolution": "720p",
+ "aspect_ratio": "9:16",
+ "test": false,
+ "reference_images": {
+  "croco-face.png": "fc7d52460e1c992f0083a8477c82287732f4c34b359ea3f5590ae2587b290141",
+  "croco-face-2.png (first attempts only)": "c541d59a124bdd22dc1e4fc199abd462e5f59147f70baf8f5b49958f9bb8f6a6"
+ },
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "b6c004f637d9d1537ed3ce914c84a1b432d9c04557bced4a74842f608a905b3b",
+   "request_id": "01a1d804-86a9-7848-a7e2-941760d6a528",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "FAIL: small teeth visible at mouth edge (ref croco-face + croco-face-2)"
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "47649657e45c4a3fbef4a57cddda4c731f464e37e31a0b6e5a1bd73e4714a599",
+   "request_id": "01a1d806-6fd6-7401-85d5-fb914195003c",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "FAIL: small teeth visible; blue square is a studded brick"
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "ca630f294ecbd8c6bd4fae8fdc423cb38de8f4f293ab17d958a2d08f0fc0d17d",
+   "request_id": "01a1d806-7141-70a0-bb5e-a1db08ed0ed8",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "FAIL: teeth + open mouth at end"
+  }
+ ]
+}

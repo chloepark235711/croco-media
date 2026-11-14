@@ -1,0 +1,60 @@
+{
+ "episode": "20261114-02",
+ "publish_date": "2026-11-14",
+ "status": "FINAL",
+ "model": "kling-video/v4.0/reference-to-video",
+ "resolution": "720p",
+ "aspect_ratio": "9:16",
+ "test": false,
+ "reference_images": {
+  "croco-face.png": "fc7d52460e1c992f0083a8477c82287732f4c34b359ea3f5590ae2587b290141",
+  "croco-face-2.png (first attempts only)": "c541d59a124bdd22dc1e4fc199abd462e5f59147f70baf8f5b49958f9bb8f6a6"
+ },
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "51a92df82c30956a69b14733a8a10b9ffb111466cd528b33f031ad70c12d0965",
+   "request_id": "01a1d806-72be-7b67-9064-b90b98992677",
+   "seconds": 4,
+   "price_usd": 0.5028,
+   "qa": "PASS used 0-4"
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "a72081ce1b013154194492482f9b629db1c38b798da07f1b2e8bd32f313602df",
+   "request_id": "01a1d806-7427-7590-ba20-fec85adc186a",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "FAIL: small teeth visible"
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "b2597e3910076f8e274908515af94491d6f97da13aab5d1ee60cbb4943dc4ec6",
+   "request_id": "01a1d806-759d-72ac-85b2-5248f7e1c0f9",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "FAIL: small teeth visible, star sparkle"
+  },
+  {
+   "file": "scene-02-retry.mp4",
+   "sha256": "63660266cfa8e9b959cb04cd7f6f94c1735e4055102e73e75b04aea91674e44b",
+   "request_id": "01a1d80a-000e-7a54-a173-57294efe22e2",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "PASS used 0-5 (ref croco-face only)"
+  },
+  {
+   "file": "scene-03-retry.mp4",
+   "sha256": "ec673ac1b7eaf688efab8bb81367335a0230f9d363c1e482a8603753fb2ceb27",
+   "request_id": "01a1d80a-0152-7488-850e-200a3d84de5d",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "PASS partial: used 0-3.0 slowed to 4.0 + 1.0 hold; mouth opens after 3.5 (cut)"
+  }
+ ],
+ "final": {
+  "file": "final.mp4",
+  "sha256": "e4c4d86de55ab4de990ff5453c070d5af0521fea15cc24171d47c08be41a6d38",
+  "seconds": 14
+ }
+}
