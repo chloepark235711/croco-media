@@ -65,6 +65,15 @@
    "slot": "2026-11-13T12:00 America/Denver",
    "metricool_id": 426497419,
    "uuid": "-3370566682135804642",
+   "status": "draft not released by Morning Review; slot 2026-11-13 12:00 passed (still draft true in Metricool as of 2026-11-13 20:05 MST)"
+  },
+  {
+   "id": "20261114-02",
+   "title": "Guess with Croco 3: How Many Stars? ⭐ for Toddlers | Croco's Little World #Shorts",
+   "topic": "counting 1-5 stars (P4)",
+   "slot": "2026-11-14T17:00 America/Denver",
+   "metricool_id": 427698287,
+   "uuid": "-3066228040309848673",
    "status": "draft, awaiting 08:00 Morning Review"
   }
  ],
@@ -76,13 +85,7 @@
    "id": "P3",
    "series": "Guess with Croco",
    "title": "Guess with Croco 2: What's in the Box? Shapes",
-   "note": "15 s = 5+5+5, spec in V2 prompt P3; carried over from 2026-11-13 (budget)"
-  },
-  {
-   "id": "P4",
-   "series": "Guess with Croco (counting)",
-   "title": "Croco Counts Stars",
-   "note": "14 s = 4+5+5, spec in V2 prompt P4"
+   "note": "BLOCKED 2026-11-13 run: all 3 scenes showed small teeth (refs croco-face + croco-face-2). Regenerate with image_urls=[croco-face.png] only. Keep title 'Guess with Croco 2'. 15 s = 5+5+5, $1.89; make the blue square a plain soft block (no studs)."
   },
   {
    "id": "N1",
@@ -101,10 +104,28 @@
    "series": "Guess with Croco",
    "title": "Guess with Croco 3: Who Says Moo?",
    "goal": "animal sound -> soft cartoon cow peeks from a barn door"
+  },
+  {
+   "id": "N4",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: Where's Croco's Nose?",
+   "goal": "body parts nose/eyes/tummy; Croco points to each, close-up first frame"
+  },
+  {
+   "id": "N5",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble 3: Sharing Apples",
+   "goal": "sharing ('One for you, one for me'), two soft red apples on a picnic blanket"
+  },
+  {
+   "id": "N6",
+   "series": "Move with Croco",
+   "title": "Move with Croco 3: Clap and Wave",
+   "goal": "copy-the-move: clap, clap, wave; slow gentle motion"
   }
  ],
  "series": {
-  "Guess with Croco": 1,
+  "Guess with Croco": 3,
   "Move with Croco": 1,
   "Croco & Pebble": 1
  }
