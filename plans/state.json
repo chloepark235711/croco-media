@@ -55,6 +55,13 @@
    "topic": "Oops! Saying Sorry (Croco & Pebble 1)",
    "date": "2026-11-12",
    "video_id": "NqI9TWs25NY"
+  },
+  {
+   "id": "20261114-02",
+   "title": "Guess with Croco 3: How Many Stars? ⭐ for Toddlers | Croco's Little World #Shorts",
+   "topic": "counting 1-5 stars (P4)",
+   "date": "2026-11-14",
+   "video_id": "3Z5DxY8J00A"
   }
  ],
  "drafted": [
@@ -68,12 +75,21 @@
    "status": "draft not released by Morning Review; slot 2026-11-13 12:00 passed (still draft true in Metricool as of 2026-11-13 20:05 MST)"
   },
   {
-   "id": "20261114-02",
-   "title": "Guess with Croco 3: How Many Stars? ⭐ for Toddlers | Croco's Little World #Shorts",
-   "topic": "counting 1-5 stars (P4)",
-   "slot": "2026-11-14T17:00 America/Denver",
-   "metricool_id": 427698287,
-   "uuid": "-3066228040309848673",
+   "id": "20261115-01",
+   "title": "Guess with Croco 2: What's in the Box? 🔺 for Toddlers | Croco's Little World #Shorts",
+   "topic": "shapes circle/square/triangle (P3)",
+   "slot": "2026-11-15T12:00 America/Denver",
+   "metricool_id": 428551982,
+   "uuid": "6518696249356273698",
+   "status": "draft, awaiting 08:00 Morning Review"
+  },
+  {
+   "id": "20261115-02",
+   "title": "Move with Croco 2: Big and Small! 🙌 for Toddlers | Croco's Little World #Shorts",
+   "topic": "opposites big/small (N2)",
+   "slot": "2026-11-15T17:00 America/Denver",
+   "metricool_id": 428552016,
+   "uuid": "-5518373086590120749",
    "status": "draft, awaiting 08:00 Morning Review"
   }
  ],
@@ -82,27 +98,15 @@
  ],
  "queue": [
   {
-   "id": "P3",
-   "series": "Guess with Croco",
-   "title": "Guess with Croco 2: What's in the Box? Shapes",
-   "note": "BLOCKED 2026-11-13 run: all 3 scenes showed small teeth (refs croco-face + croco-face-2). Regenerate with image_urls=[croco-face.png] only. Keep title 'Guess with Croco 2'. 15 s = 5+5+5, $1.89; make the blue square a plain soft block (no studs)."
-  },
-  {
    "id": "N1",
    "series": "Croco & Pebble",
    "title": "Croco & Pebble 2: Taking Turns on the Slide",
    "goal": "taking turns ('My turn, your turn'), low soft slide on a mat"
   },
   {
-   "id": "N2",
-   "series": "Move with Croco",
-   "title": "Move with Croco 2: Big and Small",
-   "goal": "opposites big/small via stretching tall and curling small"
-  },
-  {
    "id": "N3",
    "series": "Guess with Croco",
-   "title": "Guess with Croco 3: Who Says Moo?",
+   "title": "Guess with Croco 4: Who Says Moo?",
    "goal": "animal sound -> soft cartoon cow peeks from a barn door"
   },
   {
@@ -122,11 +126,33 @@
    "series": "Move with Croco",
    "title": "Move with Croco 3: Clap and Wave",
    "goal": "copy-the-move: clap, clap, wave; slow gentle motion"
+  },
+  {
+   "id": "N7",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: Whose Shadow? (bunny)",
+   "goal": "animal names: a soft bunny shadow on a garden wall, then a fluffy bunny hops out slowly"
+  },
+  {
+   "id": "N8",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble: Help Me, Please!",
+   "goal": "asking for help/please & thank you: Pebble helps Croco carry a big soft ball"
+  },
+  {
+   "id": "N9",
+   "series": "Move with Croco",
+   "title": "Move with Croco: Fast and Slow",
+   "goal": "opposites fast/slow via gentle tiptoe walking vs slow steps (no running)"
   }
  ],
  "series": {
   "Guess with Croco": 3,
-  "Move with Croco": 1,
+  "Move with Croco": 2,
   "Croco & Pebble": 1
- }
+ },
+ "notes": [
+  "Guess with Croco numbering: 1 Duck (draft never released), 2 Shapes (drafted 11-15), 3 Stars (published 11-14). Next Guess = 4.",
+  "Reference: use image_urls=[croco-face.png] only (croco-face-2.png causes teeth; owner approval pending)."
+ ]
 }
