@@ -1,0 +1,43 @@
+{
+ "episode": "20261115-02",
+ "publish_date": "2026-11-15",
+ "status": "QA PASS",
+ "model": "kling-video/v4.0/reference-to-video",
+ "resolution": "720p",
+ "aspect_ratio": "9:16",
+ "test": false,
+ "reference_images": {
+  "croco-face.png": "fc7d52460e1c992f0083a8477c82287732f4c34b359ea3f5590ae2587b290141"
+ },
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "6225145e0e768f04bae8644c9046a5ebc954416522fa8e1cd400f65951a03b5e",
+   "request_id": "01a1dd2a-a873-745c-a8e3-d413a33e4339",
+   "seconds": 4,
+   "price_usd": 0.5028,
+   "qa": "PASS"
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "3065eb52866537436f7f794e1de1ea6fcabb0f41e4343e12ea59efd0a7778cc8",
+   "request_id": "01a1dd2c-81bd-7ec8-bc01-71ee3d8f5a6a",
+   "seconds": 4,
+   "price_usd": 0.5028,
+   "qa": "PASS"
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "69ca590a3c19ef602fe7330afdf2f3174c7c795b642310e176db1d3df4b1c94e",
+   "request_id": "01a1dd2c-8330-77dd-b4b6-390371a2496b",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "PASS"
+  }
+ ],
+ "final": {
+  "file": "final-20261115-02.mp4",
+  "sha256": "8e86a810d8489d9423d74482b908891018541bfbfd6245c7f5a0e6ce024fe98c"
+ },
+ "total_usd": 1.6341
+}

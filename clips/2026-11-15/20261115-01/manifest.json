@@ -1,0 +1,59 @@
+{
+ "episode": "20261115-01",
+ "publish_date": "2026-11-15",
+ "status": "QA PASS",
+ "model": "kling-video/v4.0/reference-to-video",
+ "resolution": "720p",
+ "aspect_ratio": "9:16",
+ "test": false,
+ "reference_images": {
+  "croco-face.png": "fc7d52460e1c992f0083a8477c82287732f4c34b359ea3f5590ae2587b290141"
+ },
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "72ddf308d152c846926fa9b549b0be3b2e352246eda813aaf5c0ea04649b0d3e",
+   "request_id": "01a1dd2a-a722-73dd-bbc5-d232321b1b09",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "PASS (used 0-4.25 s; teeth from 4.4 s cut)"
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "e2774479759bbf4603180de25e559c887e838c32550c16b2186efcae73f3d6d0",
+   "request_id": "01a1dd2c-7ee8-7354-9fdd-3891e94113d1",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "FAIL teeth at ~3.0 s"
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "b47701c6fb78653879e5f76943fafe491a2bc00a434e7a3ac1f97d963a8d0b3b",
+   "request_id": "01a1dd2c-805e-7291-b1cc-3b901b9b2956",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "FAIL triangle rendered as rectangle; teeth at end"
+  },
+  {
+   "file": "scene-02-retry.mp4",
+   "sha256": "eff3db0f82972b60e60e80f1455e4d57950d1a88d7e3299b2ac04c672967f1ca",
+   "request_id": "01a1dd2e-82ae-7f7a-8006-abe43a25cb27",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "PASS (used 2.0-5.0 s, cropped bottom yellow mat)"
+  },
+  {
+   "file": "scene-03-retry.mp4",
+   "sha256": "02afe2644abee261da77564e40d5e18e5a7fd680b9be7a55aa442d59fbd2d60e",
+   "request_id": "01a1dd2e-841e-7736-8029-7171de248fbb",
+   "seconds": 5,
+   "price_usd": 0.6285,
+   "qa": "PASS (clear triangle 0-1.5 s; closed mouth)"
+  }
+ ],
+ "final": {
+  "file": "final-20261115-01.mp4",
+  "sha256": "03aaaa3976619cd1798123a55a2d77b6067c6380f586296e77877d1e7af3d3d3"
+ },
+ "total_usd": 3.1425
+}
