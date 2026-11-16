@@ -62,6 +62,20 @@
    "topic": "counting 1-5 stars (P4)",
    "date": "2026-11-14",
    "video_id": "3Z5DxY8J00A"
+  },
+  {
+   "id": "20261115-01",
+   "title": "Guess with Croco 2: What's in the Box? 🔺 for Toddlers | Croco's Little World #Shorts",
+   "topic": "shapes circle-square-triangle (Guess with Croco 2)",
+   "date": "2026-11-15",
+   "video_id": "rv-oZwjrpus"
+  },
+  {
+   "id": "20261115-02",
+   "title": "Move with Croco 2: Big and Small! 🙌 for Toddlers | Croco's Little World #Shorts",
+   "topic": "Big and Small (Move with Croco 2)",
+   "date": "2026-11-15",
+   "video_id": "DD7ZjEwjeHs"
   }
  ],
  "drafted": [
@@ -81,7 +95,7 @@
    "slot": "2026-11-15T12:00 America/Denver",
    "metricool_id": 428551982,
    "uuid": "6518696249356273698",
-   "status": "draft, awaiting 08:00 Morning Review"
+   "status": "PUBLISHED (released by Morning Review)"
   },
   {
    "id": "20261115-02",
@@ -90,25 +104,13 @@
    "slot": "2026-11-15T17:00 America/Denver",
    "metricool_id": 428552016,
    "uuid": "-5518373086590120749",
-   "status": "draft, awaiting 08:00 Morning Review"
+   "status": "PUBLISHED (released by Morning Review)"
   }
  ],
  "hold": [
   "20261105-01"
  ],
  "queue": [
-  {
-   "id": "N1",
-   "series": "Croco & Pebble",
-   "title": "Croco & Pebble 2: Taking Turns on the Slide",
-   "goal": "taking turns ('My turn, your turn'), low soft slide on a mat"
-  },
-  {
-   "id": "N3",
-   "series": "Guess with Croco",
-   "title": "Guess with Croco 4: Who Says Moo?",
-   "goal": "animal sound -> soft cartoon cow peeks from a barn door"
-  },
   {
    "id": "N4",
    "series": "Guess with Croco",
@@ -144,6 +146,18 @@
    "series": "Move with Croco",
    "title": "Move with Croco: Fast and Slow",
    "goal": "opposites fast/slow via gentle tiptoe walking vs slow steps (no running)"
+  },
+  {
+   "id": "N10",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: What Color Is the Leaf?",
+   "goal": "colors in nature: green leaf, red apple, yellow sun-flower; one color at a time"
+  },
+  {
+   "id": "N11",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble: Feeling Happy, Feeling Sad",
+   "goal": "naming feelings; Pebble feels a little sad (no tears), Croco gives a gentle hug, both smile"
   }
  ],
  "series": {
@@ -153,6 +167,15 @@
  },
  "notes": [
   "Guess with Croco numbering: 1 Duck (draft never released), 2 Shapes (drafted 11-15), 3 Stars (published 11-14). Next Guess = 4.",
-  "Reference: use image_urls=[croco-face.png] only (croco-face-2.png causes teeth; owner approval pending)."
+  "2026-11-16 (v3): refs [croco-face-2.png, croco-face.png] + teeth LOCK -> 4/4 clips show rows of 4-8 teeth (croco-face-2.png itself shows 4 teeth). Owner decision needed before more spend.",
+  "Priority queue v3 P1 (Taking Turns), P2 (Moo), P3 (Pat Touch Wiggle) still pending; series counters unchanged."
+ ],
+ "blocked": [
+  {
+   "id": "20261116-01",
+   "title": "Taking Turns for Toddlers 🐢 Croco & Pebble 2 | Croco's Little World #Shorts",
+   "slot": "2026-11-16T17:00 America/Denver (same-day recovery)",
+   "status": "BLOCKED 2026-11-16: teeth v3 FAIL in all 4 clips (rows of 4-8 teeth). Clips in inbox clips/2026-11-16/20261116-01. P1 stays first in queue."
+  }
  ]
 }

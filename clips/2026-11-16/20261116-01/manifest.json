@@ -1,0 +1,51 @@
+{
+ "episode": "20261116-01",
+ "title": "Taking Turns for Toddlers 🐢 Croco & Pebble 2 | Croco's Little World #Shorts",
+ "status": "BLOCKED (teeth v3)",
+ "refs": [
+  "reference/croco-face-2.png",
+  "reference/croco-face.png"
+ ],
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "9d5929c59b1ae89395245c1d57b01a5f6e9d6cc6cee95474dbefa814d8b8ade1",
+   "request_id": "01a1e596-b93a-7ff5-8e1f-f6fa40d3e118",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "price": 0.5028,
+   "test": false,
+   "qa": "FAIL teeth row 4-6"
+  },
+  {
+   "file": "scene-01-retry.mp4",
+   "sha256": "e1d525a3c3dc21895d4f54de04aefba45e6739c03fb10ecfc63ed3ddf97e78a3",
+   "request_id": "01a1e598-f18c-7617-bf80-193c64c752ae",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "price": 0.5028,
+   "test": false,
+   "qa": "FAIL teeth row, open mouth"
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "b91033323c120b9ebce6ad437d8a858921296df4d2ac1ac7e8d4ba5dfc137e7e",
+   "request_id": "01a1e598-f2ed-786a-a23b-184ad04a0aeb",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "price": 0.5028,
+   "test": false,
+   "qa": "FAIL teeth row; roll not clearly shown"
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "1a9bc7fd6c1c01f963b874116cb9adb5b20e3fb3557d596a88220e00e7a531e8",
+   "request_id": "01a1e598-f430-747f-b5e0-f61d72275d2b",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "price": 0.5028,
+   "test": false,
+   "qa": "FAIL wide-open mouth, full row of teeth 2.5-4s"
+  }
+ ]
+}
