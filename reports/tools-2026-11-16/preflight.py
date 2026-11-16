@@ -85,7 +85,8 @@ def check_references(refs, root="."):
         if not os.path.isfile(p):
             errs.append(f"reference file missing: {r}")
             continue
-        h = hashlib.sha256(open(p, "rb").read()).hexdigest()
+        with open(p, "rb") as fh:
+            h = hashlib.sha256(fh.read()).hexdigest()
         if h != ALLOWED_REFERENCES[r]:
             errs.append(f"reference sha256 mismatch: {r}")
     return errs
