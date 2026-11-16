@@ -1,7 +1,7 @@
 {
  "episode": "20261116-01",
  "title": "Taking Turns for Toddlers 🐢 Croco & Pebble 2 | Croco's Little World #Shorts",
- "status": "BLOCKED (teeth v3)",
+ "status": "SCHEDULED 2026-11-16 17:00 (same-day recovery, draft false, autoPublish true); v1 clips (face-2 + teeth lock) BLOCKED",
  "refs": [
   "reference/croco-face-2.png",
   "reference/croco-face.png"
@@ -46,6 +46,51 @@
    "price": 0.5028,
    "test": false,
    "qa": "FAIL wide-open mouth, full row of teeth 2.5-4s"
+  },
+  {
+   "file": "v4-scene-01.mp4",
+   "sha256": "56075459d398b521e4612199701fc7c31dac6ab1b63fe4d7f81720069e05b083",
+   "request_id": "01a1e5a6-1ce0-7a02-93ac-17fc49d1a441",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "price": 0.5028,
+   "test": false,
+   "qa": "PASS 0 teeth, closed mouth, close-up first frame"
+  },
+  {
+   "file": "v4-scene-02.mp4",
+   "sha256": "763e450089babf5c2a6f0e65e6b184c792ca675e26f15b69e73fb95c5eba256b",
+   "request_id": "01a1e5a6-1e32-72ee-a4c6-f9590cef6561",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "price": 0.5028,
+   "test": false,
+   "qa": "PASS 0 teeth; Croco pushes ball, Pebble stops it"
+  },
+  {
+   "file": "v4-scene-03.mp4",
+   "sha256": "9df7725438187f886329a3d9f762e34cc9ef8d1f308609edeac6fa43e78230fe",
+   "request_id": "01a1e5a6-1f9d-7117-9d42-0a1bc776aa38",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "price": 0.5028,
+   "test": false,
+   "qa": "PASS 0 teeth; Pebble rolling back is not explicit (minor)"
   }
- ]
+ ],
+ "v4_config": {
+  "refs": [
+   "reference/croco-face.png"
+  ],
+  "lock": "main croco/brand.py CHARACTER_LOCK (closed-mouth) + PEBBLE_LOCK + MOUTH_LINE_PAIR",
+  "scene_change": "sweet/kind/happy smile(s) -> closed-mouth smile(s); extra neg + 'no wide-open mouth'",
+  "preflight": "croco/preflight.py PASS"
+ },
+ "final": {
+  "file": "final-20261116-01.mp4",
+  "sha256": "a462ecbecef20e26e31522bba14a3a3f76493378d194fbb1dfbe236000b6f34b",
+  "relay_name": "6bed07e912450187.mp4",
+  "metricool_id": 430496444,
+  "uuid": "-8237430608087987912"
+ }
 }

@@ -105,6 +105,15 @@
    "metricool_id": 428552016,
    "uuid": "-5518373086590120749",
    "status": "PUBLISHED (released by Morning Review)"
+  },
+  {
+   "id": "20261116-01",
+   "title": "Taking Turns for Toddlers 🐢 Croco & Pebble 2 | Croco's Little World #Shorts",
+   "topic": "taking turns (Croco & Pebble 2)",
+   "slot": "2026-11-16T17:00 America/Denver",
+   "metricool_id": 430496444,
+   "uuid": "-8237430608087987912",
+   "status": "SCHEDULED same-day recovery (draft false, autoPublish true) after self-QA PASS; not yet published"
   }
  ],
  "hold": [
@@ -163,19 +172,25 @@
  "series": {
   "Guess with Croco": 3,
   "Move with Croco": 2,
-  "Croco & Pebble": 1
+  "Croco & Pebble": 2
  },
  "notes": [
   "Guess with Croco numbering: 1 Duck (draft never released), 2 Shapes (drafted 11-15), 3 Stars (published 11-14). Next Guess = 4.",
-  "2026-11-16 (v3): refs [croco-face-2.png, croco-face.png] + teeth LOCK -> 4/4 clips show rows of 4-8 teeth (croco-face-2.png itself shows 4 teeth). Owner decision needed before more spend.",
-  "Priority queue v3 P1 (Taking Turns), P2 (Moo), P3 (Pat Touch Wiggle) still pending; series counters unchanged."
+  "Priority queue v3 P1 (Taking Turns), P2 (Moo), P3 (Pat Touch Wiggle) still pending; series counters unchanged.",
+  "OWNER ORDER 2026-11-16 (V3 pipeline): croco-face-2.png removed from generation references; croco-face.png only. Closed-mouth / no-teeth smile preferred; 0 teeth = PASS; open mouth or several teeth = FAIL. Never relax rules automatically.",
+  "Run croco/preflight.py (branch claude/upbeat-cerf-vfh03h, also copied to inbox reports/tools-2026-11-16/) BEFORE every paid request. Prompt = main croco/brand.py scene_prompt (closed-mouth lock); smile words must be 'closed-mouth smile(s)'.",
+  "Lesson L1-L4 + failure taxonomy: reports/lessons.md"
  ],
  "blocked": [
   {
-   "id": "20261116-01",
-   "title": "Taking Turns for Toddlers 🐢 Croco & Pebble 2 | Croco's Little World #Shorts",
-   "slot": "2026-11-16T17:00 America/Denver (same-day recovery)",
-   "status": "BLOCKED 2026-11-16: teeth v3 FAIL in all 4 clips (rows of 4-8 teeth). Clips in inbox clips/2026-11-16/20261116-01. P1 stays first in queue."
+   "id": "20261117-01",
+   "title": "Guess with Croco 4: Who Says Moo?",
+   "status": "NOT GENERATED 2026-11-16: Denver 11-16 budget left $1.4776 < P2 base $1.7598"
+  },
+  {
+   "id": "20261117-02",
+   "title": "Move with Croco 3: Pat, Touch, Wiggle!",
+   "status": "NOT GENERATED 2026-11-16: budget"
   }
  ]
 }
