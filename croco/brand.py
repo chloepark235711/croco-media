@@ -22,6 +22,10 @@ NEGATIVE = "no scary expressions, no sharp teeth, no rows of teeth, no teeth, no
 PEBBLE_LOCK = 'Pebble, a small round lavender baby turtle with a cream-colored belly, a smooth lavender shell with exactly three soft sky-blue round spots, big round gray eyes, short stubby legs, a gentle closed-mouth smile, and no clothing or accessories. Soft 3D animated preschool style, gentle pastel lighting, friendly and calm.'
 PEBBLE_NEGATIVE = "No clothing or accessories on Pebble, no sharp beak, do not change Pebble's lavender color or the three sky-blue shell spots, no resemblance to other franchises' turtle characters."
 
+# Face reference for kling-video/v4.0/reference-to-video (owner order 2026-11-16):
+# croco-face.png ONLY. croco-face-2.png shows 4 teeth and is banned (see croco/preflight.py).
+REFERENCE_IMAGES = ("reference/croco-face.png",)
+
 # Characters allowed on screen (brand bible: Croco + approved supporting character Pebble only).
 APPROVED_CHARACTERS = ("Croco", "Pebble")
 
