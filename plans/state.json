@@ -179,7 +179,8 @@
   "Priority queue v3 P1 (Taking Turns), P2 (Moo), P3 (Pat Touch Wiggle) still pending; series counters unchanged.",
   "OWNER ORDER 2026-11-16 (V3 pipeline): croco-face-2.png removed from generation references; croco-face.png only. Closed-mouth / no-teeth smile preferred; 0 teeth = PASS; open mouth or several teeth = FAIL. Never relax rules automatically.",
   "Run croco/preflight.py (branch claude/upbeat-cerf-vfh03h, also copied to inbox reports/tools-2026-11-16/) BEFORE every paid request. Prompt = main croco/brand.py scene_prompt (closed-mouth lock); smile words must be 'closed-mouth smile(s)'.",
-  "Lesson L1-L4 + failure taxonomy: reports/lessons.md"
+  "Lesson L1-L4 + failure taxonomy: reports/lessons.md",
+  "OWNER RULE 2026-11-16 (later): teeth COUNT does not matter — the criterion is 'Croco looks cute' (round big head, big brown eyes, rosy cheeks, short snout, soft friendly smile). Teeth count is no longer a FAIL reason. Still FAIL: scary look, sharp/pointed fangs, older/long-faced/small-eyed Croco. Keep the verified cute config (croco-face.png only + closed-mouth lock) because it produced the cute episodes (Guess 2/3, Move 2, Taking Turns)."
  ],
  "blocked": [
   {

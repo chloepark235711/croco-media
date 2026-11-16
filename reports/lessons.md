@@ -27,3 +27,8 @@
 | MOUTH | "exactly two tiny ... teeth" | "closed-mouth smiles for both characters, no teeth visible at any time." |
 | 장면 미소 | "sweet smile", "kind smile", "happy smiles" | "gentle/kind closed-mouth smile(s)" |
 | NEG | "no more than two teeth" | "no teeth, no open mouth with teeth" + "no wide-open mouth" |
+
+## 오너 기준 변경 (2026-11-16 오후)
+- "이빨 개수는 상관없고 귀여우면 됨." → QA에서 **이빨 개수는 불합격 사유가 아님**. 판정 기준 = 귀여움 (둥근 큰 머리, 큰 갈색 눈, 분홍 볼, 짧은 주둥이, 부드러운 미소).
+- 계속 불합격: 무서운 표정, 뾰족한 송곳니, 늙어 보이거나 얼굴이 길거나 눈이 작은 Croco.
+- 생성 설정은 그대로 유지 (croco-face.png 단독 + 입 다문 LOCK): 오너가 귀엽다고 한 Guess 2·3, Move 2, Taking Turns가 모두 이 설정. 검증된 조합이라 바꾸지 않음.
