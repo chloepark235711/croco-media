@@ -76,6 +76,13 @@
    "topic": "Big and Small (Move with Croco 2)",
    "date": "2026-11-15",
    "video_id": "DD7ZjEwjeHs"
+  },
+  {
+   "id": "20261116-01",
+   "title": "Taking Turns for Toddlers 🐢 Croco & Pebble 2 | Croco's Little World #Shorts",
+   "topic": "taking turns (Croco & Pebble 2)",
+   "date": "2026-11-16",
+   "video_id": "4174uCAeqeo"
   }
  ],
  "drafted": [
@@ -113,7 +120,16 @@
    "slot": "2026-11-16T17:00 America/Denver",
    "metricool_id": 430496444,
    "uuid": "-8237430608087987912",
-   "status": "SCHEDULED same-day recovery (draft false, autoPublish true) after self-QA PASS; not yet published"
+   "status": "PUBLISHED 2026-11-16 17:00 (4174uCAeqeo)"
+  },
+  {
+   "id": "20261117-01",
+   "title": "Guess with Croco 4: Who Says Moo? 🐄 for Toddlers | Croco's Little World #Shorts",
+   "topic": "animal sounds: cow says moo (Guess with Croco 4)",
+   "slot": "2026-11-17T12:00 America/Denver",
+   "metricool_id": 430948903,
+   "uuid": "6456728099864465223",
+   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
   }
  ],
  "hold": [
@@ -131,12 +147,6 @@
    "series": "Croco & Pebble",
    "title": "Croco & Pebble 3: Sharing Apples",
    "goal": "sharing ('One for you, one for me'), two soft red apples on a picnic blanket"
-  },
-  {
-   "id": "N6",
-   "series": "Move with Croco",
-   "title": "Move with Croco 3: Clap and Wave",
-   "goal": "copy-the-move: clap, clap, wave; slow gentle motion"
   },
   {
    "id": "N7",
@@ -167,10 +177,22 @@
    "series": "Croco & Pebble",
    "title": "Croco & Pebble: Feeling Happy, Feeling Sad",
    "goal": "naming feelings; Pebble feels a little sad (no tears), Croco gives a gentle hug, both smile"
+  },
+  {
+   "id": "N12",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: Who Says Baa? (sheep)",
+   "goal": "animal sounds: a fluffy sheep peeks out; same format as Moo"
+  },
+  {
+   "id": "N13",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble: Thank You!",
+   "goal": "saying thank you: Pebble hands Croco a soft leaf, Croco says thank you"
   }
  ],
  "series": {
-  "Guess with Croco": 3,
+  "Guess with Croco": 4,
   "Move with Croco": 2,
   "Croco & Pebble": 2
  },
@@ -180,18 +202,14 @@
   "OWNER ORDER 2026-11-16 (V3 pipeline): croco-face-2.png removed from generation references; croco-face.png only. Closed-mouth / no-teeth smile preferred; 0 teeth = PASS; open mouth or several teeth = FAIL. Never relax rules automatically.",
   "Run croco/preflight.py (branch claude/upbeat-cerf-vfh03h, also copied to inbox reports/tools-2026-11-16/) BEFORE every paid request. Prompt = main croco/brand.py scene_prompt (closed-mouth lock); smile words must be 'closed-mouth smile(s)'.",
   "Lesson L1-L4 + failure taxonomy: reports/lessons.md",
-  "OWNER RULE 2026-11-16 (later): teeth COUNT does not matter — the criterion is 'Croco looks cute' (round big head, big brown eyes, rosy cheeks, short snout, soft friendly smile). Teeth count is no longer a FAIL reason. Still FAIL: scary look, sharp/pointed fangs, older/long-faced/small-eyed Croco. Keep the verified cute config (croco-face.png only + closed-mouth lock) because it produced the cute episodes (Guess 2/3, Move 2, Taking Turns)."
+  "OWNER RULE 2026-11-16 (later): teeth COUNT does not matter — the criterion is 'Croco looks cute' (round big head, big brown eyes, rosy cheeks, short snout, soft friendly smile). Teeth count is no longer a FAIL reason. Still FAIL: scary look, sharp/pointed fangs, older/long-faced/small-eyed Croco. Keep the verified cute config (croco-face.png only + closed-mouth lock) because it produced the cute episodes (Guess 2/3, Move 2, Taking Turns).",
+  "2026-11-16 20:00 run: P2 Moo shortened to 10s (5+5, 2 scenes) to fit remaining 11-16 budget; 'Hello, cow!' line dropped. Config = croco-face.png only + brand.py closed-mouth lock (owner orders recorded 11-16 supersede the stored prompt's croco-face-2/teeth LOCK). preflight budget check double-counts once a scene is already in the ledger (cosmetic bug)."
  ],
  "blocked": [
   {
-   "id": "20261117-01",
-   "title": "Guess with Croco 4: Who Says Moo?",
-   "status": "NOT GENERATED 2026-11-16: Denver 11-16 budget left $1.4776 < P2 base $1.7598"
-  },
-  {
    "id": "20261117-02",
    "title": "Move with Croco 3: Pat, Touch, Wiggle!",
-   "status": "NOT GENERATED 2026-11-16: budget"
+   "status": "NOT GENERATED 2026-11-16 20:00 run: Denver 11-16 budget left $0.2234 after Moo; slot 2026-11-17 17:00 empty. Next: manual Run now before 14:00 on 11-17 (same-day recovery, 11-17 budget) or next scheduled run."
   }
  ]
 }
