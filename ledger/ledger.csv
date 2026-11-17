@@ -36,3 +36,5 @@ date,episode_id,scene,model,seconds,resolution,request_id,status,price_usd
 2026-11-16,20261116-01,v4-1,kling-video/v4.0/reference-to-video,4,720p,01a1e5a6-1ce0-7a02-93ac-17fc49d1a441,completed,0.5028
 2026-11-16,20261116-01,v4-2,kling-video/v4.0/reference-to-video,4,720p,01a1e5a6-1e32-72ee-a4c6-f9590cef6561,completed,0.5028
 2026-11-16,20261116-01,v4-3,kling-video/v4.0/reference-to-video,4,720p,01a1e5a6-1f9d-7117-9d42-0a1bc776aa38,completed,0.5028
+2026-11-16,20261117-01,1,kling-video/v4.0/reference-to-video,5,720p,01a1e776-fe2a-792f-92e7-eaedbf9f66e6,completed,0.6285
+2026-11-16,20261117-01,2,kling-video/v4.0/reference-to-video,5,720p,01a1e778-c613-71bb-abe6-4de15f0695a0,completed,0.6285

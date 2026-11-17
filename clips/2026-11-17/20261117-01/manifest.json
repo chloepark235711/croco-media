@@ -1,0 +1,35 @@
+{
+ "episode": "20261117-01",
+ "model": "kling-video/v4.0/reference-to-video",
+ "references": [
+  "reference/croco-face.png"
+ ],
+ "resolution": "720p",
+ "aspect_ratio": "9:16",
+ "test": false,
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "f04ddec5bb882060ea12a20d32e569fdcc6a4361a5cda12bc26c1fb07504647e",
+   "request_id": "01a1e776-fe2a-792f-92e7-eaedbf9f66e6",
+   "seconds": 5,
+   "price": 0.6285,
+   "qa": "PASS"
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "04564d7f86c0487233ce356395f0f11fc6962b3e25e5edb85815887a7fff9a15",
+   "request_id": "01a1e778-c613-71bb-abe6-4de15f0695a0",
+   "seconds": 5,
+   "price": 0.6285,
+   "qa": "PASS (minor: cow has tiny horn nubs)"
+  }
+ ],
+ "final": {
+  "file": "final-20261117-01.mp4",
+  "sha256": "ba43ce9d86b4bf71cc3a372b7390bb67f222aaea40ab781ea687b51d581c22b4",
+  "seconds": 11,
+  "lufs": -13.9,
+  "peak_dbfs": -3.1
+ }
+}
