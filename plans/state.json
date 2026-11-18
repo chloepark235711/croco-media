@@ -129,6 +129,24 @@
    "slot": "2026-11-17T12:00 America/Denver",
    "metricool_id": 430948903,
    "uuid": "6456728099864465223",
+   "status": "DRAFT NOT RELEASED by Morning Review — slot 2026-11-17 12:00 passed, still draft true/PENDING in Metricool as of 2026-11-17 20:05 MST. Not published; topic held (do not re-draft same title within 30 days) until owner decides."
+  },
+  {
+   "id": "20261118-01",
+   "title": "Move with Croco 3: Pat, Touch, Wiggle! 🙌 for Toddlers | Croco's Little World #Shorts",
+   "topic": "body parts head/nose/toes (Move with Croco 3)",
+   "slot": "2026-11-18T12:00 America/Denver",
+   "metricool_id": 432322419,
+   "uuid": "7212221560647730449",
+   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+  },
+  {
+   "id": "20261118-02",
+   "title": "Croco & Pebble 3: Sharing Apples 🍎 for Toddlers | Croco's Little World #Shorts",
+   "topic": "sharing apples (Croco & Pebble 3)",
+   "slot": "2026-11-18T17:00 America/Denver",
+   "metricool_id": 432322448,
+   "uuid": "9018854597823581324",
    "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
   }
  ],
@@ -141,12 +159,6 @@
    "series": "Guess with Croco",
    "title": "Guess with Croco: Where's Croco's Nose?",
    "goal": "body parts nose/eyes/tummy; Croco points to each, close-up first frame"
-  },
-  {
-   "id": "N5",
-   "series": "Croco & Pebble",
-   "title": "Croco & Pebble 3: Sharing Apples",
-   "goal": "sharing ('One for you, one for me'), two soft red apples on a picnic blanket"
   },
   {
    "id": "N7",
@@ -189,12 +201,30 @@
    "series": "Croco & Pebble",
    "title": "Croco & Pebble: Thank You!",
    "goal": "saying thank you: Pebble hands Croco a soft leaf, Croco says thank you"
+  },
+  {
+   "id": "N14",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: Who Is Hiding? (bunny ears)",
+   "goal": "animal names: soft bunny ears peek over a flower pot, a fluffy bunny slowly hops out"
+  },
+  {
+   "id": "N15",
+   "series": "Move with Croco",
+   "title": "Move with Croco: Clap and Stomp",
+   "goal": "copy-the-move rhythm: clap, clap, gentle stomp in place (no jumping)"
+  },
+  {
+   "id": "N16",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: How Many Apples?",
+   "goal": "counting 1-3 with apples in a basket (different object from stars; count only to three)"
   }
  ],
  "series": {
   "Guess with Croco": 4,
-  "Move with Croco": 2,
-  "Croco & Pebble": 2
+  "Move with Croco": 3,
+  "Croco & Pebble": 3
  },
  "notes": [
   "Guess with Croco numbering: 1 Duck (draft never released), 2 Shapes (drafted 11-15), 3 Stars (published 11-14). Next Guess = 4.",
@@ -203,13 +233,8 @@
   "Run croco/preflight.py (branch claude/upbeat-cerf-vfh03h, also copied to inbox reports/tools-2026-11-16/) BEFORE every paid request. Prompt = main croco/brand.py scene_prompt (closed-mouth lock); smile words must be 'closed-mouth smile(s)'.",
   "Lesson L1-L4 + failure taxonomy: reports/lessons.md",
   "OWNER RULE 2026-11-16 (later): teeth COUNT does not matter — the criterion is 'Croco looks cute' (round big head, big brown eyes, rosy cheeks, short snout, soft friendly smile). Teeth count is no longer a FAIL reason. Still FAIL: scary look, sharp/pointed fangs, older/long-faced/small-eyed Croco. Keep the verified cute config (croco-face.png only + closed-mouth lock) because it produced the cute episodes (Guess 2/3, Move 2, Taking Turns).",
-  "2026-11-16 20:00 run: P2 Moo shortened to 10s (5+5, 2 scenes) to fit remaining 11-16 budget; 'Hello, cow!' line dropped. Config = croco-face.png only + brand.py closed-mouth lock (owner orders recorded 11-16 supersede the stored prompt's croco-face-2/teeth LOCK). preflight budget check double-counts once a scene is already in the ledger (cosmetic bug)."
+  "2026-11-16 20:00 run: P2 Moo shortened to 10s (5+5, 2 scenes) to fit remaining 11-16 budget; 'Hello, cow!' line dropped. Config = croco-face.png only + brand.py closed-mouth lock (owner orders recorded 11-16 supersede the stored prompt's croco-face-2/teeth LOCK). preflight budget check double-counts once a scene is already in the ledger (cosmetic bug).",
+  "2026-11-17 20:00 run: P3 Pat/Touch/Wiggle + N5 Sharing Apples generated (6 scenes, 0 retries, $3.3939), self-QA PASS, drafted 11-18 12:00/17:00. Moo (20261117-01) draft was not released for 11-17 12:00; 11-17 17:00 stayed empty (no same-day recovery run)."
  ],
- "blocked": [
-  {
-   "id": "20261117-02",
-   "title": "Move with Croco 3: Pat, Touch, Wiggle!",
-   "status": "NOT GENERATED 2026-11-16 20:00 run: Denver 11-16 budget left $0.2234 after Moo; slot 2026-11-17 17:00 empty. Next: manual Run now before 14:00 on 11-17 (same-day recovery, 11-17 budget) or next scheduled run."
-  }
- ]
+ "blocked": []
 }
