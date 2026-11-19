@@ -1,0 +1,38 @@
+{
+ "episode": "20261119-01",
+ "model": "kling-video/v4.0/reference-to-video",
+ "resolution": "720p",
+ "aspect_ratio": "9:16",
+ "reference": "reference/croco-face.png (sha256 fc7d5246\u2026)",
+ "test": false,
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "76ce2847581a8de19d6f879cf1b13a6c43cb44de424405b5fda55303d961e86d",
+   "request_id": "01a1f1c4-b38c-724d-8405-81bf078674b1",
+   "seconds": 4,
+   "price": 0.5028,
+   "qa": "PASS"
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "84ebd82806e0bf975dc8364e0d94c465e20a1fdfd13c37327ad7e4596316342f",
+   "request_id": "01a1f1c6-45e5-78de-8039-9655bad15750",
+   "seconds": 4,
+   "price": 0.5028,
+   "qa": "PASS"
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "913ec54b40a9398eacffc6d91f347f53284b842570b79ed6358b087c8008afb9",
+   "request_id": "01a1f1c6-472a-7c57-a508-a71f66f1e262",
+   "seconds": 4,
+   "price": 0.5028,
+   "qa": "PASS"
+  }
+ ],
+ "final": {
+  "file": "final-20261119-01.mp4",
+  "sha256": "e0976603ada5ba5f87deee2abbf047e810fe086c868461f0ab7f2ae5d8ac05f7"
+ }
+}

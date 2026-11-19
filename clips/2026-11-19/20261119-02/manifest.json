@@ -1,0 +1,39 @@
+{
+ "episode": "20261119-02",
+ "model": "kling-video/v4.0/reference-to-video",
+ "resolution": "720p",
+ "aspect_ratio": "9:16",
+ "reference": "reference/croco-face.png (sha256 fc7d5246\u2026)",
+ "test": false,
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "2f37df563a8f8287c7698f7b1ff722c1b10cafbf92869de7d956bb03050d6659",
+   "request_id": "01a1f1c6-484f-7124-846c-37d7dfecd57c",
+   "seconds": 4,
+   "price": 0.5028,
+   "qa": "PASS"
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "311215fb538cbefac14d57a3f842f1e10b6894e46cbde9835bac744e879200d6",
+   "request_id": "01a1f1c6-4975-7f47-b8c1-52d3c878a93c",
+   "seconds": 4,
+   "price": 0.5028,
+   "qa": "PASS"
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "af6aafa941784665b1637b81c0ba6446dcaef3fee2ca45bc8a1834baa95afdf3",
+   "request_id": "01a1f1c6-4aa4-735e-af9e-1dedf3ca9065",
+   "seconds": 4,
+   "price": 0.5028,
+   "qa": "PASS"
+  }
+ ],
+ "final": {
+  "file": "final-20261119-02.mp4",
+  "sha256": "deacfcded8c1f9b3efb84bd9ad14708900fa86f61944f337799d4a3fdd377bd0"
+ },
+ "edit_note": "scene-01 trimmed to 0-2.45s (Pebble shows tiny teeth after ~2.6s)"
+}
