@@ -83,6 +83,20 @@
    "topic": "taking turns (Croco & Pebble 2)",
    "date": "2026-11-16",
    "video_id": "4174uCAeqeo"
+  },
+  {
+   "id": "20261118-01",
+   "title": "Move with Croco 3: Pat, Touch, Wiggle! 🙌 for Toddlers | Croco's Little World #Shorts",
+   "topic": "body parts head/nose/toes (Move with Croco 3)",
+   "date": "2026-11-18",
+   "video_id": "h5vX-8EXkjc"
+  },
+  {
+   "id": "20261118-02",
+   "title": "Croco & Pebble 3: Sharing Apples 🍎 for Toddlers | Croco's Little World #Shorts",
+   "topic": "sharing apples (Croco & Pebble 3)",
+   "date": "2026-11-18",
+   "video_id": "a6LQn7XhqNg"
   }
  ],
  "drafted": [
@@ -129,7 +143,7 @@
    "slot": "2026-11-17T12:00 America/Denver",
    "metricool_id": 430948903,
    "uuid": "6456728099864465223",
-   "status": "DRAFT NOT RELEASED by Morning Review — slot 2026-11-17 12:00 passed, still draft true/PENDING in Metricool as of 2026-11-17 20:05 MST. Not published; topic held (do not re-draft same title within 30 days) until owner decides."
+   "status": "DRAFT NOT RELEASED by Morning Review — slot 2026-11-17 12:00 passed, still draft true/PENDING in Metricool as of 2026-11-17 20:05 MST. Not published; topic held (do not re-draft same title within 30 days) until owner decides. Still draft/PENDING as of 2026-11-18 20:05 MST."
   },
   {
    "id": "20261118-01",
@@ -138,7 +152,7 @@
    "slot": "2026-11-18T12:00 America/Denver",
    "metricool_id": 432322419,
    "uuid": "7212221560647730449",
-   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+   "status": "PUBLISHED 2026-11-18 12:00 (h5vX-8EXkjc)"
   },
   {
    "id": "20261118-02",
@@ -147,6 +161,24 @@
    "slot": "2026-11-18T17:00 America/Denver",
    "metricool_id": 432322448,
    "uuid": "9018854597823581324",
+   "status": "PUBLISHED 2026-11-18 17:00 (a6LQn7XhqNg)"
+  },
+  {
+   "id": "20261119-01",
+   "title": "Guess with Croco 5: Who Is Hiding? 🐰 for Toddlers | Croco's Little World #Shorts",
+   "topic": "bunny (animal names, Guess with Croco 5)",
+   "slot": "2026-11-19T12:00 America/Denver",
+   "metricool_id": 433712994,
+   "uuid": "332803236429253872",
+   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+  },
+  {
+   "id": "20261119-02",
+   "title": "Croco & Pebble 4: Saying Thank You 🌼 for Toddlers | Croco's Little World #Shorts",
+   "topic": "saying thank you (Croco & Pebble 4)",
+   "slot": "2026-11-19T17:00 America/Denver",
+   "metricool_id": 433713032,
+   "uuid": "-1997714024537896288",
    "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
   }
  ],
@@ -159,12 +191,6 @@
    "series": "Guess with Croco",
    "title": "Guess with Croco: Where's Croco's Nose?",
    "goal": "body parts nose/eyes/tummy; Croco points to each, close-up first frame"
-  },
-  {
-   "id": "N7",
-   "series": "Guess with Croco",
-   "title": "Guess with Croco: Whose Shadow? (bunny)",
-   "goal": "animal names: a soft bunny shadow on a garden wall, then a fluffy bunny hops out slowly"
   },
   {
    "id": "N8",
@@ -197,18 +223,6 @@
    "goal": "animal sounds: a fluffy sheep peeks out; same format as Moo"
   },
   {
-   "id": "N13",
-   "series": "Croco & Pebble",
-   "title": "Croco & Pebble: Thank You!",
-   "goal": "saying thank you: Pebble hands Croco a soft leaf, Croco says thank you"
-  },
-  {
-   "id": "N14",
-   "series": "Guess with Croco",
-   "title": "Guess with Croco: Who Is Hiding? (bunny ears)",
-   "goal": "animal names: soft bunny ears peek over a flower pot, a fluffy bunny slowly hops out"
-  },
-  {
    "id": "N15",
    "series": "Move with Croco",
    "title": "Move with Croco: Clap and Stomp",
@@ -219,12 +233,30 @@
    "series": "Guess with Croco",
    "title": "Guess with Croco: How Many Apples?",
    "goal": "counting 1-3 with apples in a basket (different object from stars; count only to three)"
+  },
+  {
+   "id": "N17",
+   "series": "Move with Croco",
+   "title": "Move with Croco: Stretch Like a Cat",
+   "goal": "copy-the-move: slow stretch up, reach to toes, big yawn-free smile (no wide mouth)"
+  },
+  {
+   "id": "N18",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: Round or Pointy? (moon & star)",
+   "goal": "shapes in the sky: round moon vs star, one at a time, soft night garden, no twinkling flashes"
+  },
+  {
+   "id": "N19",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble: Let's Clean Up!",
+   "goal": "routine: put blocks back in a basket together, 'clean up, clean up'"
   }
  ],
  "series": {
-  "Guess with Croco": 4,
+  "Guess with Croco": 5,
   "Move with Croco": 3,
-  "Croco & Pebble": 3
+  "Croco & Pebble": 4
  },
  "notes": [
   "Guess with Croco numbering: 1 Duck (draft never released), 2 Shapes (drafted 11-15), 3 Stars (published 11-14). Next Guess = 4.",
@@ -234,7 +266,8 @@
   "Lesson L1-L4 + failure taxonomy: reports/lessons.md",
   "OWNER RULE 2026-11-16 (later): teeth COUNT does not matter — the criterion is 'Croco looks cute' (round big head, big brown eyes, rosy cheeks, short snout, soft friendly smile). Teeth count is no longer a FAIL reason. Still FAIL: scary look, sharp/pointed fangs, older/long-faced/small-eyed Croco. Keep the verified cute config (croco-face.png only + closed-mouth lock) because it produced the cute episodes (Guess 2/3, Move 2, Taking Turns).",
   "2026-11-16 20:00 run: P2 Moo shortened to 10s (5+5, 2 scenes) to fit remaining 11-16 budget; 'Hello, cow!' line dropped. Config = croco-face.png only + brand.py closed-mouth lock (owner orders recorded 11-16 supersede the stored prompt's croco-face-2/teeth LOCK). preflight budget check double-counts once a scene is already in the ledger (cosmetic bug).",
-  "2026-11-17 20:00 run: P3 Pat/Touch/Wiggle + N5 Sharing Apples generated (6 scenes, 0 retries, $3.3939), self-QA PASS, drafted 11-18 12:00/17:00. Moo (20261117-01) draft was not released for 11-17 12:00; 11-17 17:00 stayed empty (no same-day recovery run)."
+  "2026-11-17 20:00 run: P3 Pat/Touch/Wiggle + N5 Sharing Apples generated (6 scenes, 0 retries, $3.3939), self-QA PASS, drafted 11-18 12:00/17:00. Moo (20261117-01) draft was not released for 11-17 12:00; 11-17 17:00 stayed empty (no same-day recovery run).",
+  "2026-11-18 20:00 run: N14 bunny (Guess 5) + N13 Thank You (C&P 4) generated (6 scenes x4s, 0 retries, $3.0168), self-QA PASS (02 S1 trimmed to 2.45s for Pebble teeth), drafted 11-19 12:00/17:00. 11-18 drafts were released and published."
  ],
  "blocked": []
 }
