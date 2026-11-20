@@ -97,6 +97,13 @@
    "topic": "sharing apples (Croco & Pebble 3)",
    "date": "2026-11-18",
    "video_id": "a6LQn7XhqNg"
+  },
+  {
+   "id": "20261119-02",
+   "title": "Croco & Pebble 4: Saying Thank You 🌼 for Toddlers | Croco's Little World #Shorts",
+   "topic": "saying thank you (Croco & Pebble 4)",
+   "date": "2026-11-19",
+   "video_id": "Jw1XthhWJ5Y"
   }
  ],
  "drafted": [
@@ -170,15 +177,33 @@
    "slot": "2026-11-19T12:00 America/Denver",
    "metricool_id": 433712994,
    "uuid": "332803236429253872",
-   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+   "status": "DRAFT NOT RELEASED by Morning Review — slot 2026-11-19 12:00 passed, still draft true/PENDING as of 2026-11-19 20:05 MST. Not published; topic held until owner decides."
   },
   {
    "id": "20261119-02",
    "title": "Croco & Pebble 4: Saying Thank You 🌼 for Toddlers | Croco's Little World #Shorts",
    "topic": "saying thank you (Croco & Pebble 4)",
    "slot": "2026-11-19T17:00 America/Denver",
-   "metricool_id": 433713032,
+   "metricool_id": 434359646,
    "uuid": "-1997714024537896288",
+   "status": "PUBLISHED 2026-11-19 17:00 (Jw1XthhWJ5Y) via new Metricool post id 434359646 (uuid -1997714024537896288) created by Morning Review"
+  },
+  {
+   "id": "20261120-01",
+   "title": "Move with Croco 4: Fast and Slow! 👏 for Toddlers | Croco's Little World #Shorts",
+   "topic": "opposites fast/slow clapping (Move with Croco 4)",
+   "slot": "2026-11-20T12:00 America/Denver",
+   "metricool_id": 435075525,
+   "uuid": "-2158796150400725494",
+   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+  },
+  {
+   "id": "20261120-02",
+   "title": "Croco & Pebble 5: Help Me, Please! 💛 for Toddlers | Croco's Little World #Shorts",
+   "topic": "asking for help with please (Croco & Pebble 5)",
+   "slot": "2026-11-20T17:00 America/Denver",
+   "metricool_id": 435075570,
+   "uuid": "-7863772641711929705",
    "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
   }
  ],
@@ -186,24 +211,6 @@
   "20261105-01"
  ],
  "queue": [
-  {
-   "id": "N4",
-   "series": "Guess with Croco",
-   "title": "Guess with Croco: Where's Croco's Nose?",
-   "goal": "body parts nose/eyes/tummy; Croco points to each, close-up first frame"
-  },
-  {
-   "id": "N8",
-   "series": "Croco & Pebble",
-   "title": "Croco & Pebble: Help Me, Please!",
-   "goal": "asking for help/please & thank you: Pebble helps Croco carry a big soft ball"
-  },
-  {
-   "id": "N9",
-   "series": "Move with Croco",
-   "title": "Move with Croco: Fast and Slow",
-   "goal": "opposites fast/slow via gentle tiptoe walking vs slow steps (no running)"
-  },
   {
    "id": "N10",
    "series": "Guess with Croco",
@@ -251,12 +258,30 @@
    "series": "Croco & Pebble",
    "title": "Croco & Pebble: Let's Clean Up!",
    "goal": "routine: put blocks back in a basket together, 'clean up, clean up'"
+  },
+  {
+   "id": "N20",
+   "series": "Move with Croco",
+   "title": "Move with Croco: Tiptoe and Stomp",
+   "goal": "quiet/loud: soft tiptoe steps in place vs gentle stomps (no jumping)"
+  },
+  {
+   "id": "N21",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: Who Says Quack? (duck sound only after owner decides Duck hold)",
+   "goal": "animal sounds; skip while Duck is on hold — alternative: Who Says Tweet? (little bird)"
+  },
+  {
+   "id": "N22",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble: Good Night, Pebble",
+   "goal": "bedtime routine: yawn-free, closed-mouth; tuck a soft blanket, 'good night'"
   }
  ],
  "series": {
   "Guess with Croco": 5,
-  "Move with Croco": 3,
-  "Croco & Pebble": 4
+  "Move with Croco": 4,
+  "Croco & Pebble": 5
  },
  "notes": [
   "Guess with Croco numbering: 1 Duck (draft never released), 2 Shapes (drafted 11-15), 3 Stars (published 11-14). Next Guess = 4.",
@@ -267,7 +292,8 @@
   "OWNER RULE 2026-11-16 (later): teeth COUNT does not matter — the criterion is 'Croco looks cute' (round big head, big brown eyes, rosy cheeks, short snout, soft friendly smile). Teeth count is no longer a FAIL reason. Still FAIL: scary look, sharp/pointed fangs, older/long-faced/small-eyed Croco. Keep the verified cute config (croco-face.png only + closed-mouth lock) because it produced the cute episodes (Guess 2/3, Move 2, Taking Turns).",
   "2026-11-16 20:00 run: P2 Moo shortened to 10s (5+5, 2 scenes) to fit remaining 11-16 budget; 'Hello, cow!' line dropped. Config = croco-face.png only + brand.py closed-mouth lock (owner orders recorded 11-16 supersede the stored prompt's croco-face-2/teeth LOCK). preflight budget check double-counts once a scene is already in the ledger (cosmetic bug).",
   "2026-11-17 20:00 run: P3 Pat/Touch/Wiggle + N5 Sharing Apples generated (6 scenes, 0 retries, $3.3939), self-QA PASS, drafted 11-18 12:00/17:00. Moo (20261117-01) draft was not released for 11-17 12:00; 11-17 17:00 stayed empty (no same-day recovery run).",
-  "2026-11-18 20:00 run: N14 bunny (Guess 5) + N13 Thank You (C&P 4) generated (6 scenes x4s, 0 retries, $3.0168), self-QA PASS (02 S1 trimmed to 2.45s for Pebble teeth), drafted 11-19 12:00/17:00. 11-18 drafts were released and published."
+  "2026-11-18 20:00 run: N14 bunny (Guess 5) + N13 Thank You (C&P 4) generated (6 scenes x4s, 0 retries, $3.0168), self-QA PASS (02 S1 trimmed to 2.45s for Pebble teeth), drafted 11-19 12:00/17:00. 11-18 drafts were released and published.",
+  "2026-11-19 20:00 run: N9 (claps instead of tiptoe) Move 4 + N8 Help Me Please C&P 5 generated (6x4s, 0 retries, $3.0168), self-QA PASS, drafted 11-20 12:00/17:00. TTS FAILED: ElevenLabs key lacks voices_read permission (401) -> no tts_voice_id chosen; chime+sfx only. N4 removed from queue (overlaps published body parts). Bunny (11-19 12:00) draft not released."
  ],
  "blocked": []
 }
