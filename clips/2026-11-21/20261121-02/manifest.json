@@ -1,0 +1,53 @@
+{
+ "episode": "20261121-02",
+ "references": [
+  "reference/croco-face.png"
+ ],
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "cbf2e34214720661cf2ef598905e8f9a7259f2e626d9f2b59347ef34296e3b2b",
+   "request_id": "01a1fc12-54e1-7e6c-a994-e81e612e8aac",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "8b7a8df0577860822db70dab6d2d442779a54e8a6bb490113fa1b63d57eaf48e",
+   "request_id": "01a1fc14-849e-7321-85b0-9f1d025d8349",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "70e0b6d1ce55f77b85eab93c48fd6a4b756a9af3879362468082b296137ea010",
+   "request_id": "01a1fc12-571a-7d0e-8012-3066f449fcd2",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false
+  }
+ ],
+ "final": {
+  "file": "final-20261121-02.mp4",
+  "sha256": "ad6902319ec7652cf22f51d86977ac7244b39a98b64a11c32d6d70e858d77e56",
+  "seconds": 13.2
+ },
+ "tts_voice": "Jessica cgSgspJ2msm6clMCkdW9",
+ "test": false,
+ "rejected": [
+  {
+   "scene": 2,
+   "request_id": "01a1fc12-5609-73a5-bfe9-de9ce14b4d8e",
+   "reason": "side profile, long hippo-like snout (F1)",
+   "price_usd": 0.5028
+  }
+ ]
+}

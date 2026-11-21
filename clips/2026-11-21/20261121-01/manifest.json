@@ -1,0 +1,46 @@
+{
+ "episode": "20261121-01",
+ "references": [
+  "reference/croco-face.png"
+ ],
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "7f5259fbdb9c14d2adf4ddce3b5b6a30ce7a56a307373352a343bd006e057e1e",
+   "request_id": "01a1fc10-d696-7d27-a9e7-7003c60d2b5b",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "6784ff9064e6ac0b6088db20345a60ccee2938d64319bfb2d916a344cd9b9a7d",
+   "request_id": "01a1fc12-5295-7a46-905e-5e64c0e571ff",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "5d88c33ce96cdaf6fe104960d6a713dee5d054802285979467f5cc48e43e0b1d",
+   "request_id": "01a1fc12-53ae-7c50-9f76-d2ca3d2ff7ca",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false
+  }
+ ],
+ "final": {
+  "file": "final-20261121-01.mp4",
+  "sha256": "22a9716415e284140df6d5c22b813077ac769cd7902d22213d696c4d0882def4",
+  "seconds": 13.2
+ },
+ "tts_voice": "Jessica cgSgspJ2msm6clMCkdW9",
+ "test": false,
+ "edit_note": "scene-01 trimmed to 3.25s (mouth opens with lower teeth after 3.3s)"
+}
