@@ -104,6 +104,20 @@
    "topic": "saying thank you (Croco & Pebble 4)",
    "date": "2026-11-19",
    "video_id": "Jw1XthhWJ5Y"
+  },
+  {
+   "id": "20261120-01",
+   "title": "Move with Croco 4: Fast and Slow! 👏 for Toddlers | Croco's Little World #Shorts",
+   "topic": "opposites fast/slow clapping (Move with Croco 4)",
+   "date": "2026-11-20",
+   "video_id": "PaPjsqveDh0"
+  },
+  {
+   "id": "20261120-02",
+   "title": "Croco & Pebble 5: Help Me, Please! 💛 for Toddlers | Croco's Little World #Shorts",
+   "topic": "asking for help with please (Croco & Pebble 5)",
+   "date": "2026-11-20",
+   "video_id": "4Wbsu1AB2G4"
   }
  ],
  "drafted": [
@@ -195,7 +209,7 @@
    "slot": "2026-11-20T12:00 America/Denver",
    "metricool_id": 435075525,
    "uuid": "-2158796150400725494",
-   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+   "status": "PUBLISHED 2026-11-20 12:00 (PaPjsqveDh0) via Morning Review post 435702334"
   },
   {
    "id": "20261120-02",
@@ -204,6 +218,24 @@
    "slot": "2026-11-20T17:00 America/Denver",
    "metricool_id": 435075570,
    "uuid": "-7863772641711929705",
+   "status": "PUBLISHED 2026-11-20 17:00 (4Wbsu1AB2G4) via Morning Review post 435713302"
+  },
+  {
+   "id": "20261121-01",
+   "title": "Guess with Croco 6: What Color Is It? 🍃 for Toddlers | Croco's Little World #Shorts",
+   "topic": "color green in nature: leaf, apple (Guess with Croco 6)",
+   "slot": "2026-11-21T12:00 America/Denver",
+   "metricool_id": 436338168,
+   "uuid": "-4632079394229368861",
+   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+  },
+  {
+   "id": "20261121-02",
+   "title": "Croco & Pebble 6: Let's Clean Up! 🧸 for Toddlers | Croco's Little World #Shorts",
+   "topic": "cleaning up toys routine (Croco & Pebble 6)",
+   "slot": "2026-11-21T17:00 America/Denver",
+   "metricool_id": 436338189,
+   "uuid": "2478464146178196630",
    "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
   }
  ],
@@ -211,12 +243,6 @@
   "20261105-01"
  ],
  "queue": [
-  {
-   "id": "N10",
-   "series": "Guess with Croco",
-   "title": "Guess with Croco: What Color Is the Leaf?",
-   "goal": "colors in nature: green leaf, red apple, yellow sun-flower; one color at a time"
-  },
   {
    "id": "N11",
    "series": "Croco & Pebble",
@@ -254,12 +280,6 @@
    "goal": "shapes in the sky: round moon vs star, one at a time, soft night garden, no twinkling flashes"
   },
   {
-   "id": "N19",
-   "series": "Croco & Pebble",
-   "title": "Croco & Pebble: Let's Clean Up!",
-   "goal": "routine: put blocks back in a basket together, 'clean up, clean up'"
-  },
-  {
    "id": "N20",
    "series": "Move with Croco",
    "title": "Move with Croco: Tiptoe and Stomp",
@@ -276,12 +296,30 @@
    "series": "Croco & Pebble",
    "title": "Croco & Pebble: Good Night, Pebble",
    "goal": "bedtime routine: yawn-free, closed-mouth; tuck a soft blanket, 'good night'"
+  },
+  {
+   "id": "N23",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: What Color Is the Sky? (blue)",
+   "goal": "one color in nature: blue sky, blue flower; same format as green"
+  },
+  {
+   "id": "N24",
+   "series": "Move with Croco",
+   "title": "Move with Croco: Reach High, Touch Low",
+   "goal": "opposites high/low with slow stretches in place (no jumping)"
+  },
+  {
+   "id": "N25",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble: Waiting Nicely",
+   "goal": "patience: wait for the swing/slide turn, count 1-2-3 calmly"
   }
  ],
  "series": {
-  "Guess with Croco": 5,
+  "Guess with Croco": 6,
   "Move with Croco": 4,
-  "Croco & Pebble": 5
+  "Croco & Pebble": 6
  },
  "notes": [
   "Guess with Croco numbering: 1 Duck (draft never released), 2 Shapes (drafted 11-15), 3 Stars (published 11-14). Next Guess = 4.",
@@ -293,7 +331,10 @@
   "2026-11-16 20:00 run: P2 Moo shortened to 10s (5+5, 2 scenes) to fit remaining 11-16 budget; 'Hello, cow!' line dropped. Config = croco-face.png only + brand.py closed-mouth lock (owner orders recorded 11-16 supersede the stored prompt's croco-face-2/teeth LOCK). preflight budget check double-counts once a scene is already in the ledger (cosmetic bug).",
   "2026-11-17 20:00 run: P3 Pat/Touch/Wiggle + N5 Sharing Apples generated (6 scenes, 0 retries, $3.3939), self-QA PASS, drafted 11-18 12:00/17:00. Moo (20261117-01) draft was not released for 11-17 12:00; 11-17 17:00 stayed empty (no same-day recovery run).",
   "2026-11-18 20:00 run: N14 bunny (Guess 5) + N13 Thank You (C&P 4) generated (6 scenes x4s, 0 retries, $3.0168), self-QA PASS (02 S1 trimmed to 2.45s for Pebble teeth), drafted 11-19 12:00/17:00. 11-18 drafts were released and published.",
-  "2026-11-19 20:00 run: N9 (claps instead of tiptoe) Move 4 + N8 Help Me Please C&P 5 generated (6x4s, 0 retries, $3.0168), self-QA PASS, drafted 11-20 12:00/17:00. TTS FAILED: ElevenLabs key lacks voices_read permission (401) -> no tts_voice_id chosen; chime+sfx only. N4 removed from queue (overlaps published body parts). Bunny (11-19 12:00) draft not released."
+  "2026-11-19 20:00 run: N9 (claps instead of tiptoe) Move 4 + N8 Help Me Please C&P 5 generated (6x4s, 0 retries, $3.0168), self-QA PASS, drafted 11-20 12:00/17:00. TTS FAILED: ElevenLabs key lacks voices_read permission (401) -> no tts_voice_id chosen; chime+sfx only. N4 removed from queue (overlaps published body parts). Bunny (11-19 12:00) draft not released.",
+  "2026-11-20 20:00 run: N10 (green) Guess 6 + N19 Clean Up C&P 6, 7 scenes (1 retry 02/S2 side-profile), $3.5196, QA PASS (01/S1 trimmed to 3.25s), drafted 11-21 12:00/17:00. TTS now works (voices_read OK): voice Jessica cgSgspJ2msm6clMCkdW9 chosen and fixed. 11-20 both published."
  ],
- "blocked": []
+ "blocked": [],
+ "tts_voice_id": "cgSgspJ2msm6clMCkdW9",
+ "tts_voice_name": "Jessica - Playful, Bright, Warm (premade)"
 }
