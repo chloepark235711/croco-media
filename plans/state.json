@@ -118,6 +118,20 @@
    "topic": "asking for help with please (Croco & Pebble 5)",
    "date": "2026-11-20",
    "video_id": "4Wbsu1AB2G4"
+  },
+  {
+   "id": "20261121-01",
+   "title": "Guess with Croco 6: What Color Is It? 🍃 for Toddlers | Croco's Little World #Shorts",
+   "topic": "color green in nature (Guess with Croco 6)",
+   "date": "2026-11-21",
+   "video_id": "fR9QOGF6lmA"
+  },
+  {
+   "id": "20261121-02",
+   "title": "Croco & Pebble 6: Let's Clean Up! 🧸 for Toddlers | Croco's Little World #Shorts",
+   "topic": "cleaning up toys (Croco & Pebble 6)",
+   "date": "2026-11-21",
+   "video_id": "s20cb81DQqo"
   }
  ],
  "drafted": [
@@ -227,7 +241,7 @@
    "slot": "2026-11-21T12:00 America/Denver",
    "metricool_id": 436338168,
    "uuid": "-4632079394229368861",
-   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+   "status": "PUBLISHED 2026-11-21 12:00 (fR9QOGF6lmA) via Morning Review post 436757305"
   },
   {
    "id": "20261121-02",
@@ -236,6 +250,24 @@
    "slot": "2026-11-21T17:00 America/Denver",
    "metricool_id": 436338189,
    "uuid": "2478464146178196630",
+   "status": "PUBLISHED 2026-11-21 17:00 (s20cb81DQqo) via Morning Review post 436757313"
+  },
+  {
+   "id": "20261122-01",
+   "title": "Guess with Croco 7: Who Says Baa? 🐑 for Toddlers | Croco's Little World #Shorts",
+   "topic": "animal sounds: sheep says baa (Guess with Croco 7)",
+   "slot": "2026-11-22T12:00 America/Denver",
+   "metricool_id": 437227618,
+   "uuid": "-6295897726213996269",
+   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+  },
+  {
+   "id": "20261122-02",
+   "title": "Move with Croco 5: Be a Tree! 🌳 for Toddlers | Croco's Little World #Shorts",
+   "topic": "pretend move: arms up like a tree, sway, stop (Move with Croco 5)",
+   "slot": "2026-11-22T17:00 America/Denver",
+   "metricool_id": 437227637,
+   "uuid": "4017386237373727023",
    "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
   }
  ],
@@ -248,12 +280,6 @@
    "series": "Croco & Pebble",
    "title": "Croco & Pebble: Feeling Happy, Feeling Sad",
    "goal": "naming feelings; Pebble feels a little sad (no tears), Croco gives a gentle hug, both smile"
-  },
-  {
-   "id": "N12",
-   "series": "Guess with Croco",
-   "title": "Guess with Croco: Who Says Baa? (sheep)",
-   "goal": "animal sounds: a fluffy sheep peeks out; same format as Moo"
   },
   {
    "id": "N15",
@@ -314,11 +340,29 @@
    "series": "Croco & Pebble",
    "title": "Croco & Pebble: Waiting Nicely",
    "goal": "patience: wait for the swing/slide turn, count 1-2-3 calmly"
+  },
+  {
+   "id": "N26",
+   "series": "Move with Croco",
+   "title": "Move with Croco: Flap Like a Bird",
+   "goal": "pretend move: flap arms slowly like a little bird, in place, no jumping"
+  },
+  {
+   "id": "N27",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: Who Says Oink? (piglet)",
+   "goal": "animal sounds: a round pink piglet peeks out; same format as Baa (no mud)"
+  },
+  {
+   "id": "N28",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble: Gentle Hands",
+   "goal": "being gentle: pat a small flower softly, 'gentle, gentle'"
   }
  ],
  "series": {
-  "Guess with Croco": 6,
-  "Move with Croco": 4,
+  "Guess with Croco": 7,
+  "Move with Croco": 5,
   "Croco & Pebble": 6
  },
  "notes": [
@@ -332,7 +376,8 @@
   "2026-11-17 20:00 run: P3 Pat/Touch/Wiggle + N5 Sharing Apples generated (6 scenes, 0 retries, $3.3939), self-QA PASS, drafted 11-18 12:00/17:00. Moo (20261117-01) draft was not released for 11-17 12:00; 11-17 17:00 stayed empty (no same-day recovery run).",
   "2026-11-18 20:00 run: N14 bunny (Guess 5) + N13 Thank You (C&P 4) generated (6 scenes x4s, 0 retries, $3.0168), self-QA PASS (02 S1 trimmed to 2.45s for Pebble teeth), drafted 11-19 12:00/17:00. 11-18 drafts were released and published.",
   "2026-11-19 20:00 run: N9 (claps instead of tiptoe) Move 4 + N8 Help Me Please C&P 5 generated (6x4s, 0 retries, $3.0168), self-QA PASS, drafted 11-20 12:00/17:00. TTS FAILED: ElevenLabs key lacks voices_read permission (401) -> no tts_voice_id chosen; chime+sfx only. N4 removed from queue (overlaps published body parts). Bunny (11-19 12:00) draft not released.",
-  "2026-11-20 20:00 run: N10 (green) Guess 6 + N19 Clean Up C&P 6, 7 scenes (1 retry 02/S2 side-profile), $3.5196, QA PASS (01/S1 trimmed to 3.25s), drafted 11-21 12:00/17:00. TTS now works (voices_read OK): voice Jessica cgSgspJ2msm6clMCkdW9 chosen and fixed. 11-20 both published."
+  "2026-11-20 20:00 run: N10 (green) Guess 6 + N19 Clean Up C&P 6, 7 scenes (1 retry 02/S2 side-profile), $3.5196, QA PASS (01/S1 trimmed to 3.25s), drafted 11-21 12:00/17:00. TTS now works (voices_read OK): voice Jessica cgSgspJ2msm6clMCkdW9 chosen and fixed. 11-20 both published.",
+  "2026-11-21 20:00 run: N12 sheep (Guess 7) + new Be a Tree (Move 5), 6x4s, 0 retries, $3.0168, QA PASS, drafted 11-22 12:00/17:00. 11-21 both published. TTS Jessica, 184 chars. Note: N15/N20/N24 overlap published clap/stomp/up-down — prefer new ideas."
  ],
  "blocked": [],
  "tts_voice_id": "cgSgspJ2msm6clMCkdW9",
