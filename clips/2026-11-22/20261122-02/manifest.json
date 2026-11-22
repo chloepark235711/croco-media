@@ -1,0 +1,38 @@
+{
+ "episode": "20261122-02",
+ "references": [
+  "reference/croco-face.png"
+ ],
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "432cb935d5f3f3db3b8c486dd0fbb2f2120ab08f797adf5f5ca38b49a6b39f1c",
+   "request_id": "01a20138-4a34-7be8-8ae7-7fda36bc421e",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "d3a789a9364c4202a746086ced187bf7a2469e8d797c43c979beeb469f94f2f5",
+   "request_id": "01a20138-4b4d-7ee8-90f2-0bcaefd43958",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "42fc5c6220a0d1fdf98d410f78c8d3410fbb4f9becc78a566e5c637808e1f31e",
+   "request_id": "01a20138-4c67-7463-84e5-ebca4d189d18",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false
+  }
+ ]
+}
