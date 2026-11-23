@@ -1,0 +1,54 @@
+{
+ "episode": "20261123-02",
+ "publish_date": "2026-11-23",
+ "reference": [
+  "reference/croco-face.png"
+ ],
+ "scenes": [
+  {
+   "scene": 1,
+   "file": "clips/2026-11-23/20261123-02/scene-01.mp4",
+   "sha256": "9a653ffa882a28b824604f2ea1ac5b14d7f9f7de6b14a5dc9f48131ecea27258",
+   "request_id": "01a2065e-e49d-7e94-a5fe-ed8a7c3b7787",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": false,
+   "test": false
+  },
+  {
+   "scene": 2,
+   "file": "clips/2026-11-23/20261123-02/scene-02.mp4",
+   "sha256": "4ff62be410500d0325b6feac7e29c7cd4a672badd5e7573af7a46851afac887f",
+   "request_id": "01a2065e-e5dd-76cb-b61d-efcc90ed57b9",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": false,
+   "test": false
+  },
+  {
+   "scene": 3,
+   "file": "clips/2026-11-23/20261123-02/scene-03.mp4",
+   "sha256": "56e2c7475472385b093db04c07e8c20547da5393d88c7092654b071b4e291276",
+   "request_id": "01a20661-3c10-7232-93d4-fca7d50a6f48",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": true,
+   "test": false
+  }
+ ],
+ "rejected": [
+  {
+   "scene": 3,
+   "request_id": "01a2065e-e71b-7abc-b63f-eb802d72e5b8",
+   "price": 0.5028,
+   "reason": "02: Pebble shell ~6 spots (rule: 3)"
+  }
+ ],
+ "test": false
+}

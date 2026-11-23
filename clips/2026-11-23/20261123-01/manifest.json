@@ -1,0 +1,54 @@
+{
+ "episode": "20261123-01",
+ "publish_date": "2026-11-23",
+ "reference": [
+  "reference/croco-face.png"
+ ],
+ "scenes": [
+  {
+   "scene": 1,
+   "file": "clips/2026-11-23/20261123-01/scene-01.mp4",
+   "sha256": "09a978306210773949e4dc2ca0f22b9c4de5b0ed77deb46e5c763f7d1cf50160",
+   "request_id": "01a2065d-5fc0-71d2-a92b-05c9e7998818",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": false,
+   "test": false
+  },
+  {
+   "scene": 2,
+   "file": "clips/2026-11-23/20261123-01/scene-02.mp4",
+   "sha256": "008c0bf587a9b8f684429748b0fa6cdd65af38732e03462e0696204fc49ace45",
+   "request_id": "01a2065e-e21a-777f-931c-6da17da43f15",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": false,
+   "test": false
+  },
+  {
+   "scene": 3,
+   "file": "clips/2026-11-23/20261123-01/scene-03.mp4",
+   "sha256": "ed40553e71a1e716c0421e76a8055dd640028dae6b76aa985845906049689ca7",
+   "request_id": "01a20661-3ab6-793d-bf0f-50a1c03ec49a",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": true,
+   "test": false
+  }
+ ],
+ "rejected": [
+  {
+   "scene": 3,
+   "request_id": "01a2065e-e355-7de7-8793-98eca2a628ee",
+   "price": 0.5028,
+   "reason": "01: side-profile Croco + oversized piglet rear"
+  }
+ ],
+ "test": false
+}
