@@ -132,6 +132,13 @@
    "topic": "cleaning up toys (Croco & Pebble 6)",
    "date": "2026-11-21",
    "video_id": "s20cb81DQqo"
+  },
+  {
+   "id": "20261122-01",
+   "title": "Guess with Croco 7: Who Says Baa? 🐑 for Toddlers | Croco's Little World #Shorts",
+   "topic": "animal sounds: sheep says baa (Guess with Croco 7)",
+   "date": "2026-11-22",
+   "video_id": "y-EZ-9A0ShE"
   }
  ],
  "drafted": [
@@ -259,7 +266,7 @@
    "slot": "2026-11-22T12:00 America/Denver",
    "metricool_id": 437227618,
    "uuid": "-6295897726213996269",
-   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+   "status": "PUBLISHED 2026-11-22 12:00 (y-EZ-9A0ShE) via Morning Review post 437648981"
   },
   {
    "id": "20261122-02",
@@ -268,6 +275,24 @@
    "slot": "2026-11-22T17:00 America/Denver",
    "metricool_id": 437227637,
    "uuid": "4017386237373727023",
+   "status": "NOT PUBLISHED — Morning Review post 437648989 (11-22 17:00) ERROR 'You have reached your Metricool account limit.' Clips/final MP4 unpublished; topic reusable after owner fixes Metricool limit."
+  },
+  {
+   "id": "20261123-01",
+   "title": "Guess with Croco 8: Who Says Oink? 🐷 for Toddlers | Croco's Little World #Shorts",
+   "topic": "animal sounds: pig says oink (Guess with Croco 8)",
+   "slot": "2026-11-23T12:00 America/Denver",
+   "metricool_id": 438233356,
+   "uuid": "3708823190038203216",
+   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+  },
+  {
+   "id": "20261123-02",
+   "title": "Croco & Pebble 7: Happy and Sad 💛 for Toddlers | Croco's Little World #Shorts",
+   "topic": "feelings sad->happy, gentle hug (Croco & Pebble 7)",
+   "slot": "2026-11-23T17:00 America/Denver",
+   "metricool_id": 438233409,
+   "uuid": "6662754219825709636",
    "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
   }
  ],
@@ -275,12 +300,6 @@
   "20261105-01"
  ],
  "queue": [
-  {
-   "id": "N11",
-   "series": "Croco & Pebble",
-   "title": "Croco & Pebble: Feeling Happy, Feeling Sad",
-   "goal": "naming feelings; Pebble feels a little sad (no tears), Croco gives a gentle hug, both smile"
-  },
   {
    "id": "N15",
    "series": "Move with Croco",
@@ -348,22 +367,34 @@
    "goal": "pretend move: flap arms slowly like a little bird, in place, no jumping"
   },
   {
-   "id": "N27",
-   "series": "Guess with Croco",
-   "title": "Guess with Croco: Who Says Oink? (piglet)",
-   "goal": "animal sounds: a round pink piglet peeks out; same format as Baa (no mud)"
-  },
-  {
    "id": "N28",
    "series": "Croco & Pebble",
    "title": "Croco & Pebble: Gentle Hands",
    "goal": "being gentle: pat a small flower softly, 'gentle, gentle'"
+  },
+  {
+   "id": "N29",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: Who Says Neigh? (little pony)",
+   "goal": "animal sounds: a small round pony peeks out; same format as Baa/Oink"
+  },
+  {
+   "id": "N30",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble: Let's Say Hello!",
+   "goal": "greetings: wave and say hello to a new friend, friendly closed-mouth smiles"
+  },
+  {
+   "id": "N31",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: One, Two, Three Leaves",
+   "goal": "counting 1-3 with big autumn leaves (no flashing)"
   }
  ],
  "series": {
-  "Guess with Croco": 7,
+  "Guess with Croco": 8,
   "Move with Croco": 5,
-  "Croco & Pebble": 6
+  "Croco & Pebble": 7
  },
  "notes": [
   "Guess with Croco numbering: 1 Duck (draft never released), 2 Shapes (drafted 11-15), 3 Stars (published 11-14). Next Guess = 4.",
@@ -377,7 +408,8 @@
   "2026-11-18 20:00 run: N14 bunny (Guess 5) + N13 Thank You (C&P 4) generated (6 scenes x4s, 0 retries, $3.0168), self-QA PASS (02 S1 trimmed to 2.45s for Pebble teeth), drafted 11-19 12:00/17:00. 11-18 drafts were released and published.",
   "2026-11-19 20:00 run: N9 (claps instead of tiptoe) Move 4 + N8 Help Me Please C&P 5 generated (6x4s, 0 retries, $3.0168), self-QA PASS, drafted 11-20 12:00/17:00. TTS FAILED: ElevenLabs key lacks voices_read permission (401) -> no tts_voice_id chosen; chime+sfx only. N4 removed from queue (overlaps published body parts). Bunny (11-19 12:00) draft not released.",
   "2026-11-20 20:00 run: N10 (green) Guess 6 + N19 Clean Up C&P 6, 7 scenes (1 retry 02/S2 side-profile), $3.5196, QA PASS (01/S1 trimmed to 3.25s), drafted 11-21 12:00/17:00. TTS now works (voices_read OK): voice Jessica cgSgspJ2msm6clMCkdW9 chosen and fixed. 11-20 both published.",
-  "2026-11-21 20:00 run: N12 sheep (Guess 7) + new Be a Tree (Move 5), 6x4s, 0 retries, $3.0168, QA PASS, drafted 11-22 12:00/17:00. 11-21 both published. TTS Jessica, 184 chars. Note: N15/N20/N24 overlap published clap/stomp/up-down — prefer new ideas."
+  "2026-11-21 20:00 run: N12 sheep (Guess 7) + new Be a Tree (Move 5), 6x4s, 0 retries, $3.0168, QA PASS, drafted 11-22 12:00/17:00. 11-21 both published. TTS Jessica, 184 chars. Note: N15/N20/N24 overlap published clap/stomp/up-down — prefer new ideas.",
+  "2026-11-22 20:00 run: N27 Oink (Guess 8) + N11 Happy and Sad (C&P 7), 8 requests (2 retries: 01/S3 side profile, 02/S3 Pebble ~6 shell spots), $4.0224, QA PASS, drafted 11-23 12:00/17:00. 11-22 12:00 Baa published; 11-22 17:00 Be a Tree ERROR 'Metricool account limit' -> owner must check Metricool plan. TTS Jessica, 197 chars."
  ],
  "blocked": [],
  "tts_voice_id": "cgSgspJ2msm6clMCkdW9",
