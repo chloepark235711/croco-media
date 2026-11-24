@@ -284,7 +284,7 @@
    "slot": "2026-11-23T12:00 America/Denver",
    "metricool_id": 438233356,
    "uuid": "3708823190038203216",
-   "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
+   "status": "NOT PUBLISHED — Morning Review post (438949664 / 438949698) ERROR 'You have reached your Metricool account limit.' Final MP4 unpublished; topic reusable after owner fixes Metricool limit."
   },
   {
    "id": "20261123-02",
@@ -293,6 +293,15 @@
    "slot": "2026-11-23T17:00 America/Denver",
    "metricool_id": 438233409,
    "uuid": "6662754219825709636",
+   "status": "NOT PUBLISHED — Morning Review post (438949664 / 438949698) ERROR 'You have reached your Metricool account limit.' Final MP4 unpublished; topic reusable after owner fixes Metricool limit."
+  },
+  {
+   "id": "20261124-01",
+   "title": "Guess with Croco 9: Who Says Neigh? 🐴 for Toddlers | Croco's Little World #Shorts",
+   "topic": "animal sounds: pony says neigh (Guess with Croco 9)",
+   "slot": "2026-11-24T12:00 America/Denver",
+   "metricool_id": 439750619,
+   "uuid": "7488437095210830801",
    "status": "DRAFT (draft true, autoPublish true) — awaiting 08:00 Morning Review"
   }
  ],
@@ -373,12 +382,6 @@
    "goal": "being gentle: pat a small flower softly, 'gentle, gentle'"
   },
   {
-   "id": "N29",
-   "series": "Guess with Croco",
-   "title": "Guess with Croco: Who Says Neigh? (little pony)",
-   "goal": "animal sounds: a small round pony peeks out; same format as Baa/Oink"
-  },
-  {
    "id": "N30",
    "series": "Croco & Pebble",
    "title": "Croco & Pebble: Let's Say Hello!",
@@ -389,10 +392,28 @@
    "series": "Guess with Croco",
    "title": "Guess with Croco: One, Two, Three Leaves",
    "goal": "counting 1-3 with big autumn leaves (no flashing)"
+  },
+  {
+   "id": "N32",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: Who Says Tweet? (little bird)",
+   "goal": "animal sounds: small round sky-blue bird on a flower bush; same format as Neigh"
+  },
+  {
+   "id": "N33",
+   "series": "Croco & Pebble",
+   "title": "Croco & Pebble: Gentle Hands with a Little Bird",
+   "goal": "being gentle: wave softly at a bird, no touching, 'gentle, gentle'"
+  },
+  {
+   "id": "N34",
+   "series": "Guess with Croco",
+   "title": "Guess with Croco: Round Orange Pumpkin",
+   "goal": "one color in nature: orange pumpkin, orange leaf"
   }
  ],
  "series": {
-  "Guess with Croco": 8,
+  "Guess with Croco": 9,
   "Move with Croco": 5,
   "Croco & Pebble": 7
  },
@@ -409,9 +430,17 @@
   "2026-11-19 20:00 run: N9 (claps instead of tiptoe) Move 4 + N8 Help Me Please C&P 5 generated (6x4s, 0 retries, $3.0168), self-QA PASS, drafted 11-20 12:00/17:00. TTS FAILED: ElevenLabs key lacks voices_read permission (401) -> no tts_voice_id chosen; chime+sfx only. N4 removed from queue (overlaps published body parts). Bunny (11-19 12:00) draft not released.",
   "2026-11-20 20:00 run: N10 (green) Guess 6 + N19 Clean Up C&P 6, 7 scenes (1 retry 02/S2 side-profile), $3.5196, QA PASS (01/S1 trimmed to 3.25s), drafted 11-21 12:00/17:00. TTS now works (voices_read OK): voice Jessica cgSgspJ2msm6clMCkdW9 chosen and fixed. 11-20 both published.",
   "2026-11-21 20:00 run: N12 sheep (Guess 7) + new Be a Tree (Move 5), 6x4s, 0 retries, $3.0168, QA PASS, drafted 11-22 12:00/17:00. 11-21 both published. TTS Jessica, 184 chars. Note: N15/N20/N24 overlap published clap/stomp/up-down — prefer new ideas.",
-  "2026-11-22 20:00 run: N27 Oink (Guess 8) + N11 Happy and Sad (C&P 7), 8 requests (2 retries: 01/S3 side profile, 02/S3 Pebble ~6 shell spots), $4.0224, QA PASS, drafted 11-23 12:00/17:00. 11-22 12:00 Baa published; 11-22 17:00 Be a Tree ERROR 'Metricool account limit' -> owner must check Metricool plan. TTS Jessica, 197 chars."
+  "2026-11-22 20:00 run: N27 Oink (Guess 8) + N11 Happy and Sad (C&P 7), 8 requests (2 retries: 01/S3 side profile, 02/S3 Pebble ~6 shell spots), $4.0224, QA PASS, drafted 11-23 12:00/17:00. 11-22 12:00 Baa published; 11-22 17:00 Be a Tree ERROR 'Metricool account limit' -> owner must check Metricool plan. TTS Jessica, 197 chars.",
+  "2026-11-23 20:00 run: N29 Neigh (Guess 9) PASS -> draft 11-24 12:00 (439750619). N26 Flap Like a Bird (Move 6) BLOCKED (clown nose / pointed fangs / >2 teeth / missing pocket star), 11-24 17:00 left empty. 9 requests $4.5252. 11-22 17:00 + 11-23 12:00/17:00 all ERROR 'Metricool account limit' -> owner must fix plan. Lesson: arm-flap scenes in the garden produced odd faces; add 'no red nose' + 'pocket star on the front pocket' explicitly; 'little wave' in frontal shots tends to open the mouth."
  ],
- "blocked": [],
+ "blocked": [
+  {
+   "id": "20261124-02",
+   "title": "Move with Croco 6: Flap Like a Bird! 🐦 for Toddlers | Croco's Little World #Shorts",
+   "reason": "S2 v1 red clown nose, S2 retry pointed fang-like teeth; S3 v1 ~3 teeth incl. lower, S3 retry pocket star missing; budget left < 1 scene. scene-01 PASS kept in clips/2026-11-24/20261124-02/. Retry next run (counter not advanced).",
+   "date": "2026-11-23"
+  }
+ ],
  "tts_voice_id": "cgSgspJ2msm6clMCkdW9",
  "tts_voice_name": "Jessica - Playful, Bright, Warm (premade)"
 }
