@@ -77,3 +77,12 @@ date,episode_id,scene,model,seconds,resolution,request_id,status,price_usd
 2026-11-22,20261123-02,2,kling-video/v4.0/reference-to-video,4,720p,01a2065e-e5dd-76cb-b61d-efcc90ed57b9,completed,0.5028
 2026-11-22,20261123-02,3,kling-video/v4.0/reference-to-video,4,720p,01a20661-3c10-7232-93d4-fca7d50a6f48,completed,0.5028
 2026-11-22,20261123-02,3-rejected,kling-video/v4.0/reference-to-video,4,720p,01a2065e-e71b-7abc-b63f-eb802d72e5b8,completed,0.5028
+2026-11-23,20261124-01,1,kling-video/v4.0/reference-to-video,4,720p,01a20b83-a796-7ff8-b0db-4f6381fbb667,completed,0.5028
+2026-11-23,20261124-01,2,kling-video/v4.0/reference-to-video,4,720p,01a20b85-441f-70fd-a7c8-4a2f89e11cfe,completed,0.5028
+2026-11-23,20261124-01,3-rejected,kling-video/v4.0/reference-to-video,4,720p,01a20b85-4557-7675-a2fd-28c5dc64caf4,completed,0.5028
+2026-11-23,20261124-02,1,kling-video/v4.0/reference-to-video,4,720p,01a20b83-a8d4-75a0-9e05-ef60d8d12f6d,completed,0.5028
+2026-11-23,20261124-02,2-rejected,kling-video/v4.0/reference-to-video,4,720p,01a20b85-4687-7acd-b85f-05489acf43bb,completed,0.5028
+2026-11-23,20261124-02,3-rejected,kling-video/v4.0/reference-to-video,4,720p,01a20b85-47bf-7aba-ad07-b595531d372b,completed,0.5028
+2026-11-23,20261124-01,3,kling-video/v4.0/reference-to-video,4,720p,01a20b86-f28a-7d06-b7c1-b19176b118de,completed,0.5028
+2026-11-23,20261124-02,2-retry-rejected,kling-video/v4.0/reference-to-video,4,720p,01a20b86-f3ce-7082-b7b8-998cdc1df064,completed,0.5028
+2026-11-23,20261124-02,3-retry-rejected,kling-video/v4.0/reference-to-video,4,720p,01a20b86-f503-7923-aabd-7d96f4a88dfc,completed,0.5028

@@ -1,0 +1,63 @@
+{
+ "episode": "20261124-02",
+ "publish_date": "2026-11-24",
+ "reference": [
+  "reference/croco-face.png"
+ ],
+ "status": "BLOCKED (S2/S3 failed after one retry each; budget left < 1 scene)",
+ "scenes": [
+  {
+   "scene": 1,
+   "file": "clips/2026-11-24/20261124-02/scene-01.mp4",
+   "sha256": "fc6ab81c27e4123185fb55bf194d9ec3b22b31df31f046f288149094cc58627e",
+   "request_id": "01a20b83-a8d4-75a0-9e05-ef60d8d12f6d",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": false,
+   "test": false,
+   "qa": "PASS"
+  },
+  {
+   "scene": 2,
+   "file": "clips/2026-11-24/20261124-02/rejected/scene-02-retry-fangs.mp4",
+   "sha256": "90aed45ccfd687e1d0d96e60ee7cd807d9af4d04d17dae970408ccf7447f18c3",
+   "request_id": "01a20b86-f3ce-7082-b7b8-998cdc1df064",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": true,
+   "test": false,
+   "qa": "FAIL: two pointed fang-like teeth at mouth corners all clip"
+  },
+  {
+   "scene": 3,
+   "file": "clips/2026-11-24/20261124-02/rejected/scene-03-retry-nostar.mp4",
+   "sha256": "59e1983bf679177e839e1a9ea9c9dd2c351133c6a53ae5ceed48d4e69dc36639",
+   "request_id": "01a20b86-f503-7923-aabd-7d96f4a88dfc",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": true,
+   "test": false,
+   "qa": "FAIL: pocket star missing (stars moved to overall corners)"
+  }
+ ],
+ "rejected_not_stored": [
+  {
+   "scene": 2,
+   "request_id": "01a20b85-4687-7acd-b85f-05489acf43bb",
+   "price": 0.5028,
+   "reason": "red clown nose on Croco"
+  },
+  {
+   "scene": 3,
+   "request_id": "01a20b85-47bf-7aba-ad07-b595531d372b",
+   "price": 0.5028,
+   "reason": "open smile with ~3 teeth incl. lower (v3 FAIL) from ~2.0s"
+  }
+ ]
+}

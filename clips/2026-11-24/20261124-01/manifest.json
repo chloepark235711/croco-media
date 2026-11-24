@@ -1,0 +1,57 @@
+{
+ "episode": "20261124-01",
+ "publish_date": "2026-11-24",
+ "reference": [
+  "reference/croco-face.png"
+ ],
+ "scenes": [
+  {
+   "scene": 1,
+   "file": "clips/2026-11-24/20261124-01/scene-01.mp4",
+   "sha256": "786a2217e746f351cf7b77964f4c8c162f5287be844923f53ffa2dc6ba3a34fe",
+   "request_id": "01a20b83-a796-7ff8-b0db-4f6381fbb667",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": false,
+   "test": false,
+   "qa": "PASS"
+  },
+  {
+   "scene": 2,
+   "file": "clips/2026-11-24/20261124-01/scene-02.mp4",
+   "sha256": "cbcc6785f4472d7a9a78e72443c437340c15ffb864001c74f945d10832fb1842",
+   "request_id": "01a20b85-441f-70fd-a7c8-4a2f89e11cfe",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": false,
+   "test": false,
+   "qa": "PASS"
+  },
+  {
+   "scene": 3,
+   "file": "clips/2026-11-24/20261124-01/scene-03.mp4",
+   "sha256": "d2a3fcb4dd079586f03cd78d6b51dc744a2c4fb3bf43a97e673f2af9b87e0922",
+   "request_id": "01a20b86-f28a-7d06-b7c1-b19176b118de",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price": 0.5028,
+   "retry": true,
+   "test": false,
+   "qa": "PASS"
+  }
+ ],
+ "rejected": [
+  {
+   "scene": 3,
+   "request_id": "01a20b85-4557-7675-a2fd-28c5dc64caf4",
+   "price": 0.5028,
+   "reason": "pony tall/long-legged with dark mane, inconsistent with S2"
+  }
+ ],
+ "status": "QA PASS"
+}
