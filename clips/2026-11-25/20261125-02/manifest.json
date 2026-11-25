@@ -1,0 +1,19 @@
+{
+ "episode": "20261125-02",
+ "date": "2026-11-25",
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "4fba47e34937a93fb71c62968547e3a800d7ebff325d541d1a299849eb138274",
+   "request_id": "01a210aa-1e08-78f3-91b7-8de0f7dd0d23",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false,
+   "reference": "reference/croco-face.png",
+   "qa": "PASS"
+  }
+ ],
+ "blocked": "scene 2/3 requests 01a210ac-0a6b-7247-83fc-eeeaf73b70b8 / 01a210ac-0b86-745f-8e90-acf2a736968d failed: Higgsfield API credit balance too low"
+}

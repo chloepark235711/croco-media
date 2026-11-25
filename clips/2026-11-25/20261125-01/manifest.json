@@ -1,0 +1,42 @@
+{
+ "episode": "20261125-01",
+ "date": "2026-11-25",
+ "scenes": [
+  {
+   "file": "scene-01.mp4",
+   "sha256": "8f15af47e8dc76506d9f94fb5ae18db1fcd8645c2a891d14822d777cdd37cd17",
+   "request_id": "01a210aa-1ced-7394-bc68-f8ec1f25b514",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false,
+   "reference": "reference/croco-face.png",
+   "qa": "PASS"
+  },
+  {
+   "file": "scene-02.mp4",
+   "sha256": "4e59fbd82727e6d0a3a32451ea53a3ff90057d4c0029c01f478b0a90f85214e2",
+   "request_id": "01a210ac-0817-7a50-bcf0-dc28a62fc286",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false,
+   "reference": "reference/croco-face.png",
+   "qa": "PASS"
+  },
+  {
+   "file": "scene-03.mp4",
+   "sha256": "45a11e21a3ad8a5b50753cf85081df4c36e1b0d202cd91b660c5e4b421a37564",
+   "request_id": "01a210ac-0947-799a-aca8-81da2937925f",
+   "model": "kling-video/v4.0/reference-to-video",
+   "seconds": 4,
+   "resolution": "720p",
+   "price_usd": 0.5028,
+   "test": false,
+   "reference": "reference/croco-face.png",
+   "qa": "PASS"
+  }
+ ]
+}
