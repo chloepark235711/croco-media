@@ -92,3 +92,4 @@ date,episode_id,scene,model,seconds,resolution,request_id,status,price_usd
 2026-11-24,20261125-01,3,kling-video/v4.0/reference-to-video,4,720p,01a210ac-0947-799a-aca8-81da2937925f,completed,0.5028
 2026-11-24,20261125-02,2,kling-video/v4.0/reference-to-video,4,720p,01a210ac-0a6b-7247-83fc-eeeaf73b70b8,failed-credit-balance-too-low,0
 2026-11-24,20261125-02,3,kling-video/v4.0/reference-to-video,4,720p,01a210ac-0b86-745f-8e90-acf2a736968d,failed-credit-balance-too-low,0
+2026-11-25,20261126-02,2,kling-video/v4.0/reference-to-video,4,720p,01a215d0-ae90-71e0-9fbf-b15692ad3b38,failed-credit-balance-too-low,0
