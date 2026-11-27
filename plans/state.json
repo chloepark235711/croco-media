@@ -376,7 +376,8 @@
    "id": "N26",
    "series": "Move with Croco",
    "title": "Move with Croco: Flap Like a Bird",
-   "goal": "pretend move: flap arms slowly like a little bird, in place, no jumping"
+   "goal": "pretend move: flap arms slowly like a little bird, in place, no jumping",
+   "note": " 2026-11-26 20:04 run: 20261127-01 S2 01a21af6-47b5-7468-99ac-251ec4af0e44 failed 'credit balance too low'."
   },
   {
    "id": "N28",
