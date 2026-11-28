@@ -456,13 +456,14 @@
   "2026-11-23 20:00 run: N29 Neigh (Guess 9) PASS -> draft 11-24 12:00 (439750619). N26 Flap Like a Bird (Move 6) BLOCKED (clown nose / pointed fangs / >2 teeth / missing pocket star), 11-24 17:00 left empty. 9 requests $4.5252. 11-22 17:00 + 11-23 12:00/17:00 all ERROR 'Metricool account limit' -> owner must fix plan. Lesson: arm-flap scenes in the garden produced odd faces; add 'no red nose' + 'pocket star on the front pocket' explicitly; 'little wave' in frontal shots tends to open the mouth.",
   "2026-11-24 20:00 run: N32 Tweet (Guess 10) PASS -> draft 11-25 12:00 (441199204). N22 Good Night Pebble (C&P 8) BLOCKED: Higgsfield API 'credit balance too low' after 4 paid scenes ($2.0112). 11-25 17:00 empty. 11-24 12:00 Neigh also ERROR 'Metricool account limit' (4th in a row). Note: MCP Higgsfield balance (Plus web workspace, 969.5 credits) is NOT the API balance.",
   "2026-11-25 20:00 run: Higgsfield API still 'credit balance too low' (1 failed request, $0). No generation, no Metricool drafts for 11-26 (both slots empty). 11-25 12:00 Tweet ERROR 'Metricool account limit' (5th in a row). Plans for 11-26 (Move 6 Rock Teddy + Good Night retry) ready in plans/2026-11-26.md. Series counters unchanged.",
-  "2026-11-26 01:44 run (PROMPT v4): Buffer replaces Metricool (GraphQL https://api.buffer.com, proxy auth). Buffer lists 20 sent posts, all in published. No posts in 11-26/11-27 slots. Higgsfield API credit too low (3rd day). Plan plans/2026-11-27.md."
+  "2026-11-26 01:44 run (PROMPT v4): Buffer replaces Metricool (GraphQL https://api.buffer.com, proxy auth). Buffer lists 20 sent posts, all in published. No posts in 11-26/11-27 slots. Higgsfield API credit too low (3rd day). Plan plans/2026-11-27.md.",
+  "2026-11-27 20:04 run: BLOCKED (Higgsfield API credit too low, 5th day). D=11-28 not drafted. Plan plans/2026-11-28.md carried over."
  ],
  "blocked": [
   {
    "id": "20261124-02",
    "title": "Move with Croco 6: Flap Like a Bird! 🐦 for Toddlers | Croco's Little World #Shorts",
-   "reason": "S2 v1 red clown nose, S2 retry pointed fang-like teeth; S3 v1 ~3 teeth incl. lower, S3 retry pocket star missing; budget left < 1 scene. scene-01 PASS kept in clips/2026-11-24/20261124-02/. Retry next run (counter not advanced). Re-planned as Move with Croco 7 for D=2026-11-27 12:00 (S3 wave removed); not generated (credit).",
+   "reason": "S2 v1 red clown nose, S2 retry pointed fang-like teeth; S3 v1 ~3 teeth incl. lower, S3 retry pocket star missing; budget left < 1 scene. scene-01 PASS kept in clips/2026-11-24/20261124-02/. Retry next run (counter not advanced). Re-planned as Move with Croco 7 for D=2026-11-27 12:00 (S3 wave removed); not generated (credit). 2026-11-27 20:04 run: re-planned as 20261128-01 (D=11-28 12:00); S2 01a2201c-c14f-79ef-9e37-434aee5d671a failed 'credit balance too low'.",
    "date": "2026-11-23"
   },
   {
